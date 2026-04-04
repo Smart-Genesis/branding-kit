@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Branding Kits — Smart Genesis</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #f6f7fb;
+    --card: #ffffff;
+    --ink: #1b1f2a;
+    --muted: #657287;
+    --border: rgba(10, 37, 64, 0.08);
+    --accent: #2E7D32; /* Smart Genesis green */
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0;
+    font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'Liberation Sans', sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Header */
+  .header {
+    position: sticky; top: 0; z-index: 10;
+    background: linear-gradient(180deg, #ffffff, rgba(255,255,255,0.95));
+    border-bottom: 1px solid var(--border);
+    padding: 18px 22px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .brand {
+    display: flex; align-items: center; gap: 10px;
+    font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--ink);
+  }
+  .brand-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px rgba(46,125,50,0.12); }
+  .header-right { font-size: 12px; color: var(--muted); letter-spacing: .08em; text-transform: uppercase; }
+  .header-right a { color: var(--accent); text-decoration: none; font-weight: 600; }
+
+  /* Grid */
+  .wrap { max-width: 1100px; margin: 0 auto; padding: 34px 22px 54px; }
+  .title { font-size: 22px; font-weight: 700; margin: 8px 0 4px; letter-spacing: -.01em; }
+  .subtitle { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+
+  .grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+  }
+  @media (max-width: 980px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .grid { grid-template-columns: 1fr; } }
+
+  .card {
+    display: block;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 20px 18px;
+    text-decoration: none;
+    color: inherit;
+    transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    box-shadow: 0 6px 14px rgba(10,37,64,0.05);
+    min-height: 148px;
+  }
+  .card:hover { transform: translateY(-2px); border-color: rgba(10,37,64,0.16); box-shadow: 0 10px 24px rgba(10,37,64,0.09); }
+
+  .card-top { display: flex; align-items: center; gap: 14px; }
+  .logo-box { width: 56px; height: 56px; border-radius: 12px; display:flex; align-items:center; justify-content:center; background: #f2f5fa; }
+  .meta { margin-top: 12px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .name { font-size: 16px; font-weight: 700; letter-spacing: .02em; }
+  .tag { font-size: 11px; color: var(--muted); letter-spacing: .14em; text-transform: uppercase; }
+  .arrow { width: 28px; height: 28px; border-radius: 50%; background: #f2f5fa; display:flex; align-items:center; justify-content:center; color: var(--muted); font-weight: 700; }
+
+  /* Small helpers */
+  .sr-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+</style>
+</head>
+<body>
+  <header class="header">
+    <div class="brand"><span class="brand-dot" aria-hidden="true"></span> Branding Kits</div>
+    <div class="header-right">Designed by <a href="https://smartgenesis.io" target="_blank" rel="noopener">Smart Genesis</a></div>
+  </header>
+  <main class="wrap">
+    <h1 class="title">Explore Brand Identity Kits</h1>
+    <p class="subtitle">Click any card to open its brand guide.</p>
+
+    <div class="grid">
+      <!-- Assetra -->
+      <a class="card" href="assetra-branding-kit.html" aria-label="Open Assetra brand kit">
+        <div class="card-top">
+          <div class="logo-box" aria-hidden="true">
+            <!-- Assetra mini mark -->
+            <svg width="38" height="38" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="0" y="37" width="28" height="28" rx="4" fill="#00BFA6"/>
+              <rect x="31" y="37" width="28" height="28" rx="4" fill="#00BFA6" opacity="0.55"/>
+              <rect x="0" y="5" width="28" height="28" rx="4" fill="#C9A227"/>
+              <rect x="31" y="5" width="28" height="28" rx="4" fill="#00BFA6" opacity="0.35"/>
+            </svg>
+          </div>
+          <div>
+            <div class="name">Assetra</div>
+            <div class="tag">RWA · DeFi · AST</div>
+          </div>
+          <div class="arrow" aria-hidden="true">→</div>
+        </div>
+      </a>
+
+            <!-- Zentara -->
+      <a class="card" href="zentara-brand-kit.html" aria-label="Open Zentara brand kit">
+        <div class="card-top">
+          <div class="logo-box" aria-hidden="true" style="background:#eef7f1">
+            <!-- Zentara mini mark (three petals) -->
+            <svg width="40" height="40" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="zg1" x1="50" y1="50" x2="50" y2="14" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#0B6E4F"/>
+                  <stop offset="100%" stop-color="#4DB6AC"/>
+                </linearGradient>
+                <linearGradient id="zg2" x1="50" y1="50" x2="82" y2="69" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#4DB6AC"/>
+                  <stop offset="100%" stop-color="#A7E245"/>
+                </linearGradient>
+                <linearGradient id="zg3" x1="50" y1="50" x2="18" y2="69" gradientUnits="userSpaceOnUse">
+                  <stop offset="0%" stop-color="#A7E245"/>
+                  <stop offset="100%" stop-color="#0B6E4F"/>
+                </linearGradient>
+              </defs>
+              <path d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#zg1)"/>
+              <path transform="rotate(120,50,50)" d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#zg2)"/>
+              <path transform="rotate(240,50,50)" d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#zg3)"/>
+              <circle cx="50" cy="50" r="6" fill="#0B6E4F"/>
+            </svg>
+          </div>
+          <div>
+            <div class="name">Zentara</div>
+            <div class="tag">Nature · Wellness</div>
+          </div>
+          <div class="arrow" aria-hidden="true">→</div>
+        </div>
+      </a>
+
+      <!-- Dhara -->
+      <a class="card" href="dhara-brand-kit.html" aria-label="Open Dhara brand kit">
+        <div class="card-top">
+          <div class="logo-box" aria-hidden="true" style="background:#edf6ef">
+            <!-- Dhara mini mark (ring + leaf + seed) -->
+            <svg width="40" height="40" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <circle cx="50" cy="50" r="42" fill="none" stroke="#2E7D32" stroke-width="6"/>
+              <path d="M 50,17 C 74,31 74,59 50,67 C 26,59 26,31 50,17 Z" fill="#2E7D32"/>
+              <circle cx="50" cy="17" r="7" fill="#D4AF37"/>
+              <circle cx="50" cy="17" r="3.5" fill="#F5D040"/>
+            </svg>
+          </div>
+          <div>
+            <div class="name">Dhara</div>
+            <div class="tag">Sustainability · Carbon · DHR</div>
+          </div>
+          <div class="arrow" aria-hidden="true">→</div>
+        </div>
+      </a>
+
+      <!-- Nexterra -->
+      <a class="card" href="nexterra-branding-kit.html" aria-label="Open Nexterra brand kit">
+        <div class="card-top">
+          <div class="logo-box" aria-hidden="true" style="background:#eaf7f5">
+            <!-- Nexterra mini mark -->
+            <svg width="40" height="40" viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="72" height="72" rx="14" fill="#00BFA6" fill-opacity="0.1"/>
+              <rect x="13" y="14" width="12" height="8" rx="1.5" fill="#00BFA6" fill-opacity="0.95"/>
+              <rect x="13" y="24" width="12" height="8" rx="1.5" fill="#00BFA6" fill-opacity="0.65"/>
+              <rect x="13" y="34" width="12" height="8" rx="1.5" fill="#00BFA6" fill-opacity="0.38"/>
+              <rect x="47" y="50" width="12" height="8" rx="1.5" fill="#00BFA6" fill-opacity="0.95"/>
+              <rect x="47" y="40" width="12" height="8" rx="1.5" fill="#00BFA6" fill-opacity="0.65"/>
+              <rect x="47" y="30" width="12" height="8" rx="1.5" fill="#00BFA6" fill-opacity="0.38"/>
+              <line x1="25" y1="18" x2="47" y2="54" stroke="#00BFA6" stroke-width="2.5" stroke-linecap="round"/>
+              <circle cx="25" cy="18" r="3" fill="#C9A227"/>
+              <circle cx="47" cy="54" r="3" fill="#C9A227"/>
+            </svg>
+          </div>
+          <div>
+            <div class="name">Nexterra</div>
+            <div class="tag">Infra · Global · NXT</div>
+          </div>
+          <div class="arrow" aria-hidden="true">→</div>
+        </div>
+      </a>
+
+    </div>
+  </main>
+</body>
+</html>
