@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dhara — Brand Identity System</title>
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/poppins@5.0.8/400.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/poppins@5.0.8/500.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/poppins@5.0.8/600.css" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Poppins',system-ui,sans-serif;background:#EDE8DE;color:#1A1A0A;line-height:1.5}
+.page{max-width:980px;margin:0 auto;padding:56px 40px}
+.kh{display:flex;align-items:center;gap:18px;margin-bottom:56px;padding-bottom:24px;border-bottom:2px solid #2E7D32}
+.kh-title{font-size:24px;font-weight:600;color:#2E7D32;letter-spacing:.04em}
+.kh-sub{font-size:12px;color:#6B6B52;margin-top:3px}
+.kh-right{margin-left:auto;text-align:right}
+.kh-ver{font-size:9px;font-family:monospace;color:#9A9A7A;letter-spacing:.1em;text-transform:uppercase}
+.badges{display:flex;gap:6px;margin-top:7px;justify-content:flex-end}
+.badge{font-size:9px;font-weight:700;padding:3px 9px;border-radius:20px;letter-spacing:.08em;text-transform:uppercase}
+.bg{background:#E8F5E9;color:#1B5E20}.bb{background:#EFEBE9;color:#4E342E}.bgo{background:#FFF8E1;color:#8B6914}
+.sec{margin-bottom:60px}
+.sl{display:flex;align-items:center;gap:12px;margin-bottom:22px;padding-bottom:12px;border-bottom:.5px solid rgba(0,0,0,.1)}
+.sl-n{font-size:10px;font-weight:700;color:#2E7D32;letter-spacing:.1em;font-family:monospace}
+.sl-t{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#9A9A7A}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.g4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.panel{border-radius:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:40px 28px;gap:14px;position:relative;overflow:hidden}
+.pcr{background:#FAFAF8;border:1px solid rgba(0,0,0,.05)}
+.pbe{background:#F5F0E8;border:1px solid rgba(0,0,0,.07)}
+.pdk{background:#1C1C0E;border:1px solid rgba(255,255,255,.04)}
+.pgr{background:#2E7D32;border:1px solid rgba(0,0,0,.1)}
+.pdg{background:#1B5E20;border:1px solid rgba(0,0,0,.12)}
+.lh{display:flex;align-items:center;gap:18px}
+.wm{font-family:'Poppins',sans-serif;font-weight:600;letter-spacing:.07em}
+.tl{font-size:9px;letter-spacing:.26em;text-transform:uppercase;font-weight:400;opacity:.6;margin-top:5px}
+.pm{font-size:9px;font-family:monospace;position:absolute;bottom:12px;right:16px;opacity:.28;letter-spacing:.05em}
+.sw-c{height:68px;border-radius:10px;margin-bottom:10px}
+.sw-n{font-size:12px;font-weight:600;color:#1A1A0A}
+.sw-h{font-size:11px;font-family:monospace;color:#6B6B52;margin:2px 0 1px}
+.sw-r{font-size:10px;color:#9A9A7A}
+.ty-blk{background:#FAFAF8;border-radius:18px;border:1px solid rgba(0,0,0,.05);overflow:hidden}
+.ty-row{padding:20px 28px;border-bottom:.5px solid rgba(0,0,0,.06)}
+.ty-row:last-child{border-bottom:none}
+.ty-meta{font-size:10px;font-family:monospace;color:#9A9A7A;margin-top:6px}
+.shelf{background:#FAFAF8;border-radius:18px;border:1px solid rgba(0,0,0,.05);padding:32px 28px;display:flex;align-items:flex-end;gap:24px;flex-wrap:wrap}
+.shelf-dk{background:#1C1C0E;border-color:rgba(255,255,255,.04)}
+.ii{display:flex;flex-direction:column;align-items:center;gap:10px}
+.il{font-size:9px;font-family:monospace;color:#9A9A7A}
+.il-dk{font-size:9px;font-family:monospace;color:#444}
+.ai{border-radius:22%;background:#2E7D32;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.st{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center}
+.guide-do{background:#FAFAF8;border-radius:16px;border:1.5px solid #C8E6C9;padding:22px 24px}
+.guide-dont{background:#FAFAF8;border-radius:16px;border:1.5px solid #FFCDD2;padding:22px 24px}
+.gi{display:flex;gap:8px;font-size:12px;color:#5C5844;margin-bottom:8px;line-height:1.5}
+.gi:last-child{margin-bottom:0}
+.footer{text-align:center;padding:32px 0;border-top:.5px solid rgba(0,0,0,.1);color:#9A9A7A;font-size:11px;margin-top:8px}
+.footer strong{color:#2E7D32}
+.strip{display:flex;gap:4px}
+.ss{height:40px;flex:1;border-radius:6px}
+
+/* ── INTRO OVERLAY: Dhara ── */
+.intro-dhara{position:fixed;inset:0;background:#1C1C0E;z-index:9999;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.intro-dhara-bg{position:absolute;inset:0;background-image:linear-gradient(rgba(46,125,50,0.05) 1px,transparent 1px),linear-gradient(90deg, rgba(46,125,50,0.05) 1px,transparent 1px);background-size:44px 44px;pointer-events:none}
+.intro-dhara-wrap{position:relative;display:flex;flex-direction:column;align-items:center;gap:12px}
+.intro-mark{width:96px;height:96px;display:flex;align-items:center;justify-content:center;opacity:0;transform:scale(.92);animation:introMarkIn 520ms cubic-bezier(.2,.9,.2,1.05) forwards}
+.intro-word{font-weight:600;letter-spacing:.07em;color:#FFFFFF;font-size:28px;font-family:'Poppins',system-ui,sans-serif;opacity:0;transform:translateY(6px);animation:introTextIn 380ms ease-out forwards;animation-delay:360ms}
+.intro-word em{color:#2E7D32;font-style:normal}
+.intro-tag{font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:rgba(212,175,55,.8);font-weight:400;opacity:0;animation:introFadeIn 480ms ease-out forwards;animation-delay:720ms}
+.intro-skip{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.18);padding:6px 12px;border-radius:999px;cursor:pointer;user-select:none}
+.intro-dhara.out{animation:introOverlayOut 600ms ease forwards}
+@keyframes introMarkIn{0%{opacity:0;transform:scale(.92)}60%{opacity:1;transform:scale(1.04)}100%{opacity:1;transform:scale(1)}}
+@keyframes introTextIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+@keyframes introFadeIn{from{opacity:0}to{opacity:1}}
+@keyframes introOverlayOut{to{opacity:0;visibility:hidden}}
+@media (prefers-reduced-motion: reduce){.intro-mark,.intro-word,.intro-tag{animation:none;opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<!-- ───────────────────────────── INTRO OVERLAY ───────────────────────────── -->
+<div class="intro-dhara" id="intro-dhara" aria-label="Intro animation overlay">
+  <div class="intro-dhara-bg" aria-hidden="true"></div>
+  <div class="intro-dhara-wrap">
+    <div class="intro-mark" id="intro-mark" aria-hidden="true"></div>
+    <div class="intro-word" aria-hidden="true"><em>dhara</em></div>
+    <div class="intro-tag" aria-hidden="true">Earth · Flow · Life</div>
+  </div>
+  <div class="intro-skip" id="intro-dhara-skip" role="button" aria-label="Skip intro">Skip</div>
+</div>
+<div class="page">
+
+<div class="kh">
+  <div id="h-mark"></div>
+  <div><div class="kh-title">Dhara Brand Identity</div><div class="kh-sub">Blockchain Sustainability Platform · Identity System v1.0 · 2024 
+    <br >Designed by <a href="https://smartgenesis.io" target="_blank" style="color:#2E7D32;font-weight:500;text-decoration:none">Smart Genesis</a>
+  </div></div>
+  <div class="kh-right">
+    <div class="kh-ver">Brand Kit · Confidential</div>
+    <div class="badges"><span class="badge bg">Earth Green</span><span class="badge bb">Soil Brown</span><span class="badge bgo">Harvest Gold</span></div>
+  </div>
+</div>
+
+<!-- 01 Primary Logo -->
+<div class="sec">
+  <div class="sl"><span class="sl-n">01</span><span class="sl-t">Primary Logo</span></div>
+  <div class="g2">
+    <div class="panel pcr">
+      <div class="lh"><div id="logo-lgt"></div><div><div class="wm" style="font-size:30px;color:#2E7D32">dhara</div><div class="tl" style="color:#6D4C41">Earth · Flow · Life</div></div></div>
+      <div class="pm">Light Mode · Primary</div>
+    </div>
+    <div class="panel pdk">
+      <div class="lh"><div id="logo-drk"></div><div><div class="wm" style="font-size:30px;color:#fff">dhara</div><div class="tl" style="color:#D4AF37">Earth · Flow · Life</div></div></div>
+      <div class="pm" style="color:#D4AF37;opacity:.45">Dark Mode · Primary</div>
+    </div>
+  </div>
+  <div class="g2" style="margin-top:12px">
+    <div class="panel pgr">
+      <div class="lh"><div id="logo-grn"></div><div><div class="wm" style="font-size:30px;color:#fff">dhara</div><div class="tl" style="color:rgba(255,255,255,.6)">Earth · Flow · Life</div></div></div>
+      <div class="pm" style="color:rgba(255,255,255,.35)">Earth Green Background</div>
+    </div>
+    <div class="panel pbe">
+      <div class="lh"><div id="logo-gld"></div><div><div class="wm" style="font-size:30px;color:#D4AF37">dhara</div><div class="tl" style="color:#6D4C41">Premium Token Edition</div></div></div>
+      <div class="pm">Gold Accent · Premium</div>
+    </div>
+  </div>
+</div>
+
+<!-- 02 Logo Variants -->
+<div class="sec">
+  <div class="sl"><span class="sl-n">02</span><span class="sl-t">Logo Variants</span></div>
+  <div class="g3">
+    <div class="panel pbe" style="padding:28px 20px;min-height:210px">
+      <div id="v-icon"></div>
+      <div style="font-size:10px;font-family:monospace;color:#8B6355;margin-top:8px">Icon Mark</div>
+    </div>
+    <div class="panel pbe" style="padding:28px 20px;min-height:210px">
+      <div id="v-coin"></div>
+      <div style="font-size:10px;font-family:monospace;color:#8B6355;margin-top:8px">DHR Token Coin</div>
+    </div>
+    <div class="panel pcr" style="padding:28px 20px;min-height:210px">
+      <div class="st"><div id="v-stack"></div><div class="wm" style="font-size:22px;color:#2E7D32">dhara</div><div style="font-size:9px;letter-spacing:.3em;text-transform:uppercase;color:#6D4C41;font-weight:400">Sustainability</div></div>
+      <div class="pm">Stacked · Square Format</div>
+    </div>
+  </div>
+  <div class="g3" style="margin-top:12px">
+    <div class="panel pdk" style="padding:24px 20px;min-height:160px">
+      <div id="v-idk"></div>
+      <div style="font-size:10px;font-family:monospace;color:#444;margin-top:8px">Dark Icon Mark</div>
+    </div>
+    <div class="panel pdg" style="padding:24px 20px;min-height:160px">
+      <div id="v-irev"></div>
+      <div style="font-size:10px;font-family:monospace;color:rgba(255,255,255,.3);margin-top:8px">Reversed · Forest Green</div>
+    </div>
+    <div class="panel pdk" style="padding:24px 20px;min-height:160px">
+      <div class="lh"><div id="v-igld"></div><div class="wm" style="font-size:22px;color:#D4AF37">dhara</div></div>
+      <div class="pm" style="color:#D4AF37;opacity:.4">Gold on Dark</div>
+    </div>
+  </div>
+</div>
+
+<!-- 03 Color System -->
+<div class="sec">
+  <div class="sl"><span class="sl-n">03</span><span class="sl-t">Color System</span></div>
+  <div class="g4" style="margin-bottom:14px">
+    <div><div class="sw-c" style="background:#2E7D32"></div><div class="sw-n">Earth Green</div><div class="sw-h">#2E7D32</div><div class="sw-r">Primary · Brand · CTA</div></div>
+    <div><div class="sw-c" style="background:#6D4C41"></div><div class="sw-n">Soil Brown</div><div class="sw-h">#6D4C41</div><div class="sw-r">Secondary · Warmth · Roots</div></div>
+    <div><div class="sw-c" style="background:#D4AF37"></div><div class="sw-n">Harvest Gold</div><div class="sw-h">#D4AF37</div><div class="sw-r">Accent · Token · Premium</div></div>
+    <div><div class="sw-c" style="background:#F5F0E8;border:1px solid rgba(0,0,0,.07)"></div><div class="sw-n">Field Beige</div><div class="sw-h">#F5F0E8</div><div class="sw-r">Neutral · Background</div></div>
+  </div>
+  <div style="background:#FAFAF8;border-radius:16px;border:1px solid rgba(0,0,0,.05);padding:24px 28px">
+    <div style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#9A9A7A;margin-bottom:16px">Extended Palette</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px">
+      <div><div class="strip"><div class="ss" style="background:#1B5E20"></div><div class="ss" style="background:#2E7D32"></div><div class="ss" style="background:#43A047"></div><div class="ss" style="background:#81C784"></div><div class="ss" style="background:#E8F5E9;border:.5px solid rgba(0,0,0,.07)"></div></div><div style="font-size:10px;color:#9A9A7A;text-align:center;margin-top:7px">Green Ramp</div></div>
+      <div><div class="strip"><div class="ss" style="background:#3E2723"></div><div class="ss" style="background:#4E342E"></div><div class="ss" style="background:#6D4C41"></div><div class="ss" style="background:#8D6E63"></div><div class="ss" style="background:#EFEBE9;border:.5px solid rgba(0,0,0,.07)"></div></div><div style="font-size:10px;color:#9A9A7A;text-align:center;margin-top:7px">Brown Ramp</div></div>
+      <div><div class="strip"><div class="ss" style="background:#8B6914"></div><div class="ss" style="background:#B8960C"></div><div class="ss" style="background:#D4AF37"></div><div class="ss" style="background:#F0D060"></div><div class="ss" style="background:#FFF8E1;border:.5px solid rgba(0,0,0,.07)"></div></div><div style="font-size:10px;color:#9A9A7A;text-align:center;margin-top:7px">Gold Ramp</div></div>
+      <div><div class="strip"><div class="ss" style="background:#1C1C0E"></div><div class="ss" style="background:#3A3A20"></div><div class="ss" style="background:#5C5844"></div><div class="ss" style="background:#F5F0E8;border:.5px solid rgba(0,0,0,.07)"></div><div class="ss" style="background:#FAFAF8;border:.5px solid rgba(0,0,0,.07)"></div></div><div style="font-size:10px;color:#9A9A7A;text-align:center;margin-top:7px">Neutral Ramp</div></div>
+    </div>
+    <div style="margin-top:18px;background:#1C1C0E;border-radius:12px;padding:18px 22px;display:flex;gap:20px;align-items:center;flex-wrap:wrap">
+      <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#3A3A20;margin-right:4px">Dark Mode</div>
+      <div style="display:flex;align-items:center;gap:7px"><div style="width:22px;height:22px;border-radius:5px;background:#2E7D32"></div><div style="font-size:10px;font-family:monospace;color:#5C5844">#2E7D32</div></div>
+      <div style="display:flex;align-items:center;gap:7px"><div style="width:22px;height:22px;border-radius:5px;background:#D4AF37"></div><div style="font-size:10px;font-family:monospace;color:#5C5844">#D4AF37</div></div>
+      <div style="display:flex;align-items:center;gap:7px"><div style="width:22px;height:22px;border-radius:5px;background:#fff"></div><div style="font-size:10px;font-family:monospace;color:#5C5844">#FFFFFF</div></div>
+      <div style="display:flex;align-items:center;gap:7px"><div style="width:22px;height:22px;border-radius:5px;background:#5C5844"></div><div style="font-size:10px;font-family:monospace;color:#5C5844">#5C5844</div></div>
+      <div style="display:flex;align-items:center;gap:7px"><div style="width:22px;height:22px;border-radius:5px;background:#3A3A20"></div><div style="font-size:10px;font-family:monospace;color:#5C5844">#3A3A20</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- 04 Typography -->
+<div class="sec">
+  <div class="sl"><span class="sl-n">04</span><span class="sl-t">Typography System</span></div>
+  <div class="ty-blk">
+    <div class="ty-row"><div style="font-size:46px;font-weight:600;color:#2E7D32;letter-spacing:.07em;line-height:1">dhara</div><div class="ty-meta">Poppins 600 · Wordmark / Display · 46px · letter-spacing 0.07em</div></div>
+    <div class="ty-row"><div style="font-size:28px;font-weight:600;color:#1A1A0A;line-height:1.2">Sustainable Land Finance</div><div class="ty-meta">Poppins 600 · Hero Heading H1 · 28px</div></div>
+    <div class="ty-row"><div style="font-size:20px;font-weight:500;color:#1A1A0A;line-height:1.3">Carbon Credits & Asset Tokenization</div><div class="ty-meta">Poppins 500 · Section Heading H2 · 20px</div></div>
+    <div class="ty-row"><div style="font-size:16px;font-weight:400;color:#1A1A0A">Land Asset Management Platform</div><div class="ty-meta">Poppins 400 · Subheading H3 · 16px</div></div>
+    <div class="ty-row"><div style="font-size:15px;font-weight:400;color:#5C5844;line-height:1.75;max-width:560px">Dhara connects land stewards, farmers, and global investors through blockchain-verified carbon credits and sustainable asset management. Built for India, designed for the world.</div><div class="ty-meta">Poppins 400 · Body Text · 15px · line-height 1.75</div></div>
+    <div class="ty-row" style="display:flex;gap:40px;flex-wrap:wrap;align-items:flex-start">
+      <div><div style="font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#6D4C41">Carbon Credits</div><div class="ty-meta">700 · Uppercase Label · 11px</div></div>
+      <div><div style="font-size:13px;font-weight:400;color:#9A9A7A">0 1 2 3 4 5 6 7 8 9 · ₹ $ €</div><div class="ty-meta">400 · Numerals · 13px</div></div>
+      <div><div style="font-size:13px;font-weight:500;color:#2E7D32">→ Start Investing →</div><div class="ty-meta">500 · CTA / Link · 13px</div></div>
+    </div>
+  </div>
+  <div style="margin-top:12px;background:#1C1C0E;border-radius:16px;padding:24px 32px;display:flex;gap:32px;align-items:baseline;flex-wrap:wrap">
+    <div><div style="font-size:36px;font-weight:600;color:#2E7D32;line-height:1">Aa</div><div style="font-size:9px;font-family:monospace;color:#3A3A20;margin-top:6px">H1·36·600</div></div>
+    <div><div style="font-size:24px;font-weight:600;color:#fff;line-height:1">Aa</div><div style="font-size:9px;font-family:monospace;color:#3A3A20;margin-top:6px">H2·24·600</div></div>
+    <div><div style="font-size:18px;font-weight:500;color:#fff;line-height:1">Aa</div><div style="font-size:9px;font-family:monospace;color:#3A3A20;margin-top:6px">H3·18·500</div></div>
+    <div><div style="font-size:15px;font-weight:400;color:#9A9A7A;line-height:1">Aa</div><div style="font-size:9px;font-family:monospace;color:#3A3A20;margin-top:6px">Body·15·400</div></div>
+    <div><div style="font-size:12px;font-weight:400;color:#5C5844;line-height:1">Aa</div><div style="font-size:9px;font-family:monospace;color:#3A3A20;margin-top:6px">Caption·12·400</div></div>
+    <div><div style="font-size:10px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#D4AF37;line-height:1">Label</div><div style="font-size:9px;font-family:monospace;color:#3A3A20;margin-top:6px">Label·10·700·UC</div></div>
+  </div>
+</div>
+
+<!-- 05 Icon Sizes -->
+<div class="sec">
+  <div class="sl"><span class="sl-n">05</span><span class="sl-t">Icon Sizes & Favicon</span></div>
+  <div class="shelf">
+    <div class="ii"><div id="s-16"></div><div class="il">16px · Favicon</div></div>
+    <div class="ii"><div id="s-24"></div><div class="il">24px</div></div>
+    <div class="ii"><div id="s-32"></div><div class="il">32px</div></div>
+    <div class="ii"><div id="s-48"></div><div class="il">48px</div></div>
+    <div class="ii"><div id="s-64"></div><div class="il">64px</div></div>
+    <div class="ii"><div class="ai" style="width:96px;height:96px" id="ai-96"></div><div class="il">96px · App Icon</div></div>
+    <div class="ii"><div class="ai" style="width:120px;height:120px" id="ai-120"></div><div class="il">120px · App Store</div></div>
+  </div>
+  <div class="shelf shelf-dk" style="margin-top:10px">
+    <div class="ii"><div id="s-dk16"></div><div class="il-dk">16px · Dark</div></div>
+    <div class="ii"><div id="s-dk32"></div><div class="il-dk">32px · Dark</div></div>
+    <div class="ii"><div id="s-dk48"></div><div class="il-dk">48px · Dark</div></div>
+    <div class="ii"><div style="width:80px;height:80px;border-radius:22%;background:#242416;display:flex;align-items:center;justify-content:center" id="ai-dk80"></div><div class="il-dk">Earth Dark</div></div>
+    <div class="ii"><div style="width:80px;height:80px;border-radius:22%;background:#2E7D32;display:flex;align-items:center;justify-content:center" id="ai-gr80"></div><div class="il-dk">Earth Green</div></div>
+    <div class="ii"><div style="width:80px;height:80px;border-radius:22%;background:#1B5E20;display:flex;align-items:center;justify-content:center" id="ai-dg80"></div><div class="il-dk">Deep Forest</div></div>
+  </div>
+</div>
+
+<!-- 06 Usage Context -->
+<div class="sec">
+  <div class="sl"><span class="sl-n">06</span><span class="sl-t">Usage Context</span></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+    <div style="background:#2E7D32;border-radius:18px;padding:28px;border:1px solid rgba(0,0,0,.1)">
+      <div class="lh" style="gap:10px;margin-bottom:22px"><div id="bc-mark"></div><div class="wm" style="font-size:18px;color:#fff">dhara</div></div>
+      <div style="font-size:14px;font-weight:600;color:#fff;line-height:1.3">Priya Sharma</div>
+      <div style="font-size:11px;color:rgba(255,255,255,.55);margin-top:2px">Head of Carbon Markets</div>
+      <div style="margin-top:18px;border-top:.5px solid rgba(255,255,255,.15);padding-top:14px">
+        <div style="font-size:10px;color:rgba(255,255,255,.42);margin-bottom:3px">priya@dharaprotocol.io</div>
+        <div style="font-size:10px;color:#D4AF37">dharaprotocol.io</div>
+      </div>
+    </div>
+    <div style="background:#FAFAF8;border-radius:18px;padding:22px;border:1px solid rgba(0,0,0,.05)">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px"><div id="ui-mark"></div><div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#9A9A7A">Portfolio</div></div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#6D4C41;margin-bottom:8px">Carbon Credits</div>
+      <div style="font-size:28px;font-weight:600;color:#2E7D32;line-height:1">₹ 84,200</div>
+      <div style="font-size:12px;color:#43A047;margin-top:5px;font-weight:500">↑ +12.4% this quarter</div>
+      <div style="height:.5px;background:rgba(0,0,0,.07);margin:16px 0"></div>
+      <div style="display:flex;justify-content:space-between">
+        <div><div style="font-size:10px;color:#9A9A7A;margin-bottom:3px">DHR Balance</div><div style="font-size:15px;font-weight:600;color:#D4AF37">1,240 DHR</div></div>
+        <div style="text-align:right"><div style="font-size:10px;color:#9A9A7A;margin-bottom:3px">Land Area</div><div style="font-size:15px;font-weight:600;color:#1A1A0A">4.2 ha</div></div>
+      </div>
+    </div>
+    <div style="background:#1C1C0E;border-radius:18px;padding:22px;border:1px solid rgba(255,255,255,.03)">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px">
+        <div><div style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#3A3A20;margin-bottom:2px">DHR Token</div><div style="font-size:10px;color:#5C5844">Polygon Mainnet</div></div>
+        <div id="tkn-coin"></div>
+      </div>
+      <div style="font-size:26px;font-weight:600;color:#D4AF37;line-height:1">$0.84</div>
+      <div style="font-size:12px;color:#43A047;margin-top:5px;font-weight:500">+5.2% · ₹69.72</div>
+      <div style="margin-top:18px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+        <div style="background:#242416;border-radius:10px;padding:12px"><div style="font-size:10px;color:#5C5844;margin-bottom:4px">Supply</div><div style="font-size:13px;font-weight:600;color:#fff">100M DHR</div></div>
+        <div style="background:#242416;border-radius:10px;padding:12px"><div style="font-size:10px;color:#5C5844;margin-bottom:4px">Network</div><div style="font-size:13px;font-weight:600;color:#2E7D32">Polygon</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 07 Brand Guidelines -->
+<div class="sec">
+  <div class="sl"><span class="sl-n">07</span><span class="sl-t">Brand Guidelines</span></div>
+  <div class="g2" style="margin-bottom:12px">
+    <div class="guide-do">
+      <div style="font-size:10px;font-weight:700;color:#2E7D32;letter-spacing:.12em;text-transform:uppercase;margin-bottom:16px">✓ Do</div>
+      <div class="gi"><span style="color:#2E7D32;font-weight:700;flex-shrink:0">→</span>Use the mark on clean, uncluttered backgrounds only</div>
+      <div class="gi"><span style="color:#2E7D32;font-weight:700;flex-shrink:0">→</span>Maintain clearspace equal to the gold seed dot's diameter</div>
+      <div class="gi"><span style="color:#2E7D32;font-weight:700;flex-shrink:0">→</span>Scale the logo proportionally at all times</div>
+      <div class="gi"><span style="color:#2E7D32;font-weight:700;flex-shrink:0">→</span>Use only approved color combinations from this brand kit</div>
+      <div class="gi"><span style="color:#2E7D32;font-weight:700;flex-shrink:0">→</span>Always pair the mark with Poppins typeface</div>
+    </div>
+    <div class="guide-dont">
+      <div style="font-size:10px;font-weight:700;color:#C62828;letter-spacing:.12em;text-transform:uppercase;margin-bottom:16px">✕ Don't</div>
+      <div class="gi"><span style="color:#C62828;font-weight:700;flex-shrink:0">→</span>Distort, stretch, rotate, or crop the logo mark</div>
+      <div class="gi"><span style="color:#C62828;font-weight:700;flex-shrink:0">→</span>Change the wordmark font, weight, or letter-spacing</div>
+      <div class="gi"><span style="color:#C62828;font-weight:700;flex-shrink:0">→</span>Apply drop shadows, gradients, or complex effects</div>
+      <div class="gi"><span style="color:#C62828;font-weight:700;flex-shrink:0">→</span>Place the logo on low-contrast or patterned backgrounds</div>
+      <div class="gi"><span style="color:#C62828;font-weight:700;flex-shrink:0">→</span>Use unauthorized colors or introduce new brand colors</div>
+    </div>
+  </div>
+  <div style="background:#1C1C0E;border-radius:16px;padding:28px 32px">
+    <div style="font-size:10px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:#3A3A20;margin-bottom:22px">Brand Voice & Personality</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px">
+      <div style="text-align:center"><div style="font-size:14px;font-weight:600;color:#2E7D32;margin-bottom:7px">Grounded</div><div style="font-size:11px;color:#5C5844;line-height:1.55">Connected to earth and real-world impact</div></div>
+      <div style="text-align:center"><div style="font-size:14px;font-weight:600;color:#D4AF37;margin-bottom:7px">Trustworthy</div><div style="font-size:11px;color:#5C5844;line-height:1.55">Blockchain transparency and verifiable data</div></div>
+      <div style="text-align:center"><div style="font-size:14px;font-weight:600;color:#81C784;margin-bottom:7px">Progressive</div><div style="font-size:11px;color:#5C5844;line-height:1.55">Web3 innovation meets traditional roots</div></div>
+      <div style="text-align:center"><div style="font-size:14px;font-weight:600;color:#BCAAA4;margin-bottom:7px">Global</div><div style="font-size:11px;color:#5C5844;line-height:1.55">Indian roots, universal scalability and reach</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  <strong>Dhara</strong> · Brand Identity System v1.0 · Confidential · © 2026 Smart Genesis<br>
+  Designed by <a href="https://smartgenesis.io" target="_blank" style="color:#2E7D32;font-weight:500;text-decoration:none">Smart Genesis</a> · Developed by Smart Genesis
+  <span style="font-size:10px;color:#9A9A7A;margin-top:5px;display:block">Primary: #2E7D32 · Secondary: #6D4C41 · Accent: #D4AF37 · Typeface: Poppins 400/500/600</span>
+</div>
+
+</div>
+<script>
+var cid=0;
+function mark(sz,o){
+  o=o||{};
+  var ring=o.ring!==undefined?o.ring:'#2E7D32';
+  var leaf=o.leaf!==undefined?o.leaf:'#2E7D32';
+  var vein=o.vein!==undefined?o.vein:'rgba(255,255,255,0.35)';
+  var s1=o.s1!==undefined?o.s1:'#43A047';
+  var s2=o.s2!==undefined?o.s2:'#795548';
+  var s3=o.s3!==undefined?o.s3:'#4E342E';
+  var seed=o.seed!==undefined?o.seed:'#D4AF37';
+  var si=o.si!==undefined?o.si:'#F5D040';
+  var sw=sz<24?6:sz<40?5:sz<64?4:3;
+  var showV=sz>=32;
+  var showS=!o.noSoil&&sz>=20;
+  var sR=sz<24?7:sz<40?6:5;
+  var s='<svg viewBox="0 0 100 100" style="width:'+sz+'px;height:'+sz+'px;flex-shrink:0;display:block" xmlns="http://www.w3.org/2000/svg">';
+  if(!o.noRing) s+='<circle cx="50" cy="50" r="44" fill="none" stroke="'+ring+'" stroke-width="'+sw+'"/>';
+  if(showS){
+    s+='<line x1="14" y1="68" x2="86" y2="68" stroke="'+s1+'" stroke-width="'+sw+'" stroke-linecap="round"/>';
+    s+='<line x1="20" y1="76" x2="80" y2="76" stroke="'+s2+'" stroke-width="'+sw+'" stroke-linecap="round"/>';
+    s+='<line x1="26" y1="83" x2="74" y2="83" stroke="'+s3+'" stroke-width="'+sw+'" stroke-linecap="round"/>';
+  }
+  s+='<path d="M 50,17 C 74,31 74,59 50,67 C 26,59 26,31 50,17 Z" fill="'+leaf+'"/>';
+  if(showV){
+    s+='<line x1="50" y1="21" x2="50" y2="64" stroke="'+vein+'" stroke-width="1.2"/>';
+    s+='<line x1="50" y1="37" x2="61" y2="45" stroke="'+vein+'" stroke-width="0.8"/>';
+    s+='<line x1="50" y1="37" x2="39" y2="45" stroke="'+vein+'" stroke-width="0.8"/>';
+  }
+  s+='<circle cx="50" cy="17" r="'+sR+'" fill="'+seed+'"/>';
+  if(sz>=20) s+='<circle cx="50" cy="17" r="'+(sR*0.5)+'" fill="'+si+'"/>';
+  s+='</svg>';
+  return s;
+}
+function coin(sz){
+  cid++;
+  var id=cid,r=sz/2,cx=r,cy=r,iR=r*0.77;
+  var ls=(iR*1.55)/50,tx=cx-50*ls,ty=cy-42*ls;
+  var tipY=ty+17*ls,sR=sz/22;
+  var s='<svg viewBox="0 0 '+sz+' '+sz+'" style="width:'+sz+'px;height:'+sz+'px;flex-shrink:0;display:block" xmlns="http://www.w3.org/2000/svg">';
+  s+='<defs><clipPath id="cc'+id+'"><circle cx="'+cx+'" cy="'+cy+'" r="'+(iR-0.5)+'"/></clipPath></defs>';
+  s+='<circle cx="'+cx+'" cy="'+cy+'" r="'+(r*0.97)+'" fill="#D4AF37"/>';
+  s+='<circle cx="'+cx+'" cy="'+cy+'" r="'+(r*0.90)+'" fill="#9A7B0A"/>';
+  s+='<circle cx="'+cx+'" cy="'+cy+'" r="'+(r*0.83)+'" fill="#D4AF37"/>';
+  s+='<circle cx="'+cx+'" cy="'+cy+'" r="'+iR+'" fill="#1B5E20"/>';
+  s+='<g clip-path="url(#cc'+id+')">';
+  s+='<g transform="translate('+tx+','+ty+') scale('+ls+')">';
+  s+='<path d="M 50,17 C 74,31 74,59 50,67 C 26,59 26,31 50,17 Z" fill="rgba(255,255,255,0.95)"/>';
+  if(sz>=40) s+='<line x1="50" y1="22" x2="50" y2="64" stroke="rgba(27,94,32,0.25)" stroke-width="'+(1.5/ls)+'"/>';
+  s+='</g></g>';
+  s+='<circle cx="'+cx+'" cy="'+tipY+'" r="'+sR+'" fill="#D4AF37"/>';
+  s+='<circle cx="'+cx+'" cy="'+tipY+'" r="'+(sR*0.5)+'" fill="#F5D040"/>';
+  if(sz>=80){
+    var dhrY=ty+67*ls+sz*0.09;
+    s+='<text x="'+cx+'" y="'+dhrY+'" text-anchor="middle" font-size="'+(sz/11)+'" fill="rgba(212,175,55,0.65)" font-family="Poppins,sans-serif" font-weight="700" letter-spacing="'+(sz/28)+'">DHR</text>';
+  }
+  s+='</svg>';
+  return s;
+}
+var G={ring:'#2E7D32',leaf:'#2E7D32',vein:'rgba(255,255,255,0.35)',s1:'#43A047',s2:'#795548',s3:'#4E342E',seed:'#D4AF37',si:'#F5D040'};
+var W={ring:'rgba(255,255,255,0.72)',leaf:'rgba(255,255,255,0.92)',vein:'rgba(27,94,32,0.28)',s1:'rgba(255,255,255,0.55)',s2:'rgba(255,255,255,0.36)',s3:'rgba(255,255,255,0.2)',seed:'#D4AF37',si:'#F5D040'};
+var B={ring:'rgba(245,240,232,0.72)',leaf:'rgba(245,240,232,0.92)',vein:'rgba(27,94,32,0.32)',s1:'rgba(245,240,232,0.58)',s2:'rgba(245,240,232,0.38)',s3:'rgba(245,240,232,0.22)',seed:'#D4AF37',si:'#F5D040'};
+var GL={ring:'#D4AF37',leaf:'#D4AF37',vein:'rgba(139,105,20,0.38)',s1:'rgba(212,175,55,0.7)',s2:'rgba(212,175,55,0.5)',s3:'rgba(212,175,55,0.32)',seed:'#8B6914',si:'#D4AF37'};
+var WA={ring:'rgba(255,255,255,0.45)',leaf:'#fff',vein:'rgba(27,94,32,0.28)',s1:'rgba(255,255,255,0.5)',s2:'rgba(255,255,255,0.34)',s3:'rgba(255,255,255,0.18)',seed:'#D4AF37',si:'#F5D040'};
+function set(id,html){var el=document.getElementById(id);if(el)el.innerHTML=html;}
+set('h-mark',mark(36,G));
+set('logo-lgt',mark(72,G));set('logo-drk',mark(72,W));set('logo-grn',mark(72,B));set('logo-gld',mark(72,GL));
+set('v-icon',mark(96,G));set('v-coin',coin(120));set('v-stack',mark(56,G));
+set('v-idk',mark(72,W));set('v-irev',mark(72,B));set('v-igld',mark(44,GL));
+set('s-16',mark(16,G));set('s-24',mark(24,G));set('s-32',mark(32,G));set('s-48',mark(48,G));set('s-64',mark(64,G));
+var a96=document.getElementById('ai-96');if(a96)a96.innerHTML=mark(76,WA);
+var a120=document.getElementById('ai-120');if(a120)a120.innerHTML=mark(96,WA);
+set('s-dk16',mark(16,W));set('s-dk32',mark(32,W));set('s-dk48',mark(48,W));
+var dk80=document.getElementById('ai-dk80');if(dk80)dk80.innerHTML=mark(62,WA);
+var gr80=document.getElementById('ai-gr80');if(gr80)gr80.innerHTML=mark(62,WA);
+var dg80=document.getElementById('ai-dg80');if(dg80)dg80.innerHTML=mark(62,WA);
+set('bc-mark',mark(28,B));set('ui-mark',mark(26,G));set('tkn-coin',coin(44));
+</script>
+<script>
+// Intro overlay wiring (renders logo using existing mark())
+(function(){
+  var ov=document.getElementById('intro-dhara');
+  if(!ov) return;
+  var skip=document.getElementById('intro-dhara-skip');
+  var slot=document.getElementById('intro-mark');
+  // Render high-contrast mark for dark backdrop
+  try{ if(slot && typeof mark==='function'){ slot.innerHTML=mark(88,{ring:'rgba(255,255,255,0.72)',leaf:'rgba(255,255,255,0.92)',vein:'rgba(27,94,32,0.28)',s1:'rgba(255,255,255,0.55)',s2:'rgba(255,255,255,0.36)',s3:'rgba(255,255,255,0.2)',seed:'#D4AF37',si:'#F5D040'}); } }catch(e){}
+  function close(){ if(!ov) return; ov.classList.add('out'); setTimeout(function(){ if(ov&&ov.parentNode) ov.parentNode.removeChild(ov); ov=null; }, 650); }
+  if(skip) skip.addEventListener('click',close);
+  var reduced=false; try{ reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){}
+  setTimeout(close, reduced?60:2400);
+})();
+</script>
+</body>
+</html>

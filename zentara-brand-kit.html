@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zentara — Brand Identity System</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green:    #0B6E4F;
+  --teal:     #4DB6AC;
+  --lime:     #A7E245;
+  --charcoal: #2D3330;
+  --offwhite: #F4F7F3;
+  --white:    #FFFFFF;
+  --green-xl: #EAF5EF;
+  --green-md: #C3E6D4;
+  --dark-bg:  #1A2820;
+  --muted:    #6B7B74;
+  --border:   rgba(11,110,79,0.12);
+}
+
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+
+body {
+  font-family:'Poppins',sans-serif;
+  background:var(--offwhite);
+  color:var(--charcoal);
+  line-height:1.6;
+  overflow-x:hidden;
+}
+
+body.is-intro-playing{overflow:hidden}
+
+/* ── INTRO SPLASH ── */
+.brand-intro {
+  position:fixed;inset:0;z-index:240;
+  display:flex;align-items:center;justify-content:center;
+  background:
+    radial-gradient(circle at 24% 22%,rgba(167,226,69,0.18) 0%,transparent 28%),
+    radial-gradient(circle at 76% 30%,rgba(77,182,172,0.22) 0%,transparent 30%),
+    linear-gradient(145deg,#08130E 0%,#102219 48%,#173526 100%);
+  transition:opacity 0.85s ease,visibility 0.85s ease,transform 0.85s ease;
+}
+.brand-intro::before {
+  content:'';
+  position:absolute;inset:0;
+  background:
+    linear-gradient(rgba(255,255,255,0.035) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,0.03) 1px,transparent 1px);
+  background-size:120px 120px;
+  -webkit-mask-image:radial-gradient(circle at center,black 38%,transparent 82%);
+  mask-image:radial-gradient(circle at center,black 38%,transparent 82%);
+  opacity:0.5;
+}
+body.intro-complete .brand-intro {
+  opacity:0;visibility:hidden;pointer-events:none;transform:scale(1.03);
+}
+.brand-intro-core {
+  position:relative;
+  width:min(82vw,420px);
+  aspect-ratio:1;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+}
+.intro-halo {
+  position:absolute;
+  width:84%;
+  aspect-ratio:1;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(77,182,172,0.2) 0%,rgba(77,182,172,0.12) 28%,rgba(167,226,69,0.05) 56%,transparent 72%);
+  filter:blur(6px);
+  animation:introHaloPulse 3s ease-out both;
+}
+.intro-logo {
+  width:min(48vw,220px);
+  height:auto;
+  position:relative;
+  z-index:1;
+  filter:drop-shadow(0 14px 40px rgba(77,182,172,0.28));
+}
+.intro-orbit,
+.intro-core-shell,
+.intro-core,
+.intro-petal {transform-box:view-box;transform-origin:center}
+.intro-orbit {
+  opacity:0;
+  stroke-dasharray:278;
+  stroke-dashoffset:278;
+  animation:introOrbit 1.6s cubic-bezier(0.25,1,0.3,1) 0.18s forwards;
+}
+.intro-petal {opacity:0}
+.intro-petal-1 {animation:introPetalOne 1.55s cubic-bezier(0.2,0.95,0.22,1) 0.3s forwards}
+.intro-petal-2 {animation:introPetalTwo 1.55s cubic-bezier(0.2,0.95,0.22,1) 0.48s forwards}
+.intro-petal-3 {animation:introPetalThree 1.55s cubic-bezier(0.2,0.95,0.22,1) 0.66s forwards}
+.intro-core-shell {
+  opacity:0;
+  animation:introCoreShell 0.7s ease-out 1.35s forwards;
+}
+.intro-core {
+  opacity:0;
+  animation:introCore 0.8s cubic-bezier(0.22,1,0.36,1) 1.5s forwards;
+}
+.intro-wordmark {
+  margin-top:28px;
+  padding-left:0.34em;
+  font-size:32px;
+  font-weight:700;
+  letter-spacing:0.34em;
+  text-transform:uppercase;
+  color:white;
+  opacity:0;
+  animation:introWordReveal 0.8s ease-out 1.7s forwards;
+}
+.intro-wordmark span{color:var(--teal)}
+.intro-caption {
+  margin-top:12px;
+  font-size:12px;
+  font-weight:500;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  text-align: center;
+  color:rgba(255,255,255,0.58);
+  opacity:0;
+  animation:introWordReveal 0.85s ease-out 1.95s forwards;
+}
+.intro-skip {
+  position:absolute;top:28px;right:28px;
+  border:1px solid rgba(255,255,255,0.14);
+  background:rgba(255,255,255,0.04);
+  color:rgba(255,255,255,0.68);
+  border-radius:999px;
+  padding:9px 14px;
+  font:600 11px/1 'Poppins',sans-serif;
+  letter-spacing:0.12em;
+  text-transform:uppercase;
+  cursor:pointer;
+}
+.intro-skip:hover{background:rgba(255,255,255,0.08);color:white}
+
+/* ── UTILITIES ── */
+.label {
+  font-size:10px;font-weight:600;letter-spacing:3px;
+  text-transform:uppercase;color:var(--green);margin-bottom:6px;
+}
+.sec {padding:72px 60px;border-bottom:1px solid var(--border)}
+.sec-title {font-size:22px;font-weight:600;color:var(--charcoal);margin-bottom:8px}
+.sec-sub {font-size:14px;color:var(--muted);margin-bottom:40px;font-weight:400}
+
+/* ── NAV ── */
+nav {
+  background:var(--charcoal);
+  padding:18px 60px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:100;
+}
+.nav-brand {display:flex;align-items:center;gap:12px}
+.nav-wordmark {
+  font-size:15px;font-weight:700;color:white;
+  letter-spacing:0.2em;text-transform:uppercase;
+}
+.nav-tag {
+  font-size:11px;color:rgba(255,255,255,0.45);
+  font-weight:400;letter-spacing:0.05em;
+}
+
+/* ── HERO ── */
+.hero {
+  background:var(--dark-bg);
+  padding:80px 60px 90px;
+  text-align:center;
+  position:relative;overflow:hidden;
+}
+.hero::before {
+  content:'';
+  position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse 60% 50% at 30% 50%,rgba(11,110,79,0.18) 0%,transparent 70%),
+    radial-gradient(ellipse 50% 60% at 70% 50%,rgba(77,182,172,0.12) 0%,transparent 70%);
+}
+.hero-inner{position:relative;z-index:1}
+.hero-tagline {
+  margin-top:32px;
+  font-size:32px;font-weight:700;
+  color:white;letter-spacing:-0.01em;line-height:1.2;
+}
+.hero-sub {
+  margin-top:12px;font-size:15px;
+  color:rgba(255,255,255,0.5);font-weight:400;letter-spacing:0.02em;
+}
+.hero-badges {
+  display:flex;gap:10px;justify-content:center;margin-top:28px;
+  flex-wrap:wrap;
+}
+.hero-entrance{will-change:transform,opacity}
+body.is-intro-playing .hero-entrance {
+  opacity:0;
+  transform:translateY(24px) scale(0.98);
+}
+body.intro-complete .hero-entrance {
+  animation:heroReveal 0.9s cubic-bezier(0.22,1,0.36,1) both;
+}
+body.intro-complete .hero-entrance.delay-1{animation-delay:0.08s}
+body.intro-complete .hero-entrance.delay-2{animation-delay:0.16s}
+body.intro-complete .hero-entrance.delay-3{animation-delay:0.24s}
+body.intro-complete .hero-entrance.delay-4{animation-delay:0.32s}
+.badge {
+  font-size:11px;font-weight:500;letter-spacing:0.08em;
+  padding:6px 14px;border-radius:100px;text-transform:uppercase;
+  border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.6);
+}
+
+/* ── LOGO GRID ── */
+.logo-grid {
+  display:grid;grid-template-columns:1fr 1fr;gap:16px;
+}
+.logo-grid-3 {
+  display:grid;grid-template-columns:repeat(3,1fr);gap:16px;
+}
+.logo-card {
+  border-radius:12px;
+  padding:40px 32px;
+  display:flex;flex-direction:column;align-items:center;gap:16px;
+  border:1px solid var(--border);
+}
+.logo-card.light{background:var(--white)}
+.logo-card.soft{background:var(--green-xl)}
+.logo-card.dark{background:var(--dark-bg)}
+.logo-card.charcoal{background:var(--charcoal)}
+.logo-card.green{background:var(--green)}
+.logo-card .card-label {
+  font-size:10px;font-weight:500;letter-spacing:0.12em;
+  text-transform:uppercase;color:var(--muted);margin-top:4px;
+}
+.logo-card.dark .card-label,
+.logo-card.charcoal .card-label,
+.logo-card.green .card-label {color:rgba(255,255,255,0.4)}
+
+/* ── COLOR PALETTE ── */
+.palette-grid {
+  display:grid;grid-template-columns:repeat(5,1fr);gap:0;
+  border-radius:12px;overflow:hidden;
+  border:1px solid var(--border);
+}
+.swatch-col {display:flex;flex-direction:column}
+.swatch {height:100px;transition:filter 0.2s}
+.swatch-info {
+  padding:14px;background:white;border-top:1px solid var(--border);
+  flex:1;
+}
+.swatch-name {font-size:12px;font-weight:600;color:var(--charcoal);margin-bottom:2px}
+.swatch-hex {font-size:11px;color:var(--muted);font-weight:400;font-family:monospace}
+.swatch-role {
+  font-size:9px;font-weight:600;letter-spacing:0.1em;
+  text-transform:uppercase;color:var(--green);margin-bottom:6px;
+}
+
+.palette-tints {
+  margin-top:24px;
+  display:flex;gap:6px;
+}
+.tint-swatch {
+  flex:1;height:32px;border-radius:6px;
+}
+
+/* ── TYPOGRAPHY ── */
+.type-hero {
+  font-size:64px;font-weight:800;
+  background:linear-gradient(135deg,var(--green) 0%,var(--teal) 50%,var(--lime) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;line-height:1;letter-spacing:-0.03em;
+}
+.type-specimens {display:flex;flex-direction:column;gap:24px;margin-top:40px}
+.type-row {
+  display:flex;align-items:baseline;gap:20px;
+  padding-bottom:24px;border-bottom:1px solid var(--border);
+}
+.type-meta {width:120px;flex-shrink:0}
+.type-meta-weight {font-size:11px;font-weight:600;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase}
+.type-meta-size {font-size:10px;color:var(--muted)}
+
+/* ── TOKEN COIN ── */
+.coin-display {
+  display:flex;gap:48px;align-items:center;flex-wrap:wrap;
+}
+.coin-info {flex:1;min-width:200px}
+.coin-info h3 {font-size:18px;font-weight:600;margin-bottom:8px}
+.coin-info p {font-size:14px;color:var(--muted);line-height:1.7}
+.coin-specs {margin-top:20px;display:flex;flex-direction:column;gap:8px}
+.coin-spec {
+  display:flex;gap:12px;align-items:center;
+  font-size:13px;color:var(--charcoal);
+}
+.coin-spec-dot {
+  width:8px;height:8px;border-radius:50%;flex-shrink:0;
+}
+
+/* ── APP ICONS ── */
+.icon-grid {
+  display:flex;gap:24px;align-items:flex-end;flex-wrap:wrap;
+}
+.icon-item {display:flex;flex-direction:column;align-items:center;gap:10px}
+.icon-label {font-size:11px;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:0.08em}
+
+/* ── BRAND VALUES ── */
+.values-grid {display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.value-card {
+  padding:32px 28px;border-radius:12px;
+  border:1px solid var(--border);background:white;
+}
+.value-icon {
+  width:44px;height:44px;border-radius:10px;
+  background:var(--green-xl);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:16px;
+}
+.value-title {font-size:16px;font-weight:600;margin-bottom:8px}
+.value-text {font-size:13px;color:var(--muted);line-height:1.7}
+
+/* ── GRADIENT SUGGESTION ── */
+.gradient-strip {
+  height:80px;border-radius:12px;
+  background:linear-gradient(90deg,var(--green) 0%,var(--teal) 40%,var(--lime) 100%);
+  margin-bottom:12px;
+}
+.gradient-alt {
+  height:80px;border-radius:12px;
+  background:linear-gradient(135deg,#052B1F 0%,var(--green) 35%,var(--teal) 65%,#C5F08C 100%);
+  margin-bottom:12px;
+}
+.gradient-dark {
+  height:80px;border-radius:12px;
+  background:linear-gradient(90deg,#052B1F 0%,var(--green) 100%);
+  margin-bottom:12px;
+}
+
+/* ── USAGE EXAMPLES ── */
+.usage-grid {display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.usage-card {
+  border-radius:12px;overflow:hidden;border:1px solid var(--border);
+}
+.usage-header {padding:10px 16px;font-size:10px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;background:var(--offwhite);border-bottom:1px solid var(--border);color:var(--muted)}
+.usage-body {padding:32px;display:flex;align-items:center;justify-content:center;min-height:140px}
+
+/* ── FOOTER ── */
+footer {
+  background:var(--charcoal);padding:32px 60px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.footer-note {font-size:12px;color:rgba(255,255,255,0.35)}
+.footer-version {
+  font-size:11px;color:rgba(255,255,255,0.25);
+  letter-spacing:0.08em;font-family:monospace;
+}
+
+/* ── DIVIDER ── */
+.rule {border:none;border-top:1px solid var(--border);margin:32px 0}
+
+@keyframes gradFlow {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+@keyframes introHaloPulse {
+  0%{opacity:0;transform:scale(0.45)}
+  35%{opacity:0.95}
+  100%{opacity:0.82;transform:scale(1.12)}
+}
+@keyframes introOrbit {
+  0%{opacity:0;stroke-dashoffset:278;transform:scale(0.82)}
+  100%{opacity:1;stroke-dashoffset:0;transform:scale(1)}
+}
+@keyframes introPetalOne {
+  0%{opacity:0;transform:translate(-14px,-48px) rotate(-46deg) scale(0.18)}
+  55%{opacity:1}
+  100%{opacity:0.95;transform:translate(0,0) rotate(0deg) scale(1)}
+}
+@keyframes introPetalTwo {
+  0%{opacity:0;transform:translate(56px,-2px) rotate(196deg) scale(0.18)}
+  55%{opacity:1}
+  100%{opacity:0.95;transform:translate(0,0) rotate(120deg) scale(1)}
+}
+@keyframes introPetalThree {
+  0%{opacity:0;transform:translate(-52px,10px) rotate(76deg) scale(0.18)}
+  55%{opacity:1}
+  100%{opacity:0.95;transform:translate(0,0) rotate(240deg) scale(1)}
+}
+@keyframes introCoreShell {
+  0%{opacity:0;transform:scale(0.4)}
+  100%{opacity:1;transform:scale(1)}
+}
+@keyframes introCore {
+  0%{opacity:0;transform:scale(0.12)}
+  65%{opacity:1}
+  100%{opacity:1;transform:scale(1)}
+}
+@keyframes introWordReveal {
+  0%{opacity:0;transform:translateY(16px)}
+  100%{opacity:1;transform:translateY(0)}
+}
+@keyframes heroReveal {
+  0%{opacity:0;transform:translateY(26px) scale(0.98)}
+  100%{opacity:1;transform:translateY(0) scale(1)}
+}
+.gradient-animated {
+  height:80px;border-radius:12px;
+  background:linear-gradient(90deg,var(--green),var(--teal),var(--lime),var(--teal),var(--green));
+  background-size:300% 100%;
+  animation:gradFlow 4s ease infinite;
+  margin-bottom:12px;
+}
+.gradient-note {font-size:12px;color:var(--muted)}
+
+@media (max-width:720px) {
+  .brand-intro-core {width:min(88vw,340px)}
+  .intro-logo {width:min(56vw,180px)}
+  .intro-wordmark {font-size:24px;letter-spacing:0.28em}
+  .intro-caption {font-size:11px;letter-spacing:0.12em;text-align:center;padding:0 12px}
+  .intro-skip {top:18px;right:18px}
+}
+
+@media (prefers-reduced-motion:reduce) {
+  body.is-intro-playing{overflow:auto}
+  .brand-intro {opacity:0;visibility:hidden;pointer-events:none;transform:none}
+  .brand-intro::before,
+  .intro-halo,
+  .intro-logo *,
+  .hero-entrance {animation:none !important;transition:none !important}
+  .hero-entrance {opacity:1 !important;transform:none !important}
+}
+</style>
+</head>
+<body class="is-intro-playing">
+
+<noscript>
+  <style>
+    body.is-intro-playing{overflow:auto}
+    .brand-intro{display:none !important}
+    .hero-entrance{opacity:1 !important;transform:none !important}
+  </style>
+</noscript>
+
+<div class="brand-intro">
+  <button class="intro-skip" type="button">Skip intro</button>
+  <div class="brand-intro-core">
+    <div class="intro-halo"></div>
+    <svg class="intro-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <linearGradient id="ig1" x1="50" y1="50" x2="50" y2="14" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#0B6E4F"/>
+          <stop offset="100%" stop-color="#4DB6AC"/>
+        </linearGradient>
+        <linearGradient id="ig2" x1="50" y1="50" x2="82" y2="69" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#4DB6AC"/>
+          <stop offset="100%" stop-color="#A7E245"/>
+        </linearGradient>
+        <linearGradient id="ig3" x1="50" y1="50" x2="18" y2="69" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#A7E245"/>
+          <stop offset="100%" stop-color="#0B6E4F"/>
+        </linearGradient>
+      </defs>
+      <circle class="intro-orbit" cx="50" cy="50" r="44" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="0.8"/>
+      <path class="intro-petal intro-petal-1" d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#ig1)"/>
+      <path class="intro-petal intro-petal-2" d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#ig2)"/>
+      <path class="intro-petal intro-petal-3" d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#ig3)"/>
+      <circle class="intro-core-shell" cx="50" cy="50" r="7" fill="#1A2820"/>
+      <circle class="intro-core" cx="50" cy="50" r="3.5" fill="#4DB6AC"/>
+    </svg>
+    <div class="intro-wordmark">Z<span>E</span>NT<span>A</span>RA</div>
+    <div class="intro-caption">Nature enters first, then the ecosystem comes alive</div>
+  </div>
+</div>
+
+<!-- ─── NAV ─── -->
+<nav>
+  <div class="nav-brand">
+    <svg width="28" height="28" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="ng1" x1="50" y1="50" x2="50" y2="14" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#0B6E4F"/>
+          <stop offset="100%" stop-color="#4DB6AC"/>
+        </linearGradient>
+        <linearGradient id="ng2" x1="50" y1="50" x2="82" y2="69" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#4DB6AC"/>
+          <stop offset="100%" stop-color="#A7E245"/>
+        </linearGradient>
+        <linearGradient id="ng3" x1="50" y1="50" x2="18" y2="69" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#A7E245"/>
+          <stop offset="100%" stop-color="#0B6E4F"/>
+        </linearGradient>
+      </defs>
+      <path d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#ng1)"/>
+      <path transform="rotate(120,50,50)" d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#ng2)"/>
+      <path transform="rotate(240,50,50)" d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#ng3)"/>
+      <circle cx="50" cy="50" r="6" fill="white"/>
+    </svg>
+    <span class="nav-wordmark">Zentara</span>
+  </div>
+  <span class="nav-tag">Designed by Smart Genesis · v1.0</span>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+  <div class="hero-inner">
+    <!-- Main Logo SVG — large -->
+    <svg class="hero-entrance delay-0" width="120" height="120" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 8px 32px rgba(77,182,172,0.25))">
+      <defs>
+        <linearGradient id="hg1" x1="50" y1="50" x2="50" y2="14" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#0B6E4F"/>
+          <stop offset="100%" stop-color="#4DB6AC"/>
+        </linearGradient>
+        <linearGradient id="hg2" x1="50" y1="50" x2="82" y2="69" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#4DB6AC"/>
+          <stop offset="100%" stop-color="#A7E245"/>
+        </linearGradient>
+        <linearGradient id="hg3" x1="50" y1="50" x2="18" y2="69" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#A7E245"/>
+          <stop offset="100%" stop-color="#0B6E4F"/>
+        </linearGradient>
+      </defs>
+      <!-- Orbit ring -->
+      <circle cx="50" cy="50" r="44" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="0.8"/>
+      <!-- Three petals -->
+      <path d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#hg1)" opacity="0.95"/>
+      <path transform="rotate(120,50,50)" d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#hg2)" opacity="0.95"/>
+      <path transform="rotate(240,50,50)" d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#hg3)" opacity="0.95"/>
+      <!-- Center node -->
+      <circle cx="50" cy="50" r="7" fill="#1A2820"/>
+      <circle cx="50" cy="50" r="3.5" fill="#4DB6AC"/>
+    </svg>
+
+    <div class="hero-tagline hero-entrance delay-1">Harmony in the Digital Ecosystem</div>
+    <div class="hero-sub hero-entrance delay-2">Web3 · Sustainability · Green Energy · Digital Assets</div>
+
+    <!-- Wordmark display -->
+    <div class="hero-entrance delay-3" style="margin-top:40px;letter-spacing:0.28em;font-size:36px;font-weight:700;color:white;text-transform:uppercase">
+      Z<span style="color:#4DB6AC">E</span>N<span style="color:#4DB6AC">T</span>A<span style="color:#A7E245">R</span>A
+    </div>
+
+    <div class="hero-badges hero-entrance delay-4">
+      <span class="badge">ESG Native</span>
+      <span class="badge">Green Energy</span>
+      <span class="badge">Web3 Ecosystem</span>
+      <span class="badge">Carbon Neutral</span>
+    </div>
+  </div>
+</section>
+
+<!-- ─── BRAND STORY ─── -->
+<section class="sec" style="background:white">
+  <p class="label">Brand Identity</p>
+  <h2 class="sec-title">The Zentara Philosophy</h2>
+  <p class="sec-sub">Rooted in balance, built for the future</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px">
+    <div>
+      <p style="font-size:15px;line-height:1.85;color:var(--charcoal)">
+        Zentara is named from "Zen" — the state of effortless balance — and "Tara" — the earth goddess of compassion and protection. Together, they form a brand that stands at the intersection of ancient wisdom and forward-thinking technology.
+      </p>
+      <p style="font-size:15px;line-height:1.85;color:var(--charcoal);margin-top:16px">
+        The visual identity draws from ecosystem cycles: flowing, interconnected, self-sustaining. Every curve in the logo represents continuity; every gradient represents the energy spectrum of a living planet.
+      </p>
+    </div>
+    <div style="background:var(--green-xl);border-radius:12px;padding:28px;border:1px solid var(--green-md)">
+      <p style="font-size:13px;font-weight:600;color:var(--green);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:16px">Brand Pillars</p>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:6px;height:6px;background:var(--green);border-radius:50%;margin-top:6px;flex-shrink:0"></div>
+          <div><strong style="font-size:13px;font-weight:600">Harmony</strong><br><span style="font-size:13px;color:var(--muted)">Balance between digital progress and environmental stewardship</span></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:6px;height:6px;background:var(--teal);border-radius:50%;margin-top:6px;flex-shrink:0"></div>
+          <div><strong style="font-size:13px;font-weight:600">Flow</strong><br><span style="font-size:13px;color:var(--muted)">Seamless connection between energy, land, and digital assets</span></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:flex-start">
+          <div style="width:6px;height:6px;background:var(--lime);border-radius:50%;margin-top:6px;flex-shrink:0"></div>
+          <div><strong style="font-size:13px;font-weight:600">Growth</strong><br><span style="font-size:13px;color:var(--muted)">Organic, sustainable expansion — like an ecosystem, not a machine</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── LOGO SUITE ─── -->
+<section class="sec" style="background:var(--offwhite)">
+  <p class="label">Logo System</p>
+  <h2 class="sec-title">Logo Variations</h2>
+  <p class="sec-sub">Full suite for every application and context</p>
+
+  <!-- Row 1: Main horizontal logos -->
+  <div class="logo-grid" style="margin-bottom:16px">
+
+    <!-- Light bg: Symbol + Wordmark -->
+    <div class="logo-card light" style="align-items:flex-start;gap:0">
+      <div class="card-label" style="margin-bottom:24px">Primary — Light Background</div>
+      <div style="display:flex;align-items:center;gap:16px">
+        <svg width="52" height="52" viewBox="0 0 100 100">
+          <defs>
+            <linearGradient id="ll1" x1="50" y1="50" x2="50" y2="14" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#0B6E4F"/><stop offset="100%" stop-color="#4DB6AC"/></linearGradient>
+            <linearGradient id="ll2" x1="50" y1="50" x2="82" y2="69" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#4DB6AC"/><stop offset="100%" stop-color="#A7E245"/></linearGradient>
+            <linearGradient id="ll3" x1="50" y1="50" x2="18" y2="69" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#A7E245"/><stop offset="100%" stop-color="#0B6E4F"/></linearGradient>
+          </defs>
+          <path d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#ll1)"/>
+          <path transform="rotate(120,50,50)" d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#ll2)"/>
+          <path transform="rotate(240,50,50)" d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#ll3)"/>
+          <circle cx="50" cy="50" r="7" fill="white"/>
+          <circle cx="50" cy="50" r="3.5" fill="#4DB6AC"/>
+        </svg>
+        <div>
+          <div style="font-size:22px;font-weight:700;color:#0B6E4F;letter-spacing:0.18em;text-transform:uppercase;line-height:1">ZENTARA</div>
+          <div style="font-size:9px;font-weight:500;color:var(--muted);letter-spacing:0.22em;text-transform:uppercase;margin-top:3px">Web3 Ecosystem</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dark bg: Symbol + Wordmark -->
+    <div class="logo-card dark" style="align-items:flex-start;gap:0">
+      <div class="card-label" style="margin-bottom:24px">Primary — Dark Background</div>
+      <div style="display:flex;align-items:center;gap:16px">
+        <svg width="52" height="52" viewBox="0 0 100 100">
+          <defs>
+            <linearGradient id="dl1" x1="50" y1="50" x2="50" y2="14" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#0B6E4F"/><stop offset="100%" stop-color="#4DB6AC"/></linearGradient>
+            <linearGradient id="dl2" x1="50" y1="50" x2="82" y2="69" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#4DB6AC"/><stop offset="100%" stop-color="#A7E245"/></linearGradient>
+            <linearGradient id="dl3" x1="50" y1="50" x2="18" y2="69" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#A7E245"/><stop offset="100%" stop-color="#0B6E4F"/></linearGradient>
+          </defs>
+          <path d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#dl1)"/>
+          <path transform="rotate(120,50,50)" d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#dl2)"/>
+          <path transform="rotate(240,50,50)" d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#dl3)"/>
+          <circle cx="50" cy="50" r="7" fill="#1A2820"/>
+          <circle cx="50" cy="50" r="3.5" fill="#4DB6AC"/>
+        </svg>
+        <div>
+          <div style="font-size:22px;font-weight:700;color:white;letter-spacing:0.18em;text-transform:uppercase;line-height:1">ZENTARA</div>
+          <div style="font-size:9px;font-weight:500;color:rgba(255,255,255,0.35);letter-spacing:0.22em;text-transform:uppercase;margin-top:3px">Web3 Ecosystem</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Row 2: Compact + Mono -->
+  <div class="logo-grid-3" style="margin-bottom:16px">
+    <!-- Green background -->
+    <div class="logo-card green" style="min-height:160px;justify-content:center">
+      <svg width="44" height="44" viewBox="0 0 100 100">
+        <defs>
+          <linearGradient id="gl1" x1="50" y1="50" x2="50" y2="14" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="rgba(255,255,255,0.3)"/><stop offset="100%" stop-color="rgba(255,255,255,0.9)"/></linearGradient>
+          <linearGradient id="gl2" x1="50" y1="50" x2="82" y2="69" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="rgba(255,255,255,0.5)"/><stop offset="100%" stop-color="#A7E245"/></linearGradient>
+          <linearGradient id="gl3" x1="50" y1="50" x2="18" y2="69" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#A7E245"/><stop offset="100%" stop-color="rgba(255,255,255,0.3)"/></linearGradient>
+        </defs>
+        <path d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#gl1)"/>
+        <path transform="rotate(120,50,50)" d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#gl2)"/>
+        <path transform="rotate(240,50,50)" d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#gl3)"/>
+        <circle cx="50" cy="50" r="7" fill="rgba(5,43,31,0.6)"/>
+        <circle cx="50" cy="50" r="3.5" fill="white"/>
+      </svg>
+      <div style="font-size:18px;font-weight:700;color:white;letter-spacing:0.22em;text-transform:uppercase">ZENTARA</div>
+      <div class="card-label">Brand Green Background</div>
+    </div>
+
+    <!-- Monochrome dark -->
+    <div class="logo-card soft" style="min-height:160px;justify-content:center">
+      <svg width="44" height="44" viewBox="0 0 100 100">
+        <path d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="#0B6E4F"/>
+        <path transform="rotate(120,50,50)" d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="#4DB6AC"/>
+        <path transform="rotate(240,50,50)" d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="#A7E245"/>
+        <circle cx="50" cy="50" r="7" fill="#EAF5EF"/>
+        <circle cx="50" cy="50" r="3.5" fill="#0B6E4F"/>
+      </svg>
+      <div style="font-size:18px;font-weight:700;color:#0B6E4F;letter-spacing:0.22em;text-transform:uppercase">ZENTARA</div>
+      <div class="card-label">Flat Color Version</div>
+    </div>
+
+    <!-- Single color / minimal -->
+    <div class="logo-card light" style="min-height:160px;justify-content:center;border:1px solid var(--border)">
+      <svg width="44" height="44" viewBox="0 0 100 100">
+        <path d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="#2D3330"/>
+        <path transform="rotate(120,50,50)" d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="#2D3330" opacity="0.65"/>
+        <path transform="rotate(240,50,50)" d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="#2D3330" opacity="0.35"/>
+        <circle cx="50" cy="50" r="7" fill="white"/>
+        <circle cx="50" cy="50" r="3.5" fill="#2D3330"/>
+      </svg>
+      <div style="font-size:18px;font-weight:700;color:#2D3330;letter-spacing:0.22em;text-transform:uppercase">ZENTARA</div>
+      <div class="card-label">Monochrome</div>
+    </div>
+  </div>
+
+  <!-- Row 3: Icon-only circular versions -->
+  <div style="margin-top:8px">
+    <p style="font-size:12px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-bottom:16px">Circular Icon — App & Avatar Format</p>
+    <div style="display:flex;gap:16px;flex-wrap:wrap;align-items:flex-end">
+
+      <!-- Icon: dark pill -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:10px">
+        <svg width="80" height="80" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="ci1" x1="50" y1="50" x2="50" y2="14" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#0B6E4F"/><stop offset="100%" stop-color="#4DB6AC"/></linearGradient>
+            <linearGradient id="ci2" x1="50" y1="50" x2="82" y2="69" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#4DB6AC"/><stop offset="100%" stop-color="#A7E245"/></linearGradient>
+            <linearGradient id="ci3" x1="50" y1="50" x2="18" y2="69" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#A7E245"/><stop offset="100%" stop-color="#0B6E4F"/></linearGradient>
+            <clipPath id="cc1"><circle cx="50" cy="50" r="46"/></clipPath>
+          </defs>
+          <circle cx="50" cy="50" r="50" fill="#1A2820"/>
+          <g clip-path="url(#cc1)">
+            <path d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#ci1)"/>
+            <path transform="rotate(120,50,50)" d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#ci2)"/>
+            <path transform="rotate(240,50,50)" d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#ci3)"/>
+          </g>
+          <circle cx="50" cy="50" r="7" fill="#1A2820"/>
+          <circle cx="50" cy="50" r="3.5" fill="#4DB6AC"/>
+          <circle cx="50" cy="50" r="46" fill="none" stroke="rgba(77,182,172,0.2)" stroke-width="1"/>
+        </svg>
+        <span style="font-size:10px;color:var(--muted);font-weight:500">80px Dark</span>
+      </div>
+
+      <!-- Icon: green pill -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:10px">
+        <svg width="64" height="64" viewBox="0 0 100 100">
+          <defs>
+            <linearGradient id="cig1" x1="50" y1="50" x2="50" y2="14" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#0B6E4F"/><stop offset="100%" stop-color="#4DB6AC"/></linearGradient>
+            <linearGradient id="cig2" x1="50" y1="50" x2="82" y2="69" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#4DB6AC"/><stop offset="100%" stop-color="#A7E245"/></linearGradient>
+            <linearGradient id="cig3" x1="50" y1="50" x2="18" y2="69" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#A7E245"/><stop offset="100%" stop-color="#0B6E4F"/></linearGradient>
+            <clipPath id="cgc"><circle cx="50" cy="50" r="46"/></clipPath>
+          </defs>
+          <circle cx="50" cy="50" r="50" fill="#0B6E4F"/>
+          <g clip-path="url(#cgc)">
+            <path d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#cig1)"/>
+            <path transform="rotate(120,50,50)" d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#cig2)"/>
+            <path transform="rotate(240,50,50)" d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#cig3)"/>
+          </g>
+          <circle cx="50" cy="50" r="7" fill="rgba(11,110,79,0.8)"/>
+          <circle cx="50" cy="50" r="3.5" fill="white"/>
+        </svg>
+        <span style="font-size:10px;color:var(--muted);font-weight:500">64px Green</span>
+      </div>
+
+      <!-- Icon: white bg -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:10px">
+        <svg width="48" height="48" viewBox="0 0 100 100">
+          <defs>
+            <linearGradient id="ciw1" x1="50" y1="50" x2="50" y2="14" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#0B6E4F"/><stop offset="100%" stop-color="#4DB6AC"/></linearGradient>
+            <linearGradient id="ciw2" x1="50" y1="50" x2="82" y2="69" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#4DB6AC"/><stop offset="100%" stop-color="#A7E245"/></linearGradient>
+            <linearGradient id="ciw3" x1="50" y1="50" x2="18" y2="69" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#A7E245"/><stop offset="100%" stop-color="#0B6E4F"/></linearGradient>
+            <clipPath id="cwc"><circle cx="50" cy="50" r="46"/></clipPath>
+          </defs>
+          <circle cx="50" cy="50" r="50" fill="white"/>
+          <g clip-path="url(#cwc)">
+            <path d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#ciw1)"/>
+            <path transform="rotate(120,50,50)" d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#ciw2)"/>
+            <path transform="rotate(240,50,50)" d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#ciw3)"/>
+          </g>
+          <circle cx="50" cy="50" r="7" fill="white"/>
+          <circle cx="50" cy="50" r="3.5" fill="#4DB6AC"/>
+          <circle cx="50" cy="50" r="48" fill="none" stroke="var(--green-md)" stroke-width="4"/>
+        </svg>
+        <span style="font-size:10px;color:var(--muted);font-weight:500">48px White</span>
+      </div>
+
+      <!-- App icon rounded square -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:10px">
+        <svg width="64" height="64" viewBox="0 0 100 100">
+          <defs>
+            <linearGradient id="ais1" x1="50" y1="50" x2="50" y2="14" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#0B6E4F"/><stop offset="100%" stop-color="#4DB6AC"/></linearGradient>
+            <linearGradient id="ais2" x1="50" y1="50" x2="82" y2="69" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#4DB6AC"/><stop offset="100%" stop-color="#A7E245"/></linearGradient>
+            <linearGradient id="ais3" x1="50" y1="50" x2="18" y2="69" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#A7E245"/><stop offset="100%" stop-color="#0B6E4F"/></linearGradient>
+          </defs>
+          <rect width="100" height="100" rx="22" fill="#1A2820"/>
+          <path d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#ais1)"/>
+          <path transform="rotate(120,50,50)" d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#ais2)"/>
+          <path transform="rotate(240,50,50)" d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#ais3)"/>
+          <circle cx="50" cy="50" r="7" fill="#1A2820"/>
+          <circle cx="50" cy="50" r="3.5" fill="#4DB6AC"/>
+        </svg>
+        <span style="font-size:10px;color:var(--muted);font-weight:500">App Icon</span>
+      </div>
+
+      <!-- Favicon -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:10px">
+        <svg width="32" height="32" viewBox="0 0 100 100">
+          <defs>
+            <linearGradient id="fav1" x1="50" y1="50" x2="50" y2="14" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#0B6E4F"/><stop offset="100%" stop-color="#4DB6AC"/></linearGradient>
+            <linearGradient id="fav2" x1="50" y1="50" x2="82" y2="69" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#4DB6AC"/><stop offset="100%" stop-color="#A7E245"/></linearGradient>
+            <linearGradient id="fav3" x1="50" y1="50" x2="18" y2="69" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#A7E245"/><stop offset="100%" stop-color="#0B6E4F"/></linearGradient>
+          </defs>
+          <rect width="100" height="100" rx="18" fill="#0B6E4F"/>
+          <path d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#fav1)"/>
+          <path transform="rotate(120,50,50)" d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#fav2)"/>
+          <path transform="rotate(240,50,50)" d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#fav3)"/>
+          <circle cx="50" cy="50" r="7" fill="#0B6E4F"/>
+          <circle cx="50" cy="50" r="3.5" fill="rgba(255,255,255,0.8)"/>
+        </svg>
+        <span style="font-size:10px;color:var(--muted);font-weight:500">Favicon 32px</span>
+      </div>
+
+      <!-- Favicon 16px -->
+      <div style="display:flex;flex-direction:column;align-items:center;gap:10px">
+        <svg width="16" height="16" viewBox="0 0 100 100">
+          <defs>
+            <linearGradient id="f16_1" x1="50" y1="50" x2="50" y2="14" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#0B6E4F"/><stop offset="100%" stop-color="#4DB6AC"/></linearGradient>
+            <linearGradient id="f16_2" x1="50" y1="50" x2="82" y2="69" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#4DB6AC"/><stop offset="100%" stop-color="#A7E245"/></linearGradient>
+            <linearGradient id="f16_3" x1="50" y1="50" x2="18" y2="69" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#A7E245"/><stop offset="100%" stop-color="#0B6E4F"/></linearGradient>
+          </defs>
+          <rect width="100" height="100" rx="20" fill="#0B6E4F"/>
+          <path d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#f16_1)"/>
+          <path transform="rotate(120,50,50)" d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#f16_2)"/>
+          <path transform="rotate(240,50,50)" d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#f16_3)"/>
+        </svg>
+        <span style="font-size:10px;color:var(--muted);font-weight:500">16px</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TOKEN COIN ─── -->
+<section class="sec" style="background:white">
+  <p class="label">Token Design</p>
+  <h2 class="sec-title">ZTR — Zentara Token</h2>
+  <p class="sec-sub">The digital asset at the heart of the ecosystem</p>
+
+  <div class="coin-display">
+
+    <!-- Coin front (gold-tinted) -->
+    <div>
+      <svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="coinbg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#1B5E40"/>
+            <stop offset="50%" stop-color="#0B6E4F"/>
+            <stop offset="100%" stop-color="#063D2C"/>
+          </linearGradient>
+          <linearGradient id="coinrim" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#7EC8A0"/>
+            <stop offset="40%" stop-color="#A7E245"/>
+            <stop offset="100%" stop-color="#4DB6AC"/>
+          </linearGradient>
+          <linearGradient id="cp1" x1="100" y1="100" x2="100" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="rgba(11,110,79,0.3)"/><stop offset="100%" stop-color="#4DB6AC"/></linearGradient>
+          <linearGradient id="cp2" x1="100" y1="100" x2="148" y2="143" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#4DB6AC"/><stop offset="100%" stop-color="#A7E245"/></linearGradient>
+          <linearGradient id="cp3" x1="100" y1="100" x2="52" y2="143" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#A7E245"/><stop offset="100%" stop-color="rgba(11,110,79,0.4)"/></linearGradient>
+        </defs>
+        <!-- Outer rim -->
+        <circle cx="100" cy="100" r="98" fill="url(#coinrim)"/>
+        <!-- Main coin face -->
+        <circle cx="100" cy="100" r="90" fill="url(#coinbg)"/>
+        <!-- Inner decorative ring -->
+        <circle cx="100" cy="100" r="83" fill="none" stroke="rgba(167,226,69,0.2)" stroke-width="0.8"/>
+        <circle cx="100" cy="100" r="78" fill="none" stroke="rgba(77,182,172,0.15)" stroke-width="0.5"/>
+
+        <!-- Logo mark scaled 2x -->
+        <g transform="translate(100,100) scale(2.4) translate(-50,-50)">
+          <path d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#cp1)"/>
+          <path transform="rotate(120,50,50)" d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#cp2)"/>
+          <path transform="rotate(240,50,50)" d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#cp3)"/>
+          <circle cx="50" cy="50" r="7" fill="#0D4A35"/>
+          <circle cx="50" cy="50" r="3.5" fill="#4DB6AC"/>
+        </g>
+
+        <!-- Curved text: ZENTARA WEB3 ECOSYSTEM around the coin -->
+        <path id="topArc" d="M 18,100 A 82,82 0 0,1 182,100" fill="none"/>
+        <path id="botArc" d="M 18,100 A 82,82 0 0,0 182,100" fill="none"/>
+        <text font-family="Poppins,sans-serif" font-size="10" font-weight="600" fill="#A7E245" letter-spacing="4">
+          <textPath href="#topArc" startOffset="10%">ZENTARA · WEB3 ECOSYSTEM</textPath>
+        </text>
+        <text font-family="Poppins,sans-serif" font-size="9" font-weight="500" fill="rgba(167,226,69,0.6)" letter-spacing="5">
+          <textPath href="#botArc" startOffset="22%">ZTR · EST. 2025</textPath>
+        </text>
+      </svg>
+      <p style="text-align:center;font-size:11px;color:var(--muted);margin-top:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase">Token Front</p>
+    </div>
+
+    <!-- Coin back -->
+    <div>
+      <svg width="200" height="200" viewBox="0 0 200 200">
+        <defs>
+          <linearGradient id="backbg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#1A4434"/>
+            <stop offset="100%" stop-color="#0D2D20"/>
+          </linearGradient>
+        </defs>
+        <circle cx="100" cy="100" r="98" fill="#A7E245"/>
+        <circle cx="100" cy="100" r="90" fill="url(#backbg)"/>
+        <circle cx="100" cy="100" r="83" fill="none" stroke="rgba(167,226,69,0.15)" stroke-width="0.8"/>
+
+        <!-- ZTR symbol -->
+        <text x="100" y="88" text-anchor="middle" font-family="Poppins,sans-serif" font-size="34" font-weight="800" fill="white" letter-spacing="2">ZTR</text>
+        <line x1="60" y1="96" x2="140" y2="96" stroke="rgba(167,226,69,0.4)" stroke-width="0.8"/>
+        <text x="100" y="112" text-anchor="middle" font-family="Poppins,sans-serif" font-size="9" font-weight="500" fill="rgba(167,226,69,0.7)" letter-spacing="3">TOKEN</text>
+
+        <!-- Small decorative elements -->
+        <circle cx="50" cy="100" r="3" fill="rgba(77,182,172,0.3)"/>
+        <circle cx="150" cy="100" r="3" fill="rgba(77,182,172,0.3)"/>
+        <circle cx="100" cy="50" r="2" fill="rgba(167,226,69,0.25)"/>
+        <circle cx="100" cy="150" r="2" fill="rgba(167,226,69,0.25)"/>
+
+        <!-- Serial / supply line -->
+        <text x="100" y="135" text-anchor="middle" font-family="monospace" font-size="7" fill="rgba(255,255,255,0.2)" letter-spacing="1">0x4ZTR·ECOSYSTEM·2025</text>
+      </svg>
+      <p style="text-align:center;font-size:11px;color:var(--muted);margin-top:10px;font-weight:500;letter-spacing:0.08em;text-transform:uppercase">Token Back</p>
+    </div>
+
+    <!-- Token info -->
+    <div class="coin-info">
+      <h3>Zentara Token (ZTR)</h3>
+      <p>The native utility token powering the Zentara ecosystem — used for governance, staking, carbon credit transactions, and green energy marketplace settlements.</p>
+      <div class="coin-specs">
+        <div class="coin-spec">
+          <div class="coin-spec-dot" style="background:var(--green)"></div>
+          <span><strong>Symbol:</strong> ZTR</span>
+        </div>
+        <div class="coin-spec">
+          <div class="coin-spec-dot" style="background:var(--teal)"></div>
+          <span><strong>Standard:</strong> ERC-20 / Multi-chain</span>
+        </div>
+        <div class="coin-spec">
+          <div class="coin-spec-dot" style="background:var(--lime)"></div>
+          <span><strong>Category:</strong> Green-utility token</span>
+        </div>
+        <div class="coin-spec">
+          <div class="coin-spec-dot" style="background:var(--charcoal)"></div>
+          <span><strong>Use:</strong> Governance, staking, payments</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── COLOR SYSTEM ─── -->
+<section class="sec" style="background:var(--offwhite)">
+  <p class="label">Color System</p>
+  <h2 class="sec-title">Brand Palette</h2>
+  <p class="sec-sub">Inspired by living ecosystems — from forest floor to canopy light</p>
+
+  <div class="palette-grid">
+    <div class="swatch-col">
+      <div class="swatch" style="background:#0B6E4F"></div>
+      <div class="swatch-info">
+        <div class="swatch-role">Primary</div>
+        <div class="swatch-name">Deep Forest</div>
+        <div class="swatch-hex">#0B6E4F</div>
+        <div class="swatch-hex" style="margin-top:2px">RGB 11 110 79</div>
+      </div>
+    </div>
+    <div class="swatch-col">
+      <div class="swatch" style="background:#4DB6AC"></div>
+      <div class="swatch-info">
+        <div class="swatch-role">Secondary</div>
+        <div class="swatch-name">Soft Teal</div>
+        <div class="swatch-hex">#4DB6AC</div>
+        <div class="swatch-hex" style="margin-top:2px">RGB 77 182 172</div>
+      </div>
+    </div>
+    <div class="swatch-col">
+      <div class="swatch" style="background:#A7E245"></div>
+      <div class="swatch-info">
+        <div class="swatch-role">Accent</div>
+        <div class="swatch-name">Light Lime</div>
+        <div class="swatch-hex">#A7E245</div>
+        <div class="swatch-hex" style="margin-top:2px">RGB 167 226 69</div>
+      </div>
+    </div>
+    <div class="swatch-col">
+      <div class="swatch" style="background:#2D3330"></div>
+      <div class="swatch-info">
+        <div class="swatch-role">Neutral Dark</div>
+        <div class="swatch-name">Charcoal</div>
+        <div class="swatch-hex">#2D3330</div>
+        <div class="swatch-hex" style="margin-top:2px">RGB 45 51 48</div>
+      </div>
+    </div>
+    <div class="swatch-col">
+      <div class="swatch" style="background:#F4F7F3;border-bottom:1px solid #E0E8E2"></div>
+      <div class="swatch-info">
+        <div class="swatch-role">Neutral Light</div>
+        <div class="swatch-name">Off-white</div>
+        <div class="swatch-hex">#F4F7F3</div>
+        <div class="swatch-hex" style="margin-top:2px">RGB 244 247 243</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tint scale -->
+  <div style="margin-top:32px">
+    <p style="font-size:12px;font-weight:600;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:12px">Deep Forest — Tint Scale</p>
+    <div class="palette-tints">
+      <div class="tint-swatch" style="background:#EAF5EF" title="#EAF5EF"></div>
+      <div class="tint-swatch" style="background:#C3E6D4" title="#C3E6D4"></div>
+      <div class="tint-swatch" style="background:#90CDB0" title="#90CDB0"></div>
+      <div class="tint-swatch" style="background:#4D9A78" title="#4D9A78"></div>
+      <div class="tint-swatch" style="background:#0B6E4F" title="#0B6E4F"></div>
+      <div class="tint-swatch" style="background:#084D38" title="#084D38"></div>
+      <div class="tint-swatch" style="background:#052B1F" title="#052B1F"></div>
+      <div class="tint-swatch" style="background:#020E0A" title="#020E0A"></div>
+    </div>
+    <div style="display:flex;justify-content:space-between;margin-top:6px;padding:0 2px">
+      <span style="font-size:10px;color:var(--muted)">50</span>
+      <span style="font-size:10px;color:var(--muted)">100</span>
+      <span style="font-size:10px;color:var(--muted)">200</span>
+      <span style="font-size:10px;color:var(--muted)">400</span>
+      <span style="font-size:10px;color:var(--muted);font-weight:700">600 ←</span>
+      <span style="font-size:10px;color:var(--muted)">700</span>
+      <span style="font-size:10px;color:var(--muted)">800</span>
+      <span style="font-size:10px;color:var(--muted)">900</span>
+    </div>
+  </div>
+
+  <!-- Color pairings -->
+  <div style="margin-top:32px;display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+    <div style="border-radius:10px;overflow:hidden;border:1px solid var(--border)">
+      <div style="background:#0B6E4F;padding:20px;display:flex;align-items:center;justify-content:center">
+        <span style="color:white;font-weight:700;font-size:13px;letter-spacing:0.1em">ZENTARA</span>
+      </div>
+      <div style="padding:10px;background:white;font-size:10px;color:var(--muted)">White on Primary</div>
+    </div>
+    <div style="border-radius:10px;overflow:hidden;border:1px solid var(--border)">
+      <div style="background:#A7E245;padding:20px;display:flex;align-items:center;justify-content:center">
+        <span style="color:#0B6E4F;font-weight:700;font-size:13px;letter-spacing:0.1em">ZENTARA</span>
+      </div>
+      <div style="padding:10px;background:white;font-size:10px;color:var(--muted)">Primary on Accent</div>
+    </div>
+    <div style="border-radius:10px;overflow:hidden;border:1px solid var(--border)">
+      <div style="background:#1A2820;padding:20px;display:flex;align-items:center;justify-content:center">
+        <span style="color:#4DB6AC;font-weight:700;font-size:13px;letter-spacing:0.1em">ZENTARA</span>
+      </div>
+      <div style="padding:10px;background:white;font-size:10px;color:var(--muted)">Teal on Dark</div>
+    </div>
+    <div style="border-radius:10px;overflow:hidden;border:1px solid var(--border)">
+      <div style="background:#EAF5EF;padding:20px;display:flex;align-items:center;justify-content:center">
+        <span style="color:#0B6E4F;font-weight:700;font-size:13px;letter-spacing:0.1em">ZENTARA</span>
+      </div>
+      <div style="padding:10px;background:white;font-size:10px;color:var(--muted)">Primary on Tint</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TYPOGRAPHY ─── -->
+<section class="sec" style="background:white">
+  <p class="label">Typography</p>
+  <h2 class="sec-title">Poppins — Brand Typeface</h2>
+  <p class="sec-sub">Geometric softness meets modern clarity</p>
+
+  <div class="type-hero">Zentara</div>
+
+  <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap">
+    <div style="background:var(--green-xl);border-radius:8px;padding:8px 16px;font-size:12px;font-weight:600;color:var(--green)">Poppins · Google Fonts</div>
+    <div style="background:var(--green-xl);border-radius:8px;padding:8px 16px;font-size:12px;font-weight:500;color:var(--green)">Free & Open Source</div>
+    <div style="background:var(--green-xl);border-radius:8px;padding:8px 16px;font-size:12px;font-weight:500;color:var(--green)">Geometric Sans-serif</div>
+  </div>
+
+  <div class="type-specimens">
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="type-meta-weight">ExtraBold 800</div>
+        <div class="type-meta-size">Display / Hero</div>
+      </div>
+      <div style="font-size:40px;font-weight:800;color:var(--charcoal);letter-spacing:-0.02em;line-height:1">Sustainability</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="type-meta-weight">Bold 700</div>
+        <div class="type-meta-size">Heading H1</div>
+      </div>
+      <div style="font-size:32px;font-weight:700;color:var(--charcoal);letter-spacing:-0.01em">Web3 Ecosystem Platform</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="type-meta-weight">SemiBold 600</div>
+        <div class="type-meta-size">Heading H2</div>
+      </div>
+      <div style="font-size:24px;font-weight:600;color:var(--charcoal)">Green Energy & Digital Assets</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="type-meta-weight">Medium 500</div>
+        <div class="type-meta-size">Subheading</div>
+      </div>
+      <div style="font-size:18px;font-weight:500;color:var(--charcoal)">Connecting nature, energy, and blockchain</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        <div class="type-meta-weight">Regular 400</div>
+        <div class="type-meta-size">Body Text</div>
+      </div>
+      <div style="font-size:15px;font-weight:400;color:var(--charcoal);line-height:1.7;max-width:500px">Zentara creates a harmonious bridge between the natural world and digital innovation — enabling sustainable land tokenization, green energy trading, and regenerative finance at global scale.</div>
+    </div>
+    <div class="type-row" style="border-bottom:none;padding-bottom:0">
+      <div class="type-meta">
+        <div class="type-meta-weight">Light 300</div>
+        <div class="type-meta-size">Caption / Meta</div>
+      </div>
+      <div style="font-size:13px;font-weight:300;color:var(--muted);letter-spacing:0.02em">Carbon Neutral · ESG Verified · Blockchain Secured · Open Protocol</div>
+    </div>
+  </div>
+
+  <!-- Letter spacing -->
+  <div style="margin-top:40px;padding-top:32px;border-top:1px solid var(--border)">
+    <p style="font-size:12px;font-weight:600;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:20px">Wordmark Letter-spacing Guide</p>
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div style="font-size:28px;font-weight:700;color:var(--green);letter-spacing:0.05em;text-transform:uppercase">ZENTARA <span style="font-size:12px;font-weight:400;color:var(--muted);letter-spacing:normal">0.05em — Compact</span></div>
+      <div style="font-size:28px;font-weight:700;color:var(--green);letter-spacing:0.15em;text-transform:uppercase">ZENTARA <span style="font-size:12px;font-weight:400;color:var(--muted);letter-spacing:normal">0.15em — Standard ✓</span></div>
+      <div style="font-size:28px;font-weight:700;color:var(--green);letter-spacing:0.28em;text-transform:uppercase">ZENTARA <span style="font-size:12px;font-weight:400;color:var(--muted);letter-spacing:normal">0.28em — Display</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── GRADIENT ANIMATIONS ─── -->
+<section class="sec" style="background:var(--offwhite)">
+  <p class="label">Motion & Gradient</p>
+  <h2 class="sec-title">Gradient Language</h2>
+  <p class="sec-sub">Animated gradient suggestion for digital-first touchpoints</p>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+    <div>
+      <div class="gradient-animated"></div>
+      <p class="gradient-note"><strong style="color:var(--charcoal)">Animated Flow</strong> — Gentle left-to-right cycle through the full palette. 4s loop, ease in-out. Ideal for hero sections, loading states, token reveals.</p>
+    </div>
+    <div>
+      <div class="gradient-strip"></div>
+      <p class="gradient-note"><strong style="color:var(--charcoal)">Spectrum Linear</strong> — Static gradient: Forest → Teal → Lime. Use for backgrounds, cards, section dividers, charts.</p>
+    </div>
+    <div>
+      <div class="gradient-alt"></div>
+      <p class="gradient-note"><strong style="color:var(--charcoal)">Deep Radiance</strong> — 135° diagonal. Rich depth from near-black to lime. Ideal for hero images, token mint screens, dashboard headers.</p>
+    </div>
+    <div>
+      <div class="gradient-dark"></div>
+      <p class="gradient-note"><strong style="color:var(--charcoal)">Midnight Forest</strong> — Near-black to deep green. For dark-mode surfaces, data visualization backgrounds, NFT frames.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── BRAND VALUES ─── -->
+<section class="sec" style="background:white">
+  <p class="label">Brand Voice</p>
+  <h2 class="sec-title">Three Pillars of Zentara</h2>
+  <p class="sec-sub">Every design decision reflects these core principles</p>
+  <div class="values-grid">
+    <div class="value-card">
+      <div class="value-icon">
+        <svg width="22" height="22" viewBox="0 0 100 100">
+          <path d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="#0B6E4F"/>
+          <path transform="rotate(120,50,50)" d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="#4DB6AC"/>
+          <path transform="rotate(240,50,50)" d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="#A7E245"/>
+          <circle cx="50" cy="50" r="7" fill="#EAF5EF"/>
+          <circle cx="50" cy="50" r="3.5" fill="#0B6E4F"/>
+        </svg>
+      </div>
+      <div class="value-title">🌿 Nature First</div>
+      <div class="value-text">Every product decision is evaluated through an ecological lens. We don't compromise the environment for growth — we grow through environmental alignment.</div>
+    </div>
+    <div class="value-card">
+      <div class="value-icon" style="background:#E8F7F5">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#4DB6AC" stroke-width="2" stroke-linecap="round">
+          <circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>
+        </svg>
+      </div>
+      <div class="value-title">⚡ Flow State</div>
+      <div class="value-text">We design for effortlessness — frictionless transitions between physical and digital value. The brand should feel like breathing: rhythmic, natural, unforced.</div>
+    </div>
+    <div class="value-card">
+      <div class="value-icon" style="background:#F5FADF">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7AB82E" stroke-width="2" stroke-linecap="round">
+          <path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51z"/><path d="M13 13l6 6"/>
+        </svg>
+      </div>
+      <div class="value-title">🌐 Global Scale</div>
+      <div class="value-text">Zentara is built for the world. The brand should feel at home in Tokyo, Lagos, Oslo, and São Paulo — clean, universal, borderless, and deeply human.</div>
+    </div>
+  </div>
+
+  <!-- Tone guide -->
+  <div style="margin-top:32px;display:grid;grid-template-columns:1fr 1fr;gap:20px">
+    <div style="background:var(--green-xl);border-radius:10px;padding:24px;border:1px solid var(--green-md)">
+      <p style="font-size:12px;font-weight:700;color:var(--green);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:12px">✓ Zentara sounds like</p>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="font-size:13px;color:var(--charcoal)">"Grow what matters"</div>
+        <div style="font-size:13px;color:var(--charcoal)">"Balance is a feature, not a setting"</div>
+        <div style="font-size:13px;color:var(--charcoal)">"Your stake in the earth's future"</div>
+        <div style="font-size:13px;color:var(--charcoal)">"Carbon down. Value up."</div>
+      </div>
+    </div>
+    <div style="background:#FFF8F5;border-radius:10px;padding:24px;border:1px solid #F5DDD5">
+      <p style="font-size:12px;font-weight:700;color:#C04020;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:12px">✕ Zentara never says</p>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <div style="font-size:13px;color:var(--muted)">"Disrupt the ecosystem"</div>
+        <div style="font-size:13px;color:var(--muted)">"100x returns guaranteed"</div>
+        <div style="font-size:13px;color:var(--muted)">"Crush the competition"</div>
+        <div style="font-size:13px;color:var(--muted)">"Move fast and break things"</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── USAGE ─── -->
+<section class="sec" style="background:var(--offwhite)">
+  <p class="label">Usage Guide</p>
+  <h2 class="sec-title">Spacing & Clear Space</h2>
+  <p class="sec-sub">Always protect the logo with minimum clear space equal to the height of the "Z" in the wordmark</p>
+
+  <div style="background:white;border-radius:12px;padding:40px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center">
+    <div style="position:relative;display:inline-block">
+      <!-- Clear space indicator -->
+      <div style="position:absolute;inset:-24px;border:1px dashed rgba(11,110,79,0.25);border-radius:4px"></div>
+      <div style="display:flex;align-items:center;gap:14px">
+        <svg width="48" height="48" viewBox="0 0 100 100">
+          <defs>
+            <linearGradient id="cs1" x1="50" y1="50" x2="50" y2="14" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#0B6E4F"/><stop offset="100%" stop-color="#4DB6AC"/></linearGradient>
+            <linearGradient id="cs2" x1="50" y1="50" x2="82" y2="69" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#4DB6AC"/><stop offset="100%" stop-color="#A7E245"/></linearGradient>
+            <linearGradient id="cs3" x1="50" y1="50" x2="18" y2="69" gradientUnits="userSpaceOnUse"><stop offset="0%" stop-color="#A7E245"/><stop offset="100%" stop-color="#0B6E4F"/></linearGradient>
+          </defs>
+          <path d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#cs1)"/>
+          <path transform="rotate(120,50,50)" d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#cs2)"/>
+          <path transform="rotate(240,50,50)" d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="url(#cs3)"/>
+          <circle cx="50" cy="50" r="7" fill="white"/>
+          <circle cx="50" cy="50" r="3.5" fill="#4DB6AC"/>
+        </svg>
+        <div style="font-size:22px;font-weight:700;color:#0B6E4F;letter-spacing:0.15em;text-transform:uppercase">ZENTARA</div>
+      </div>
+      <!-- Labels -->
+      <div style="position:absolute;top:-32px;left:50%;transform:translateX(-50%);font-size:9px;color:rgba(11,110,79,0.5);white-space:nowrap">← Minimum clear space →</div>
+    </div>
+  </div>
+
+  <div style="margin-top:24px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+    <div style="background:white;border-radius:10px;padding:16px;border:1px solid var(--border)">
+      <div style="font-size:11px;font-weight:600;color:var(--green);margin-bottom:8px">Min. Size Digital</div>
+      <div style="font-size:20px;font-weight:700;color:var(--charcoal)">32px</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:2px">Symbol height minimum</div>
+    </div>
+    <div style="background:white;border-radius:10px;padding:16px;border:1px solid var(--border)">
+      <div style="font-size:11px;font-weight:600;color:var(--green);margin-bottom:8px">Min. Size Print</div>
+      <div style="font-size:20px;font-weight:700;color:var(--charcoal)">10mm</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:2px">Symbol height minimum</div>
+    </div>
+    <div style="background:white;border-radius:10px;padding:16px;border:1px solid var(--border)">
+      <div style="font-size:11px;font-weight:600;color:var(--green);margin-bottom:8px">Clear Space</div>
+      <div style="font-size:20px;font-weight:700;color:var(--charcoal)">1× Z</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:2px">Height of letter Z</div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div style="display:flex;align-items:center;gap:10px">
+    <svg width="20" height="20" viewBox="0 0 100 100">
+      <path d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="#4DB6AC"/>
+      <path transform="rotate(120,50,50)" d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="#A7E245"/>
+      <path transform="rotate(240,50,50)" d="M 50,50 C 40,46 30,34 38,22 C 42,12 58,12 62,22 C 70,34 60,46 50,50 Z" fill="#4DB6AC" opacity="0.6"/>
+      <circle cx="50" cy="50" r="6" fill="#2D3330"/>
+      <circle cx="50" cy="50" r="3" fill="#4DB6AC"/>
+    </svg>
+    <span style="font-size:13px;font-weight:600;color:white;letter-spacing:0.12em">ZENTARA</span>
+    <span class="footer-note" style="margin-left:8px">Brand Identity System — Confidential</span>
+  </div>
+  <div style="text-align:right">
+    <div class="footer-version"> Designed by <a href="https://smartgenesis.io" target="_blank" style="color:#A7E245;font-weight:500;text-decoration:none">Smart Genesis</a> · v1.0.0 · 2026</div>
+    <div class="footer-note" style="margin-top:4px">Crafted for ESG Investors · Web3 Users · Global Markets</div>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    const body = document.body;
+    const intro = document.querySelector('.brand-intro');
+    const skipButton = document.querySelector('.intro-skip');
+
+    if (!body || !intro) return;
+
+    const finishIntro = function () {
+      if (body.classList.contains('intro-complete')) return;
+      body.classList.remove('is-intro-playing');
+      body.classList.add('intro-complete');
+      window.setTimeout(function () {
+        intro.setAttribute('hidden', 'hidden');
+      }, 900);
+    };
+
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    window.setTimeout(finishIntro, prefersReducedMotion ? 0 : 3400);
+
+    if (skipButton) {
+      skipButton.addEventListener('click', finishIntro);
+    }
+
+    document.addEventListener('keydown', function (event) {
+      if (event.key === 'Escape') finishIntro();
+    });
+  }());
+</script>
+
+</body>
+</html>

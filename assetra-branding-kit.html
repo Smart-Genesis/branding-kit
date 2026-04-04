@@ -1,0 +1,1357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Assetra — Brand Identity System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #0A2540;
+    --navy-dark: #061830;
+    --navy-light: #0d3060;
+    --teal: #00BFA6;
+    --teal-light: #00d4b8;
+    --teal-dark: #009985;
+    --gold: #C9A227;
+    --gold-light: #e0b82d;
+    --gold-dark: #a8861e;
+    --white: #FFFFFF;
+    --offwhite: #F5F7FA;
+    --grey-100: #EEF1F6;
+    --grey-200: #D1D9E6;
+    --grey-400: #8A9BB8;
+    --grey-600: #4A5E7A;
+  }
+
+  /* ── INTRO OVERLAY (blocks stacking) ── */
+  .intro-overlay {
+    position: fixed;
+    inset: 0;
+    background: var(--navy-dark);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .intro-grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,191,166,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,191,166,0.05) 1px, transparent 1px);
+    background-size: 44px 44px;
+    pointer-events: none;
+  }
+
+  .intro-wrap {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .stack-mark {
+    display: grid;
+    grid-template-columns: 18px 18px;
+    grid-auto-rows: 18px;
+    gap: 3px;
+    filter: drop-shadow(0 6px 24px rgba(0,0,0,0.25));
+  }
+
+  .stack-block {
+    width: 18px;
+    height: 18px;
+    border-radius: 3px;
+    opacity: 0;
+    transform: translateY(-56px);
+    animation: stackDrop 750ms cubic-bezier(.2,.9,.2,1.05) forwards;
+  }
+
+  .stack-b1 { background: var(--teal); animation-delay: 40ms; }
+  .stack-b2 { background: var(--teal); opacity: 0.6; animation-delay: 140ms; }
+  .stack-b3 { background: var(--gold); animation-delay: 260ms; }
+  .stack-b4 { background: var(--teal); opacity: 0.35; animation-delay: 360ms; }
+
+  @keyframes stackDrop {
+    0%   { transform: translateY(-56px); opacity: 0; }
+    60%  { transform: translateY(8px);  opacity: 1; }
+    80%  { transform: translateY(-3px); opacity: 1; }
+    100% { transform: translateY(0);    opacity: 1; }
+  }
+
+  .stack-word {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(22px, 4vw, 34px);
+    font-weight: 700;
+    color: white;
+    letter-spacing: -0.5px;
+    opacity: 0;
+    transform: translateY(6px);
+    animation: wordIn 420ms ease-out forwards;
+    animation-delay: 560ms;
+  }
+
+  .stack-tag {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    opacity: 0;
+    animation: fadeIn 500ms ease-out forwards;
+    animation-delay: 900ms;
+  }
+
+  @keyframes wordIn {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  .intro-overlay.out {
+    animation: introFadeOut 600ms ease forwards;
+  }
+
+  @keyframes introFadeOut {
+    to { opacity: 0; visibility: hidden; }
+  }
+
+  .intro-skip {
+    position: absolute;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 6px 12px;
+    border-radius: 999px;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .stack-block { animation: none; transform: none; opacity: 1; }
+    .stack-word, .stack-tag { animation: none; opacity: 1; transform: none; }
+    .intro-overlay { transition: none; }
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #F0F3F8;
+    color: var(--navy);
+    line-height: 1.6;
+  }
+
+  /* ── COVER ── */
+  .cover {
+    background: var(--navy-dark);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 4rem 2rem;
+  }
+
+  .cover-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,191,166,0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,191,166,0.06) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  .cover-glow {
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,191,166,0.12) 0%, transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+
+  .cover-badge {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--teal);
+    border: 1px solid rgba(0,191,166,0.3);
+    padding: 6px 20px;
+    border-radius: 100px;
+    margin-bottom: 3rem;
+    position: relative;
+  }
+
+  .cover-logo-main {
+    position: relative;
+    margin-bottom: 2.5rem;
+  }
+
+  .cover-tagline {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-top: 1.5rem;
+  }
+
+  .cover-meta {
+    position: absolute;
+    bottom: 2.5rem;
+    display: flex;
+    gap: 3rem;
+    font-size: 11px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+  }
+
+  .cover-meta span { font-weight: 500; }
+
+  /* ── SECTIONS ── */
+  .section {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 5rem 2.5rem;
+  }
+
+  .section-label {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--teal-dark);
+    margin-bottom: 0.5rem;
+  }
+
+  .section-title {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(28px, 4vw, 42px);
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.1;
+    margin-bottom: 0.75rem;
+  }
+
+  .section-desc {
+    font-size: 15px;
+    color: var(--grey-600);
+    max-width: 520px;
+    margin-bottom: 3.5rem;
+    line-height: 1.7;
+  }
+
+  .divider {
+    width: 100%;
+    height: 1px;
+    background: var(--grey-200);
+    margin: 0;
+  }
+
+  /* ── LOGO GRID ── */
+  .logo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5px;
+  }
+
+  .logo-cell {
+    padding: 3.5rem 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    min-height: 200px;
+  }
+
+  .logo-cell-label {
+    position: absolute;
+    top: 1.25rem;
+    left: 1.5rem;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    opacity: 0.4;
+  }
+
+  .bg-light { background: #FFFFFF; color: var(--navy); }
+  .bg-offwhite { background: var(--offwhite); color: var(--navy); }
+  .bg-dark { background: var(--navy); color: white; }
+  .bg-darker { background: var(--navy-dark); color: white; }
+  .bg-teal-wash { background: #E6FAF7; color: var(--navy); }
+
+  /* ── COLORS ── */
+  .color-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.5px;
+    margin-bottom: 1.5px;
+  }
+
+  .color-swatch {
+    height: 160px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 1.25rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .color-swatch-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+
+  .color-swatch-hex {
+    font-size: 11px;
+    font-weight: 400;
+    opacity: 0.7;
+    font-family: 'DM Sans', monospace;
+    letter-spacing: 0.5px;
+  }
+
+  .color-swatch-role {
+    position: absolute;
+    top: 1.25rem;
+    left: 1.25rem;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    opacity: 0.5;
+  }
+
+  .swatch-navy { background: var(--navy); color: white; }
+  .swatch-teal { background: var(--teal); color: white; }
+  .swatch-gold { background: var(--gold); color: white; }
+  .swatch-white { background: #FFFFFF; color: var(--navy); border: 1px solid var(--grey-200); }
+  .swatch-grey { background: #EEF1F6; color: var(--navy); }
+
+  /* ── TYPOGRAPHY ── */
+  .type-block {
+    background: white;
+    padding: 3rem 3.5rem;
+    margin-bottom: 1.5px;
+  }
+
+  .type-specimen-display {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(52px, 8vw, 96px);
+    font-weight: 800;
+    line-height: 0.9;
+    color: var(--navy);
+    letter-spacing: -2px;
+    margin-bottom: 1.5rem;
+  }
+
+  .type-specimen-sub {
+    font-family: 'Syne', sans-serif;
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: 600;
+    color: var(--teal-dark);
+    letter-spacing: -0.5px;
+  }
+
+  .type-scale-row {
+    display: flex;
+    align-items: baseline;
+    gap: 2rem;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--grey-100);
+  }
+
+  .type-scale-meta {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--grey-400);
+    min-width: 100px;
+  }
+
+  /* ── TOKEN COIN ── */
+  .coin-showcase {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1.5px;
+  }
+
+  .coin-cell {
+    padding: 4rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  .coin-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    opacity: 0.5;
+  }
+
+  /* ── APP ICONS ── */
+  .icon-grid {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    padding: 3rem;
+    background: white;
+  }
+
+  .icon-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .icon-size-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--grey-400);
+  }
+
+  /* ── USAGE ── */
+  .usage-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5px;
+  }
+
+  .usage-card {
+    background: white;
+    padding: 2.5rem;
+  }
+
+  .usage-card-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--grey-400);
+    margin-bottom: 1.5rem;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--navy-dark);
+    padding: 3rem 2.5rem;
+    text-align: center;
+  }
+
+  .footer-text {
+    font-size: 11px;
+    color: rgba(255,255,255,0.25);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 700px) {
+    .logo-grid, .coin-showcase, .usage-grid { grid-template-columns: 1fr; }
+    .color-row { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ───────────────────────────── INTRO OVERLAY ───────────────────────────── -->
+<div class="intro-overlay" id="intro" aria-label="Intro animation overlay">
+  <div class="intro-grid-bg" aria-hidden="true"></div>
+  <div class="intro-wrap">
+    <div class="stack-mark" aria-hidden="true">
+      <div class="stack-block stack-b3"></div>
+      <div class="stack-block stack-b4"></div>
+      <div class="stack-block stack-b1"></div>
+      <div class="stack-block stack-b2"></div>
+    </div>
+    <div class="stack-word" aria-hidden="true">Assetra</div>
+    <div class="stack-tag" aria-hidden="true">Tokenizing Real-World Assets</div>
+  </div>
+  <div class="intro-skip" id="intro-skip" role="button" aria-label="Skip intro">Skip</div>
+  
+</div>
+
+<!-- ═══════════════════════════════════════════ COVER ═════════════════════════════════════════════ -->
+<div class="cover">
+  <div class="cover-grid"></div>
+  <div class="cover-glow"></div>
+
+  <div class="cover-badge"> Design By <a href="https://smartgenesis.io" target="_blank" style="color:#2E7D32;font-weight:500;text-decoration:none">Smart Genesis</a> - V1.0</div>
+
+  <div class="cover-logo-main">
+    <!-- MAIN HORIZONTAL LOGO — DARK BG -->
+    <svg width="380" viewBox="0 0 380 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <!-- Icon Mark -->
+      <g transform="translate(0, 8)">
+        <!-- Base square grid structure -->
+        <rect x="0" y="32" width="18" height="18" rx="2" fill="#00BFA6" opacity="0.9"/>
+        <rect x="21" y="32" width="18" height="18" rx="2" fill="#00BFA6" opacity="0.6"/>
+        <rect x="0" y="11" width="18" height="18" rx="2" fill="#C9A227" opacity="0.85"/>
+        <rect x="21" y="11" width="18" height="18" rx="2" fill="#00BFA6" opacity="0.4"/>
+        <!-- Accent top-right ascending block -->
+        <rect x="42" y="20" width="14" height="14" rx="2" fill="rgba(255,255,255,0.15)"/>
+        <rect x="42" y="37" width="14" height="13" rx="2" fill="#00BFA6" opacity="0.35"/>
+        <!-- Rising line accent -->
+        <line x1="2" y1="9" x2="54" y2="9" stroke="rgba(201,162,39,0.3)" stroke-width="1.5" stroke-linecap="round"/>
+      </g>
+      <!-- Wordmark -->
+      <text x="74" y="52" font-family="'Syne', sans-serif" font-size="36" font-weight="700" fill="white" letter-spacing="-0.5">Assetra</text>
+      <!-- Token tag -->
+      <rect x="74" y="60" width="38" height="13" rx="3" fill="rgba(0,191,166,0.18)"/>
+      <text x="78" y="70" font-family="'DM Sans', sans-serif" font-size="8.5" font-weight="600" fill="#00BFA6" letter-spacing="1.5">AST</text>
+    </svg>
+  </div>
+
+  <div class="cover-tagline">Tokenizing the World's Real Assets</div>
+
+  <div class="cover-meta">
+    <span>Assetra Protocol</span>
+    <span>Token: AST</span>
+    <span>Web3 · RWA · DeFi</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ LOGO SYSTEM ════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">01 — Identity</div>
+  <div class="section-title">Logo System</div>
+  <div class="section-desc">Four canonical logo forms across background contexts. Maintain clear space equal to the height of the "A" character on all sides.</div>
+</div>
+<div class="divider"></div>
+
+<div class="logo-grid">
+  <!-- Light horizontal -->
+  <div class="logo-cell bg-white bg-light">
+    <span class="logo-cell-label" style="color:var(--grey-400)">Horizontal — Light</span>
+    <svg width="300" viewBox="0 0 380 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g transform="translate(0, 8)">
+        <rect x="0" y="32" width="18" height="18" rx="2" fill="#00BFA6"/>
+        <rect x="21" y="32" width="18" height="18" rx="2" fill="#00BFA6" opacity="0.55"/>
+        <rect x="0" y="11" width="18" height="18" rx="2" fill="#C9A227"/>
+        <rect x="21" y="11" width="18" height="18" rx="2" fill="#00BFA6" opacity="0.3"/>
+        <rect x="42" y="20" width="14" height="14" rx="2" fill="rgba(10,37,64,0.1)"/>
+        <rect x="42" y="37" width="14" height="13" rx="2" fill="#00BFA6" opacity="0.3"/>
+        <line x1="2" y1="9" x2="54" y2="9" stroke="rgba(201,162,39,0.4)" stroke-width="1.5" stroke-linecap="round"/>
+      </g>
+      <text x="74" y="52" font-family="'Syne', sans-serif" font-size="36" font-weight="700" fill="#0A2540" letter-spacing="-0.5">Assetra</text>
+      <rect x="74" y="60" width="38" height="13" rx="3" fill="rgba(0,191,166,0.15)"/>
+      <text x="78" y="70" font-family="'DM Sans', sans-serif" font-size="8.5" font-weight="600" fill="#009985" letter-spacing="1.5">AST</text>
+    </svg>
+  </div>
+
+  <!-- Dark horizontal -->
+  <div class="logo-cell bg-dark">
+    <span class="logo-cell-label" style="color:rgba(255,255,255,0.3)">Horizontal — Dark</span>
+    <svg width="300" viewBox="0 0 380 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g transform="translate(0, 8)">
+        <rect x="0" y="32" width="18" height="18" rx="2" fill="#00BFA6" opacity="0.9"/>
+        <rect x="21" y="32" width="18" height="18" rx="2" fill="#00BFA6" opacity="0.6"/>
+        <rect x="0" y="11" width="18" height="18" rx="2" fill="#C9A227" opacity="0.85"/>
+        <rect x="21" y="11" width="18" height="18" rx="2" fill="#00BFA6" opacity="0.4"/>
+        <rect x="42" y="20" width="14" height="14" rx="2" fill="rgba(255,255,255,0.12)"/>
+        <rect x="42" y="37" width="14" height="13" rx="2" fill="#00BFA6" opacity="0.35"/>
+        <line x1="2" y1="9" x2="54" y2="9" stroke="rgba(201,162,39,0.35)" stroke-width="1.5" stroke-linecap="round"/>
+      </g>
+      <text x="74" y="52" font-family="'Syne', sans-serif" font-size="36" font-weight="700" fill="white" letter-spacing="-0.5">Assetra</text>
+      <rect x="74" y="60" width="38" height="13" rx="3" fill="rgba(0,191,166,0.18)"/>
+      <text x="78" y="70" font-family="'DM Sans', sans-serif" font-size="8.5" font-weight="600" fill="#00BFA6" letter-spacing="1.5">AST</text>
+    </svg>
+  </div>
+
+  <!-- Vertical light -->
+  <div class="logo-cell bg-offwhite">
+    <span class="logo-cell-label" style="color:var(--grey-400)">Vertical — Light</span>
+    <svg width="160" viewBox="0 0 160 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g transform="translate(43, 0)">
+        <rect x="0" y="32" width="18" height="18" rx="2" fill="#00BFA6"/>
+        <rect x="21" y="32" width="18" height="18" rx="2" fill="#00BFA6" opacity="0.55"/>
+        <rect x="0" y="11" width="18" height="18" rx="2" fill="#C9A227"/>
+        <rect x="21" y="11" width="18" height="18" rx="2" fill="#00BFA6" opacity="0.3"/>
+        <rect x="42" y="20" width="14" height="14" rx="2" fill="rgba(10,37,64,0.1)"/>
+        <rect x="42" y="37" width="14" height="13" rx="2" fill="#00BFA6" opacity="0.3"/>
+        <line x1="2" y1="9" x2="54" y2="9" stroke="rgba(201,162,39,0.4)" stroke-width="1.5" stroke-linecap="round"/>
+      </g>
+      <text x="80" y="108" font-family="'Syne', sans-serif" font-size="28" font-weight="700" fill="#0A2540" text-anchor="middle" letter-spacing="-0.3">Assetra</text>
+      <rect x="62" y="117" width="36" height="13" rx="3" fill="rgba(0,191,166,0.15)"/>
+      <text x="80" y="127" font-family="'DM Sans', sans-serif" font-size="8" font-weight="600" fill="#009985" letter-spacing="1.5" text-anchor="middle">AST</text>
+      <text x="80" y="155" font-family="'DM Sans', sans-serif" font-size="10" font-weight="400" fill="#8A9BB8" text-anchor="middle" letter-spacing="1">Real Asset Tokenization</text>
+    </svg>
+  </div>
+
+  <!-- Vertical dark -->
+  <div class="logo-cell bg-darker">
+    <span class="logo-cell-label" style="color:rgba(255,255,255,0.25)">Vertical — Dark</span>
+    <svg width="160" viewBox="0 0 160 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g transform="translate(43, 0)">
+        <rect x="0" y="32" width="18" height="18" rx="2" fill="#00BFA6" opacity="0.9"/>
+        <rect x="21" y="32" width="18" height="18" rx="2" fill="#00BFA6" opacity="0.6"/>
+        <rect x="0" y="11" width="18" height="18" rx="2" fill="#C9A227" opacity="0.85"/>
+        <rect x="21" y="11" width="18" height="18" rx="2" fill="#00BFA6" opacity="0.4"/>
+        <rect x="42" y="20" width="14" height="14" rx="2" fill="rgba(255,255,255,0.1)"/>
+        <rect x="42" y="37" width="14" height="13" rx="2" fill="#00BFA6" opacity="0.35"/>
+        <line x1="2" y1="9" x2="54" y2="9" stroke="rgba(201,162,39,0.35)" stroke-width="1.5" stroke-linecap="round"/>
+      </g>
+      <text x="80" y="108" font-family="'Syne', sans-serif" font-size="28" font-weight="700" fill="white" text-anchor="middle" letter-spacing="-0.3">Assetra</text>
+      <rect x="62" y="117" width="36" height="13" rx="3" fill="rgba(0,191,166,0.18)"/>
+      <text x="80" y="127" font-family="'DM Sans', sans-serif" font-size="8" font-weight="600" fill="#00BFA6" letter-spacing="1.5" text-anchor="middle">AST</text>
+      <text x="80" y="155" font-family="'DM Sans', sans-serif" font-size="10" font-weight="400" fill="rgba(255,255,255,0.35)" text-anchor="middle" letter-spacing="1">Real Asset Tokenization</text>
+    </svg>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ ICON MARK ═══════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">02 — Logomark</div>
+  <div class="section-title">Icon &amp; Favicon</div>
+  <div class="section-desc">The icon mark distills the grid-tokenization concept into a compact, scalable form — works from 16px favicon to billboard.</div>
+</div>
+<div class="divider"></div>
+
+<div class="icon-grid" style="background: white; gap: 3rem; padding: 3.5rem; flex-wrap: wrap;">
+
+  <!-- Large icon dark bg -->
+  <div class="icon-item">
+    <div style="background: var(--navy-dark); border-radius: 28px; padding: 28px; display:flex; align-items:center; justify-content:center;">
+      <svg width="80" viewBox="0 0 70 70" fill="none">
+        <rect x="0" y="37" width="28" height="28" rx="4" fill="#00BFA6" opacity="0.9"/>
+        <rect x="31" y="37" width="28" height="28" rx="4" fill="#00BFA6" opacity="0.55"/>
+        <rect x="0" y="5" width="28" height="28" rx="4" fill="#C9A227" opacity="0.9"/>
+        <rect x="31" y="5" width="28" height="28" rx="4" fill="#00BFA6" opacity="0.35"/>
+        <line x1="2" y1="3" x2="58" y2="3" stroke="rgba(201,162,39,0.5)" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <span class="icon-size-label">App Icon · 128px</span>
+  </div>
+
+  <!-- Large icon light bg -->
+  <div class="icon-item">
+    <div style="background: #F0F3F8; border-radius: 28px; padding: 28px; display:flex; align-items:center; justify-content:center;">
+      <svg width="80" viewBox="0 0 70 70" fill="none">
+        <rect x="0" y="37" width="28" height="28" rx="4" fill="#00BFA6"/>
+        <rect x="31" y="37" width="28" height="28" rx="4" fill="#00BFA6" opacity="0.5"/>
+        <rect x="0" y="5" width="28" height="28" rx="4" fill="#C9A227"/>
+        <rect x="31" y="5" width="28" height="28" rx="4" fill="#00BFA6" opacity="0.3"/>
+        <line x1="2" y1="3" x2="58" y2="3" stroke="rgba(201,162,39,0.5)" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <span class="icon-size-label">App Icon · Light</span>
+  </div>
+
+  <!-- Medium -->
+  <div class="icon-item">
+    <div style="background: var(--navy); border-radius: 16px; padding: 16px; display:flex; align-items:center; justify-content:center;">
+      <svg width="48" viewBox="0 0 70 70" fill="none">
+        <rect x="0" y="37" width="28" height="28" rx="4" fill="#00BFA6" opacity="0.9"/>
+        <rect x="31" y="37" width="28" height="28" rx="4" fill="#00BFA6" opacity="0.55"/>
+        <rect x="0" y="5" width="28" height="28" rx="4" fill="#C9A227" opacity="0.9"/>
+        <rect x="31" y="5" width="28" height="28" rx="4" fill="#00BFA6" opacity="0.35"/>
+      </svg>
+    </div>
+    <span class="icon-size-label">Icon · 64px</span>
+  </div>
+
+  <!-- Small -->
+  <div class="icon-item">
+    <div style="background: var(--navy); border-radius: 10px; padding: 10px; display:flex; align-items:center; justify-content:center;">
+      <svg width="28" viewBox="0 0 70 70" fill="none">
+        <rect x="0" y="37" width="28" height="28" rx="4" fill="#00BFA6"/>
+        <rect x="31" y="37" width="28" height="28" rx="4" fill="#00BFA6" opacity="0.55"/>
+        <rect x="0" y="5" width="28" height="28" rx="4" fill="#C9A227"/>
+        <rect x="31" y="5" width="28" height="28" rx="4" fill="#00BFA6" opacity="0.35"/>
+      </svg>
+    </div>
+    <span class="icon-size-label">Icon · 32px</span>
+  </div>
+
+  <!-- Favicon -->
+  <div class="icon-item">
+    <div style="background: var(--navy); border-radius: 5px; padding: 4px; display:flex; align-items:center; justify-content:center;">
+      <svg width="16" viewBox="0 0 70 70" fill="none">
+        <rect x="0" y="37" width="28" height="28" rx="4" fill="#00BFA6"/>
+        <rect x="31" y="37" width="28" height="28" rx="4" fill="#00BFA6" opacity="0.55"/>
+        <rect x="0" y="5" width="28" height="28" rx="4" fill="#C9A227"/>
+        <rect x="31" y="5" width="28" height="28" rx="4" fill="#00BFA6" opacity="0.35"/>
+      </svg>
+    </div>
+    <span class="icon-size-label">Favicon · 16px</span>
+  </div>
+
+  <!-- Monochrome dark -->
+  <div class="icon-item">
+    <div style="background: white; border: 1px solid var(--grey-200); border-radius: 16px; padding: 16px; display:flex; align-items:center; justify-content:center;">
+      <svg width="48" viewBox="0 0 70 70" fill="none">
+        <rect x="0" y="37" width="28" height="28" rx="4" fill="#0A2540"/>
+        <rect x="31" y="37" width="28" height="28" rx="4" fill="#0A2540" opacity="0.55"/>
+        <rect x="0" y="5" width="28" height="28" rx="4" fill="#0A2540" opacity="0.85"/>
+        <rect x="31" y="5" width="28" height="28" rx="4" fill="#0A2540" opacity="0.3"/>
+      </svg>
+    </div>
+    <span class="icon-size-label">Monochrome</span>
+  </div>
+
+  <!-- White mono -->
+  <div class="icon-item">
+    <div style="background: #0A2540; border-radius: 16px; padding: 16px; display:flex; align-items:center; justify-content:center;">
+      <svg width="48" viewBox="0 0 70 70" fill="none">
+        <rect x="0" y="37" width="28" height="28" rx="4" fill="white"/>
+        <rect x="31" y="37" width="28" height="28" rx="4" fill="white" opacity="0.55"/>
+        <rect x="0" y="5" width="28" height="28" rx="4" fill="white" opacity="0.85"/>
+        <rect x="31" y="5" width="28" height="28" rx="4" fill="white" opacity="0.3"/>
+      </svg>
+    </div>
+    <span class="icon-size-label">White Mono</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ MONOCHROME ════════════════════════════════════════ -->
+<div style="margin-top: 1.5px;">
+<div class="logo-grid">
+  <div class="logo-cell bg-white bg-light" style="background: #F7F8FA;">
+    <span class="logo-cell-label" style="color:var(--grey-400)">Mono — Light Field</span>
+    <svg width="280" viewBox="0 0 380 80" fill="none">
+      <g transform="translate(0, 8)">
+        <rect x="0" y="32" width="18" height="18" rx="2" fill="#0A2540"/>
+        <rect x="21" y="32" width="18" height="18" rx="2" fill="#0A2540" opacity="0.55"/>
+        <rect x="0" y="11" width="18" height="18" rx="2" fill="#0A2540" opacity="0.8"/>
+        <rect x="21" y="11" width="18" height="18" rx="2" fill="#0A2540" opacity="0.3"/>
+        <rect x="42" y="20" width="14" height="14" rx="2" fill="#0A2540" opacity="0.15"/>
+        <rect x="42" y="37" width="14" height="13" rx="2" fill="#0A2540" opacity="0.25"/>
+      </g>
+      <text x="74" y="52" font-family="'Syne', sans-serif" font-size="36" font-weight="700" fill="#0A2540" letter-spacing="-0.5">Assetra</text>
+    </svg>
+  </div>
+
+  <div class="logo-cell" style="background: #0A2540;">
+    <span class="logo-cell-label" style="color:rgba(255,255,255,0.3)">Mono — Dark Field</span>
+    <svg width="280" viewBox="0 0 380 80" fill="none">
+      <g transform="translate(0, 8)">
+        <rect x="0" y="32" width="18" height="18" rx="2" fill="white"/>
+        <rect x="21" y="32" width="18" height="18" rx="2" fill="white" opacity="0.55"/>
+        <rect x="0" y="11" width="18" height="18" rx="2" fill="white" opacity="0.8"/>
+        <rect x="21" y="11" width="18" height="18" rx="2" fill="white" opacity="0.3"/>
+        <rect x="42" y="20" width="14" height="14" rx="2" fill="white" opacity="0.12"/>
+        <rect x="42" y="37" width="14" height="13" rx="2" fill="white" opacity="0.22"/>
+      </g>
+      <text x="74" y="52" font-family="'Syne', sans-serif" font-size="36" font-weight="700" fill="white" letter-spacing="-0.5">Assetra</text>
+    </svg>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════ COLORS ════════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">03 — Palette</div>
+  <div class="section-title">Color System</div>
+  <div class="section-desc">A financial-grade palette anchored in deep navy with teal innovation and gold authority. Each color carries semantic weight across the ecosystem.</div>
+</div>
+<div class="divider"></div>
+
+<div class="color-row" style="margin-top: 1.5px;">
+  <div class="color-swatch swatch-navy" style="height: 220px;">
+    <span class="color-swatch-role">Primary</span>
+    <span class="color-swatch-name">Deep Navy</span>
+    <span class="color-swatch-hex">#0A2540</span>
+  </div>
+  <div class="color-swatch swatch-teal" style="height: 220px;">
+    <span class="color-swatch-role">Secondary</span>
+    <span class="color-swatch-name">Teal</span>
+    <span class="color-swatch-hex">#00BFA6</span>
+  </div>
+  <div class="color-swatch swatch-gold" style="height: 220px;">
+    <span class="color-swatch-role">Accent</span>
+    <span class="color-swatch-name">Metallic Gold</span>
+    <span class="color-swatch-hex">#C9A227</span>
+  </div>
+  <div class="color-swatch swatch-white" style="height: 220px;">
+    <span class="color-swatch-role" style="color:var(--navy)">Neutral</span>
+    <span class="color-swatch-name" style="color:var(--navy)">Pure White</span>
+    <span class="color-swatch-hex" style="color:var(--grey-600)">#FFFFFF</span>
+  </div>
+  <div class="color-swatch swatch-grey" style="height: 220px;">
+    <span class="color-swatch-role" style="color:var(--navy)">Neutral</span>
+    <span class="color-swatch-name" style="color:var(--navy)">Light Grey</span>
+    <span class="color-swatch-hex" style="color:var(--grey-600)">#EEF1F6</span>
+  </div>
+</div>
+
+<!-- Tonal shades row -->
+<div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 1.5px; margin-top: 1.5px;">
+  <div style="background: #061830; height:60px; display:flex; flex-direction:column; justify-content:flex-end; padding: 10px 14px;">
+    <span style="font-size:9px; color:rgba(255,255,255,0.5); letter-spacing:1.5px;">NAVY 900</span>
+  </div>
+  <div style="background: #0A2540; height:60px; display:flex; flex-direction:column; justify-content:flex-end; padding: 10px 14px;">
+    <span style="font-size:9px; color:rgba(255,255,255,0.5); letter-spacing:1.5px;">NAVY 700</span>
+  </div>
+  <div style="background: #0d3060; height:60px; display:flex; flex-direction:column; justify-content:flex-end; padding: 10px 14px;">
+    <span style="font-size:9px; color:rgba(255,255,255,0.5); letter-spacing:1.5px;">NAVY 500</span>
+  </div>
+  <div style="background: #1e4a80; height:60px; display:flex; flex-direction:column; justify-content:flex-end; padding: 10px 14px;">
+    <span style="font-size:9px; color:rgba(255,255,255,0.5); letter-spacing:1.5px;">NAVY 300</span>
+  </div>
+  <div style="background: #4a7ab0; height:60px; display:flex; flex-direction:column; justify-content:flex-end; padding: 10px 14px;">
+    <span style="font-size:9px; color:rgba(255,255,255,0.7); letter-spacing:1.5px;">NAVY 200</span>
+  </div>
+  <div style="background: #a0bedc; height:60px; display:flex; flex-direction:column; justify-content:flex-end; padding: 10px 14px;">
+    <span style="font-size:9px; color:rgba(10,37,64,0.6); letter-spacing:1.5px;">NAVY 100</span>
+  </div>
+  <div style="background: #E6EEF8; height:60px; display:flex; flex-direction:column; justify-content:flex-end; padding: 10px 14px;">
+    <span style="font-size:9px; color:rgba(10,37,64,0.5); letter-spacing:1.5px;">NAVY 50</span>
+  </div>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(7, 1fr); gap: 1.5px; margin-top: 1.5px;">
+  <div style="background: #004d42; height:48px; display:flex; flex-direction:column; justify-content:flex-end; padding: 8px 14px;">
+    <span style="font-size:9px; color:rgba(255,255,255,0.5); letter-spacing:1.5px;">TEAL 900</span>
+  </div>
+  <div style="background: #007a68; height:48px; display:flex; flex-direction:column; justify-content:flex-end; padding: 8px 14px;">
+    <span style="font-size:9px; color:rgba(255,255,255,0.5); letter-spacing:1.5px;">TEAL 700</span>
+  </div>
+  <div style="background: #009985; height:48px; display:flex; flex-direction:column; justify-content:flex-end; padding: 8px 14px;">
+    <span style="font-size:9px; color:rgba(255,255,255,0.5); letter-spacing:1.5px;">TEAL 500</span>
+  </div>
+  <div style="background: #00BFA6; height:48px; display:flex; flex-direction:column; justify-content:flex-end; padding: 8px 14px;">
+    <span style="font-size:9px; color:rgba(255,255,255,0.7); letter-spacing:1.5px;">TEAL 400</span>
+  </div>
+  <div style="background: #00d4b8; height:48px; display:flex; flex-direction:column; justify-content:flex-end; padding: 8px 14px;">
+    <span style="font-size:9px; color:rgba(10,37,64,0.5); letter-spacing:1.5px;">TEAL 300</span>
+  </div>
+  <div style="background: #80e8dc; height:48px; display:flex; flex-direction:column; justify-content:flex-end; padding: 8px 14px;">
+    <span style="font-size:9px; color:rgba(10,37,64,0.4); letter-spacing:1.5px;">TEAL 100</span>
+  </div>
+  <div style="background: #e0faf6; height:48px; display:flex; flex-direction:column; justify-content:flex-end; padding: 8px 14px;">
+    <span style="font-size:9px; color:rgba(10,37,64,0.4); letter-spacing:1.5px;">TEAL 50</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ TYPOGRAPHY ════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">04 — Typography</div>
+  <div class="section-title">Type System</div>
+  <div class="section-desc">Syne for display and structural hierarchy. DM Sans for body, UI, and functional text. Together they balance ambition with readability.</div>
+</div>
+<div class="divider"></div>
+
+<div class="type-block" style="margin-top: 1.5px;">
+  <div style="margin-bottom: 2rem;">
+    <span style="font-size: 10px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--grey-400);">Primary — Syne</span>
+  </div>
+  <div class="type-specimen-display">Assetra<br><span style="color: var(--teal);">Protocol</span></div>
+  <div class="type-specimen-sub" style="margin-top: 1rem;">Tokenizing Real-World Assets</div>
+</div>
+
+<div style="background: white; padding: 2.5rem 3.5rem; margin-top: 1.5px;">
+  <div style="margin-bottom: 1.5rem;">
+    <span style="font-size: 10px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--grey-400);">Type Scale</span>
+  </div>
+  <div class="type-scale-row">
+    <span class="type-scale-meta">Display / H1</span>
+    <span style="font-family: 'Syne', sans-serif; font-size: 48px; font-weight: 800; color: var(--navy); letter-spacing: -1.5px; line-height:1;">Invest in the Real World</span>
+  </div>
+  <div class="type-scale-row">
+    <span class="type-scale-meta">H2</span>
+    <span style="font-family: 'Syne', sans-serif; font-size: 32px; font-weight: 700; color: var(--navy); letter-spacing: -0.5px;">Asset Tokenization Platform</span>
+  </div>
+  <div class="type-scale-row">
+    <span class="type-scale-meta">H3</span>
+    <span style="font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 600; color: var(--navy);">Energy · Real Estate · Carbon Credits</span>
+  </div>
+  <div class="type-scale-row">
+    <span class="type-scale-meta">Body / Lead</span>
+    <span style="font-size: 17px; font-weight: 400; color: var(--grey-600); line-height: 1.6;">Assetra bridges institutional capital with blockchain-native efficiency, creating a new paradigm for global asset investment.</span>
+  </div>
+  <div class="type-scale-row">
+    <span class="type-scale-meta">Caption / Label</span>
+    <span style="font-size: 12px; font-weight: 500; color: var(--grey-400); letter-spacing: 1.5px; text-transform: uppercase;">Token Symbol · AST · ERC-20</span>
+  </div>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5px; margin-top: 1.5px;">
+  <div style="background: white; padding: 2.5rem;">
+    <div style="margin-bottom: 1.25rem; font-size: 10px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--grey-400);">Primary Font — Syne</div>
+    <div style="font-family: 'Syne', sans-serif; font-size: 48px; font-weight: 800; color: var(--navy); line-height: 0.95; margin-bottom: 1rem;">Aa Bb Cc<br>Dd Ee Ff</div>
+    <div style="font-family: 'Syne', sans-serif; font-size: 18px; color: var(--grey-600);">ABCDEFGHIJKLMNOP<br>QRSTUVWXYZ 0123456789</div>
+    <div style="margin-top: 1.25rem; font-size: 11px; color: var(--grey-400); letter-spacing: 1px;">Syne — Weights: 400 Regular · 600 SemiBold · 700 Bold · 800 ExtraBold</div>
+  </div>
+  <div style="background: white; padding: 2.5rem;">
+    <div style="margin-bottom: 1.25rem; font-size: 10px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--grey-400);">Secondary Font — DM Sans</div>
+    <div style="font-family: 'DM Sans', sans-serif; font-size: 48px; font-weight: 300; color: var(--navy); line-height: 0.95; margin-bottom: 1rem;">Aa Bb Cc<br>Dd Ee Ff</div>
+    <div style="font-family: 'DM Sans', sans-serif; font-size: 18px; color: var(--grey-600);">abcdefghijklmnopqrst<br>uvwxyz 0123456789</div>
+    <div style="margin-top: 1.25rem; font-size: 11px; color: var(--grey-400); letter-spacing: 1px;">DM Sans — Weights: 300 Light · 400 Regular · 500 Medium · 600 SemiBold</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ TOKEN COIN ════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">05 — Token</div>
+  <div class="section-title">AST Coin Design</div>
+  <div class="section-desc">The AST token coin merges the logomark with a premium coin aesthetic — designed for DeFi dashboards, CEX listings, and investor decks.</div>
+</div>
+<div class="divider"></div>
+
+<div class="coin-showcase" style="margin-top: 1.5px;">
+
+  <!-- Gold coin -->
+  <div class="coin-cell" style="background: var(--navy-dark);">
+    <svg width="160" viewBox="0 0 160 160" fill="none">
+      <!-- Outer ring -->
+      <circle cx="80" cy="80" r="76" fill="#1a1a2e" stroke="#C9A227" stroke-width="1.5"/>
+      <!-- Mid ring -->
+      <circle cx="80" cy="80" r="70" fill="none" stroke="rgba(201,162,39,0.2)" stroke-width="1"/>
+      <!-- Face gradient sim -->
+      <circle cx="80" cy="80" r="66" fill="#1e1435"/>
+      <!-- Inner accent ring -->
+      <circle cx="80" cy="80" r="62" fill="none" stroke="rgba(201,162,39,0.15)" stroke-width="0.5"/>
+      <!-- Grid mark scaled -->
+      <g transform="translate(47, 52)">
+        <rect x="0" y="24" width="19" height="19" rx="2.5" fill="#00BFA6" opacity="0.85"/>
+        <rect x="22" y="24" width="19" height="19" rx="2.5" fill="#00BFA6" opacity="0.5"/>
+        <rect x="0" y="1" width="19" height="19" rx="2.5" fill="#C9A227" opacity="0.9"/>
+        <rect x="22" y="1" width="19" height="19" rx="2.5" fill="#00BFA6" opacity="0.3"/>
+        <line x1="1" y1="0" x2="40" y2="0" stroke="rgba(201,162,39,0.4)" stroke-width="1.5" stroke-linecap="round"/>
+      </g>
+      <!-- AST label -->
+      <text x="80" y="106" font-family="'DM Sans', sans-serif" font-size="13" font-weight="600" fill="#C9A227" text-anchor="middle" letter-spacing="3">AST</text>
+      <!-- Rim text -->
+      <path id="rimtop" d="M 80 80 m -60 0 a 60 60 0 0 1 120 0" fill="none"/>
+      <text font-family="'DM Sans', sans-serif" font-size="7.5" fill="rgba(201,162,39,0.45)" letter-spacing="2.5">
+        <textPath href="#rimtop" startOffset="5%">ASSETRA PROTOCOL · REAL WORLD ASSETS ·</textPath>
+      </text>
+    </svg>
+    <span class="coin-label" style="color: rgba(255,255,255,0.3);">Premium Gold Edition</span>
+  </div>
+
+  <!-- Teal/dark coin -->
+  <div class="coin-cell" style="background: #EEF1F6;">
+    <svg width="180" viewBox="0 0 160 160" fill="none">
+      <circle cx="80" cy="80" r="76" fill="white" stroke="var(--teal)" stroke-width="1.5"/>
+      <circle cx="80" cy="80" r="70" fill="none" stroke="rgba(0,191,166,0.15)" stroke-width="1"/>
+      <circle cx="80" cy="80" r="66" fill="#F0FAF8"/>
+      <circle cx="80" cy="80" r="62" fill="none" stroke="rgba(0,191,166,0.1)" stroke-width="0.5"/>
+      <g transform="translate(47, 52)">
+        <rect x="0" y="24" width="19" height="19" rx="2.5" fill="#00BFA6"/>
+        <rect x="22" y="24" width="19" height="19" rx="2.5" fill="#00BFA6" opacity="0.5"/>
+        <rect x="0" y="1" width="19" height="19" rx="2.5" fill="#C9A227"/>
+        <rect x="22" y="1" width="19" height="19" rx="2.5" fill="#0A2540" opacity="0.2"/>
+        <line x1="1" y1="0" x2="40" y2="0" stroke="rgba(201,162,39,0.5)" stroke-width="1.5" stroke-linecap="round"/>
+      </g>
+      <text x="80" y="106" font-family="'DM Sans', sans-serif" font-size="13" font-weight="600" fill="#009985" text-anchor="middle" letter-spacing="3">AST</text>
+      <path id="rimtop2" d="M 80 80 m -60 0 a 60 60 0 0 1 120 0" fill="none"/>
+      <text font-family="'DM Sans', sans-serif" font-size="7.5" fill="rgba(0,153,133,0.4)" letter-spacing="2.5">
+        <textPath href="#rimtop2" startOffset="5%">ASSETRA PROTOCOL · REAL WORLD ASSETS ·</textPath>
+      </text>
+    </svg>
+    <span class="coin-label" style="color: var(--grey-400);">Standard Teal Edition</span>
+  </div>
+
+  <!-- Navy coin -->
+  <div class="coin-cell" style="background: white; border: 1px solid var(--grey-100);">
+    <svg width="140" viewBox="0 0 160 160" fill="none">
+      <circle cx="80" cy="80" r="76" fill="#0A2540" stroke="rgba(10,37,64,0.3)" stroke-width="1.5"/>
+      <circle cx="80" cy="80" r="70" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+      <circle cx="80" cy="80" r="66" fill="#061830"/>
+      <circle cx="80" cy="80" r="62" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="0.5"/>
+      <g transform="translate(47, 52)">
+        <rect x="0" y="24" width="19" height="19" rx="2.5" fill="white" opacity="0.85"/>
+        <rect x="22" y="24" width="19" height="19" rx="2.5" fill="white" opacity="0.4"/>
+        <rect x="0" y="1" width="19" height="19" rx="2.5" fill="white" opacity="0.7"/>
+        <rect x="22" y="1" width="19" height="19" rx="2.5" fill="white" opacity="0.2"/>
+      </g>
+      <text x="80" y="106" font-family="'DM Sans', sans-serif" font-size="13" font-weight="600" fill="rgba(255,255,255,0.7)" text-anchor="middle" letter-spacing="3">AST</text>
+      <path id="rimtop3" d="M 80 80 m -60 0 a 60 60 0 0 1 120 0" fill="none"/>
+      <text font-family="'DM Sans', sans-serif" font-size="7.5" fill="rgba(255,255,255,0.2)" letter-spacing="2.5">
+        <textPath href="#rimtop3" startOffset="5%">ASSETRA PROTOCOL · REAL WORLD ASSETS ·</textPath>
+      </text>
+    </svg>
+    <span class="coin-label" style="color: var(--grey-400);">Monochrome Navy Edition</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ USAGE MOCKUPS ══════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">06 — Application</div>
+  <div class="section-title">Brand in Context</div>
+  <div class="section-desc">Real-world applications across digital touchpoints — pitch decks, dashboards, and mobile interfaces.</div>
+</div>
+<div class="divider"></div>
+
+<div class="usage-grid" style="margin-top: 1.5px;">
+
+  <!-- Dashboard card -->
+  <div class="usage-card" style="background: var(--navy-dark); padding: 0; overflow: hidden;">
+    <div style="background: var(--navy); padding: 1.25rem 1.5rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(255,255,255,0.06);">
+      <svg width="100" viewBox="0 0 380 80" fill="none">
+        <g transform="translate(0, 8)">
+          <rect x="0" y="32" width="18" height="18" rx="2" fill="#00BFA6" opacity="0.9"/>
+          <rect x="21" y="32" width="18" height="18" rx="2" fill="#00BFA6" opacity="0.6"/>
+          <rect x="0" y="11" width="18" height="18" rx="2" fill="#C9A227" opacity="0.85"/>
+          <rect x="21" y="11" width="18" height="18" rx="2" fill="#00BFA6" opacity="0.4"/>
+        </g>
+        <text x="56" y="52" font-family="'Syne', sans-serif" font-size="36" font-weight="700" fill="white" letter-spacing="-0.5">Assetra</text>
+      </svg>
+      <div style="display: flex; gap: 8px;">
+        <div style="width:8px; height:8px; border-radius:50%; background: rgba(255,255,255,0.15);"></div>
+        <div style="width:8px; height:8px; border-radius:50%; background: rgba(255,255,255,0.15);"></div>
+        <div style="width:8px; height:8px; border-radius:50%; background: rgba(255,255,255,0.15);"></div>
+      </div>
+    </div>
+    <div style="padding: 1.5rem;">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 1.25rem;">
+        <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 14px;">
+          <div style="font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 6px;">Portfolio Value</div>
+          <div style="font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 700; color: white;">$2.4M</div>
+          <div style="font-size: 11px; color: #00BFA6; margin-top: 4px;">↑ 12.4%</div>
+        </div>
+        <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 14px;">
+          <div style="font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 6px;">AST Holdings</div>
+          <div style="font-family: 'Syne', sans-serif; font-size: 24px; font-weight: 700; color: white;">48,200</div>
+          <div style="font-size: 11px; color: #C9A227; margin-top: 4px;">$1.38 / AST</div>
+        </div>
+      </div>
+      <div style="background: rgba(0,191,166,0.06); border: 1px solid rgba(0,191,166,0.15); border-radius: 10px; padding: 14px; margin-bottom: 1rem;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-size: 13px; color: rgba(255,255,255,0.7);">Real Estate Pool</span>
+          <span style="font-size: 13px; font-weight: 600; color: #00BFA6;">$840K</span>
+        </div>
+        <div style="background: rgba(255,255,255,0.08); border-radius: 4px; height: 4px; margin-top: 8px; overflow: hidden;">
+          <div style="background: #00BFA6; width: 65%; height: 100%; border-radius: 4px;"></div>
+        </div>
+      </div>
+      <div style="background: rgba(201,162,39,0.06); border: 1px solid rgba(201,162,39,0.15); border-radius: 10px; padding: 14px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-size: 13px; color: rgba(255,255,255,0.7);">Energy Credits</span>
+          <span style="font-size: 13px; font-weight: 600; color: #C9A227;">$320K</span>
+        </div>
+        <div style="background: rgba(255,255,255,0.08); border-radius: 4px; height: 4px; margin-top: 8px; overflow: hidden;">
+          <div style="background: #C9A227; width: 38%; height: 100%; border-radius: 4px;"></div>
+        </div>
+      </div>
+    </div>
+    <div style="padding: 0.5rem 1.5rem 1.5rem; font-size: 9px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(255,255,255,0.2); text-align: center;">Blockchain Dashboard — Dark Mode</div>
+  </div>
+
+  <!-- Pitch deck slide -->
+  <div class="usage-card" style="background: var(--offwhite); padding: 0; overflow: hidden;">
+    <div style="background: var(--navy); padding: 3rem 2.5rem 2rem; position: relative; overflow: hidden;">
+      <div style="position: absolute; inset: 0; background-image: linear-gradient(rgba(0,191,166,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,191,166,0.04) 1px, transparent 1px); background-size: 32px 32px;"></div>
+      <div style="position: relative;">
+        <svg width="120" viewBox="0 0 380 80" fill="none" style="margin-bottom: 2rem;">
+          <g transform="translate(0, 8)">
+            <rect x="0" y="32" width="18" height="18" rx="2" fill="#00BFA6" opacity="0.9"/>
+            <rect x="21" y="32" width="18" height="18" rx="2" fill="#00BFA6" opacity="0.6"/>
+            <rect x="0" y="11" width="18" height="18" rx="2" fill="#C9A227" opacity="0.85"/>
+            <rect x="21" y="11" width="18" height="18" rx="2" fill="#00BFA6" opacity="0.4"/>
+          </g>
+          <text x="56" y="52" font-family="'Syne', sans-serif" font-size="36" font-weight="700" fill="white" letter-spacing="-0.5">Assetra</text>
+        </svg>
+        <div style="font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 700; color: white; line-height: 1.2; margin-bottom: 0.75rem;">Invest in Physical<br>Assets. On-Chain.</div>
+        <div style="font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.6;">Tokenizing energy, land, real estate &amp;<br>carbon credits for global investors.</div>
+      </div>
+    </div>
+    <div style="padding: 1.5rem 2rem; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem;">
+      <div style="text-align: center;">
+        <div style="font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; color: var(--navy);">$4.2B</div>
+        <div style="font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--grey-400); margin-top: 4px;">TVL Target</div>
+      </div>
+      <div style="text-align: center; border-left: 1px solid var(--grey-200); border-right: 1px solid var(--grey-200);">
+        <div style="font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; color: var(--teal);">180+</div>
+        <div style="font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--grey-400); margin-top: 4px;">Countries</div>
+      </div>
+      <div style="text-align: center;">
+        <div style="font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; color: var(--gold);">AST</div>
+        <div style="font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--grey-400); margin-top: 4px;">Token Symbol</div>
+      </div>
+    </div>
+    <div style="padding: 0 2rem 1.25rem; font-size: 9px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--grey-400); text-align: center;">Pitch Deck — Light Mode</div>
+  </div>
+
+  <!-- Mobile app -->
+  <div class="usage-card" style="background: #1A1A2E; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 2.5rem;">
+    <div style="width: 200px; background: var(--navy-dark); border-radius: 32px; border: 8px solid #111; overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.5);">
+      <!-- Status bar -->
+      <div style="background: var(--navy); padding: 8px 16px; display: flex; justify-content: space-between; align-items: center;">
+        <span style="font-size: 9px; color: rgba(255,255,255,0.5);">9:41</span>
+        <div style="display: flex; gap: 4px; align-items: center;">
+          <div style="width: 12px; height: 6px; border: 1px solid rgba(255,255,255,0.4); border-radius: 2px;"><div style="width: 8px; height: 100%; background: rgba(255,255,255,0.5);"></div></div>
+        </div>
+      </div>
+      <!-- App header -->
+      <div style="background: var(--navy); padding: 12px 16px 16px; border-bottom: 1px solid rgba(255,255,255,0.05);">
+        <svg width="90" viewBox="0 0 380 80" fill="none">
+          <g transform="translate(0, 8)">
+            <rect x="0" y="32" width="18" height="18" rx="2" fill="#00BFA6" opacity="0.9"/>
+            <rect x="21" y="32" width="18" height="18" rx="2" fill="#00BFA6" opacity="0.6"/>
+            <rect x="0" y="11" width="18" height="18" rx="2" fill="#C9A227" opacity="0.85"/>
+            <rect x="21" y="11" width="18" height="18" rx="2" fill="#00BFA6" opacity="0.4"/>
+          </g>
+          <text x="56" y="52" font-family="'Syne', sans-serif" font-size="36" font-weight="700" fill="white" letter-spacing="-0.5">Assetra</text>
+        </svg>
+      </div>
+      <!-- Balance -->
+      <div style="padding: 16px; text-align: center; background: var(--navy-dark);">
+        <div style="font-size: 9px; color: rgba(255,255,255,0.35); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 6px;">Portfolio Balance</div>
+        <div style="font-family: 'Syne', sans-serif; font-size: 26px; font-weight: 700; color: white;">$124,830</div>
+        <div style="font-size: 10px; color: #00BFA6; margin-top: 4px;">↑ $2,140 (1.74%)</div>
+      </div>
+      <!-- Asset list -->
+      <div style="padding: 12px 14px;">
+        <div style="background: rgba(0,191,166,0.08); border-radius: 8px; padding: 10px 12px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="font-size: 11px; font-weight: 600; color: white;">Real Estate</div>
+            <div style="font-size: 9px; color: rgba(255,255,255,0.4);">12 tokens</div>
+          </div>
+          <div style="font-size: 12px; font-weight: 600; color: #00BFA6;">$68K</div>
+        </div>
+        <div style="background: rgba(201,162,39,0.08); border-radius: 8px; padding: 10px 12px; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <div style="font-size: 11px; font-weight: 600; color: white;">Energy</div>
+            <div style="font-size: 9px; color: rgba(255,255,255,0.4);">8 tokens</div>
+          </div>
+          <div style="font-size: 12px; font-weight: 600; color: #C9A227;">$32K</div>
+        </div>
+      </div>
+      <!-- Nav bar -->
+      <div style="background: var(--navy); padding: 10px; display: flex; justify-content: space-around; border-top: 1px solid rgba(255,255,255,0.05);">
+        <div style="width: 6px; height: 6px; border-radius: 50%; background: #00BFA6;"></div>
+        <div style="width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.2);"></div>
+        <div style="width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.2);"></div>
+        <div style="width: 6px; height: 6px; border-radius: 50%; background: rgba(255,255,255,0.2);"></div>
+      </div>
+    </div>
+    <div style="margin-top: 1.5rem; font-size: 9px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(255,255,255,0.25);">Mobile App — iOS Preview</div>
+  </div>
+
+  <!-- Business card -->
+  <div class="usage-card" style="background: var(--grey-100); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1.5rem;">
+    <!-- Front -->
+    <div style="width: 280px; background: var(--navy); border-radius: 14px; padding: 1.75rem; position: relative; overflow: hidden;">
+      <div style="position: absolute; top: -30px; right: -30px; width: 120px; height: 120px; border-radius: 50%; background: rgba(0,191,166,0.06);"></div>
+      <div style="position: absolute; bottom: -20px; left: -20px; width: 80px; height: 80px; border-radius: 50%; background: rgba(201,162,39,0.06);"></div>
+      <svg width="100" viewBox="0 0 380 80" fill="none" style="margin-bottom: 1.25rem; position: relative;">
+        <g transform="translate(0, 8)">
+          <rect x="0" y="32" width="18" height="18" rx="2" fill="#00BFA6" opacity="0.9"/>
+          <rect x="21" y="32" width="18" height="18" rx="2" fill="#00BFA6" opacity="0.6"/>
+          <rect x="0" y="11" width="18" height="18" rx="2" fill="#C9A227" opacity="0.85"/>
+          <rect x="21" y="11" width="18" height="18" rx="2" fill="#00BFA6" opacity="0.4"/>
+        </g>
+        <text x="56" y="52" font-family="'Syne', sans-serif" font-size="36" font-weight="700" fill="white" letter-spacing="-0.5">Assetra</text>
+      </svg>
+      <div style="position: relative;">
+        <div style="font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 600; color: white; margin-bottom: 3px;">Alexandra Chen</div>
+        <div style="font-size: 11px; color: rgba(255,255,255,0.45); margin-bottom: 1rem;">Head of Institutional Partnerships</div>
+        <div style="font-size: 10px; color: rgba(255,255,255,0.3); line-height: 1.8;">
+          a.chen@assetra.io<br>
+          assetra.io · Token: AST
+        </div>
+      </div>
+    </div>
+
+    <!-- Back -->
+    <div style="width: 280px; background: white; border: 1px solid var(--grey-200); border-radius: 14px; padding: 1.75rem; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+      <svg width="44" viewBox="0 0 70 70" fill="none" style="margin-bottom: 1rem;">
+        <rect x="0" y="37" width="28" height="28" rx="4" fill="#00BFA6"/>
+        <rect x="31" y="37" width="28" height="28" rx="4" fill="#00BFA6" opacity="0.5"/>
+        <rect x="0" y="5" width="28" height="28" rx="4" fill="#C9A227"/>
+        <rect x="31" y="5" width="28" height="28" rx="4" fill="#0A2540" opacity="0.2"/>
+        <line x1="1" y1="3" x2="58" y2="3" stroke="rgba(201,162,39,0.4)" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      <div style="font-size: 10px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--grey-400);">Tokenizing Real-World Assets</div>
+    </div>
+    <div style="font-size: 9px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--grey-400);">Business Card — Front &amp; Back</div>
+  </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════ CLEAR SPACE ══════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">07 — Guidelines</div>
+  <div class="section-title">Usage Rules</div>
+  <div class="section-desc">Consistent application ensures brand integrity across all media. These minimum standards protect the logo's visual clarity.</div>
+</div>
+<div class="divider"></div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.5px; margin-top: 1.5px;">
+
+  <div style="background: white; padding: 2.5rem 2rem; text-align: center;">
+    <div style="display: inline-flex; align-items: center; justify-content: center; margin-bottom: 1.5rem; position: relative; padding: 24px; border: 1px dashed var(--grey-200); border-radius: 8px;">
+      <div style="position: absolute; top: 0; left: 0; right: 0; height: 24px; border-bottom: 1px dashed rgba(0,191,166,0.4);"></div>
+      <div style="position: absolute; bottom: 0; left: 0; right: 0; height: 24px; border-top: 1px dashed rgba(0,191,166,0.4);"></div>
+      <div style="position: absolute; top: 0; bottom: 0; left: 0; width: 24px; border-right: 1px dashed rgba(0,191,166,0.4);"></div>
+      <div style="position: absolute; top: 0; bottom: 0; right: 0; width: 24px; border-left: 1px dashed rgba(0,191,166,0.4);"></div>
+      <svg width="80" viewBox="0 0 380 80" fill="none">
+        <g transform="translate(0, 8)">
+          <rect x="0" y="32" width="18" height="18" rx="2" fill="#00BFA6"/>
+          <rect x="21" y="32" width="18" height="18" rx="2" fill="#00BFA6" opacity="0.55"/>
+          <rect x="0" y="11" width="18" height="18" rx="2" fill="#C9A227"/>
+          <rect x="21" y="11" width="18" height="18" rx="2" fill="#00BFA6" opacity="0.3"/>
+        </g>
+        <text x="56" y="52" font-family="'Syne', sans-serif" font-size="36" font-weight="700" fill="#0A2540" letter-spacing="-0.5">Assetra</text>
+      </svg>
+    </div>
+    <div style="font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--grey-400); margin-bottom: 6px;">Clear Space</div>
+    <div style="font-size: 13px; color: var(--grey-600);">Minimum clear space equal to the cap-height of the "A" on all sides.</div>
+  </div>
+
+  <div style="background: white; padding: 2.5rem 2rem;">
+    <div style="font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: #E74C3C; margin-bottom: 1.25rem;">Do Not</div>
+    <div style="display: flex; flex-direction: column; gap: 1rem;">
+      <div style="display: flex; align-items: center; gap: 1rem; padding: 12px; background: #FEF2F2; border-radius: 8px; border: 1px solid #FED7D7;">
+        <svg width="50" viewBox="0 0 380 80" fill="none" style="opacity: 0.5; filter: grayscale(100%); transform: rotate(15deg); flex-shrink: 0;">
+          <text x="20" y="52" font-family="'Syne', sans-serif" font-size="36" font-weight="700" fill="#0A2540" letter-spacing="-0.5">Assetra</text>
+        </svg>
+        <span style="font-size: 11px; color: #C53030;">Don't rotate or skew</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 1rem; padding: 12px; background: #FEF2F2; border-radius: 8px; border: 1px solid #FED7D7;">
+        <svg width="50" viewBox="0 0 380 80" fill="none" style="flex-shrink: 0;">
+          <text x="20" y="52" font-family="'Syne', sans-serif" font-size="36" font-weight="700" fill="#E74C3C" letter-spacing="-0.5">Assetra</text>
+        </svg>
+        <span style="font-size: 11px; color: #C53030;">Don't use unapproved colors</span>
+      </div>
+      <div style="display: flex; align-items: center; gap: 1rem; padding: 12px; background: #FEF2F2; border-radius: 8px; border: 1px solid #FED7D7;">
+        <div style="background: #F5A623; border-radius: 4px; padding: 4px 8px; flex-shrink: 0;">
+          <svg width="40" viewBox="0 0 380 80" fill="none">
+            <text x="10" y="52" font-family="'Syne', sans-serif" font-size="36" font-weight="700" fill="white" letter-spacing="-0.5">Assetra</text>
+          </svg>
+        </div>
+        <span style="font-size: 11px; color: #C53030;">Don't use low-contrast backgrounds</span>
+      </div>
+    </div>
+  </div>
+
+  <div style="background: white; padding: 2.5rem 2rem;">
+    <div style="font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--teal-dark); margin-bottom: 1.25rem;">Approved Backgrounds</div>
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <div style="background: var(--navy-dark); border-radius: 8px; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between;">
+        <span style="font-size: 11px; color: rgba(255,255,255,0.5);">#061830 Deep Navy</span>
+        <span style="font-size: 10px; color: var(--teal); font-weight: 600;">✓ Primary</span>
+      </div>
+      <div style="background: var(--navy); border-radius: 8px; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between;">
+        <span style="font-size: 11px; color: rgba(255,255,255,0.5);">#0A2540 Navy</span>
+        <span style="font-size: 10px; color: var(--teal); font-weight: 600;">✓ Approved</span>
+      </div>
+      <div style="background: white; border: 1px solid var(--grey-200); border-radius: 8px; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between;">
+        <span style="font-size: 11px; color: var(--grey-600);">#FFFFFF White</span>
+        <span style="font-size: 10px; color: var(--teal-dark); font-weight: 600;">✓ Approved</span>
+      </div>
+      <div style="background: var(--offwhite); border: 1px solid var(--grey-200); border-radius: 8px; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between;">
+        <span style="font-size: 11px; color: var(--grey-600);">#F5F7FA Off-White</span>
+        <span style="font-size: 10px; color: var(--teal-dark); font-weight: 600;">✓ Approved</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ TAGLINES ══════════════════════════════════════════ -->
+<div class="section">
+  <div class="section-label">08 — Voice</div>
+  <div class="section-title">Brand Voice &amp; Taglines</div>
+</div>
+<div class="divider"></div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5px; margin-top: 1.5px;">
+  <div style="background: var(--navy); padding: 3rem; position: relative; overflow: hidden;">
+    <div style="position: absolute; inset: 0; background-image: linear-gradient(rgba(0,191,166,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(0,191,166,0.04) 1px, transparent 1px); background-size: 40px 40px;"></div>
+    <div style="position: relative;">
+      <div style="font-size: 9px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--teal); margin-bottom: 1.5rem;">Primary Tagline</div>
+      <div style="font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 700; color: white; line-height: 1.2;">Own the World.<br>One Token at a Time.</div>
+    </div>
+  </div>
+  <div style="background: white; padding: 3rem;">
+    <div style="font-size: 9px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase; color: var(--grey-400); margin-bottom: 1.5rem;">Secondary Taglines</div>
+    <div style="display: flex; flex-direction: column; gap: 1rem;">
+      <div style="padding: 1rem 1.25rem; border-left: 3px solid var(--teal); background: var(--offwhite);">
+        <div style="font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 600; color: var(--navy);">Real Assets. Digital Access.</div>
+      </div>
+      <div style="padding: 1rem 1.25rem; border-left: 3px solid var(--gold); background: var(--offwhite);">
+        <div style="font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 600; color: var(--navy);">Tokenizing Infrastructure. Globally.</div>
+      </div>
+      <div style="padding: 1rem 1.25rem; border-left: 3px solid var(--grey-200); background: var(--offwhite);">
+        <div style="font-family: 'Syne', sans-serif; font-size: 15px; font-weight: 600; color: var(--navy);">Institutional Grade. Blockchain Native.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════ FOOTER ════════════════════════════════════════════ -->
+<div class="footer">
+  <svg width="130" viewBox="0 0 380 80" fill="none" style="margin-bottom: 1.5rem; opacity: 0.6;">
+    <g transform="translate(0, 8)">
+      <rect x="0" y="32" width="18" height="18" rx="2" fill="#00BFA6" opacity="0.9"/>
+      <rect x="21" y="32" width="18" height="18" rx="2" fill="#00BFA6" opacity="0.6"/>
+      <rect x="0" y="11" width="18" height="18" rx="2" fill="#C9A227" opacity="0.85"/>
+      <rect x="21" y="11" width="18" height="18" rx="2" fill="#00BFA6" opacity="0.4"/>
+    </g>
+    <text x="56" y="52" font-family="'Syne', sans-serif" font-size="36" font-weight="700" fill="white" letter-spacing="-0.5">Assetra</text>
+  </svg>
+  <div class="footer-text">Brand Identity System v1.0 · Assetra Protocol · Token: AST ·  Designed by <a href="https://smartgenesis.io" target="_blank" style="color:#2E7D32;font-weight:500;text-decoration:none">Smart Genesis</a></div>
+  <div style="margin-top: 0.75rem; font-size: 10px; color: rgba(255,255,255,0.15); letter-spacing: 1px;">Colors · Typography · Logomark · Token Design · Usage Guidelines</div>
+</div>
+
+<script>
+  (function () {
+    var intro = document.getElementById('intro');
+    if (!intro) return;
+
+    var skipBtn = document.getElementById('intro-skip');
+    var prefersReduced = false;
+    try { prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+
+    function closeIntro() {
+      if (!intro) return;
+      intro.classList.add('out');
+      window.setTimeout(function(){
+        if (intro && intro.parentNode) intro.parentNode.removeChild(intro);
+        intro = null;
+      }, 650);
+    }
+
+    if (skipBtn) {
+      skipBtn.addEventListener('click', closeIntro);
+    }
+
+    // Auto-close after animation; shorten if reduced motion
+    var timeout = prefersReduced ? 50 : 2600;
+    window.setTimeout(closeIntro, timeout);
+  })();
+</script>
+</body>
+</html>
