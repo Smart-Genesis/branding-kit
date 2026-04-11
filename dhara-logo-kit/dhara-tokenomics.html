@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dhara Token (DHR) — Tokenomics</title>
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/poppins@5.0.8/400.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/poppins@5.0.8/500.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/poppins@5.0.8/600.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{
+  --green:#2E7D32;--green-light:#43A047;--green-dark:#1B5E20;--green-pale:#E8F5E9;
+  --brown:#6D4C41;--brown-dark:#4E342E;--brown-pale:#EFEBE9;
+  --gold:#D4AF37;--gold-dark:#8B6914;--gold-pale:#FFF8E1;
+  --beige:#F5F0E8;--beige2:#EDE8DE;--cream:#FAFAF8;
+  --ink:#1A1A0A;--ink2:#3A3A20;--ink3:#5C5844;--ink4:#9A9A7A;
+  --dark:#1C1C0E;--dark2:#242416;--dark3:#2E2E1A;
+  --radius:16px;--radius-sm:10px;--radius-lg:22px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Poppins',system-ui,sans-serif;background:var(--beige2);color:var(--ink);line-height:1.6;min-height:100vh}
+
+/* ── NAV ── */
+.nav{background:var(--dark);border-bottom:1px solid rgba(255,255,255,.04);position:sticky;top:0;z-index:100;padding:0 40px}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:0;height:56px}
+.nav-brand{display:flex;align-items:center;gap:10px;margin-right:40px}
+.nav-brand span{font-size:18px;font-weight:600;color:#fff;letter-spacing:.07em}
+.nav-brand em{font-style:normal;color:var(--gold);font-size:11px;font-weight:400;letter-spacing:.1em;margin-left:6px;opacity:.8}
+.nav-links{display:flex;gap:4px;flex:1}
+.nl{padding:6px 14px;border-radius:8px;font-size:12px;color:rgba(255,255,255,.45);cursor:pointer;transition:all .15s;border:none;background:transparent;font-family:'Poppins',sans-serif;white-space:nowrap}
+.nl:hover,.nl.active{color:#fff;background:rgba(255,255,255,.06)}
+.nav-pill{background:var(--green);color:#fff;border-radius:20px;padding:6px 16px;font-size:11px;font-weight:600;letter-spacing:.06em;margin-left:auto;white-space:nowrap}
+
+/* ── HERO ── */
+.hero{background:var(--dark);padding:64px 40px 56px;border-bottom:1px solid rgba(255,255,255,.04)}
+.hero-inner{max-width:1100px;margin:0 auto}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(46,125,50,.2);border:1px solid rgba(46,125,50,.35);border-radius:20px;padding:5px 14px;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--green-light);margin-bottom:24px}
+.hero h1{font-size:44px;font-weight:600;color:#fff;letter-spacing:.03em;line-height:1.15;margin-bottom:10px}
+.hero h1 span{color:var(--gold)}
+.hero-sub{font-size:15px;color:rgba(255,255,255,.45);max-width:560px;margin-bottom:40px;line-height:1.7}
+.hero-stats{display:flex;gap:12px;flex-wrap:wrap}
+.hstat{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:20px 24px;min-width:160px}
+.hstat-val{font-size:26px;font-weight:600;color:#fff;line-height:1}
+.hstat-val span{font-size:13px;color:var(--gold);font-weight:400}
+.hstat-lbl{font-size:10px;color:rgba(255,255,255,.35);margin-top:6px;letter-spacing:.1em;text-transform:uppercase;font-weight:600}
+.hstat-sub{font-size:10px;color:rgba(255,255,255,.25);margin-top:3px}
+
+/* ── PAGE ── */
+.page{max-width:1100px;margin:0 auto;padding:48px 40px}
+.section{margin-bottom:60px;scroll-margin-top:70px}
+.sec-head{display:flex;align-items:baseline;gap:12px;margin-bottom:24px;padding-bottom:14px;border-bottom:1px solid rgba(0,0,0,.08)}
+.sec-num{font-size:10px;font-weight:700;color:var(--green);letter-spacing:.1em;font-family:monospace}
+.sec-title{font-size:18px;font-weight:600;color:var(--ink);letter-spacing:.02em}
+.sec-badge{margin-left:auto;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--green-pale);color:var(--green-dark);padding:4px 12px;border-radius:20px}
+
+/* ── CARDS ── */
+.card{background:var(--cream);border-radius:var(--radius);border:1px solid rgba(0,0,0,.05);padding:28px}
+.card-dk{background:var(--dark);border:1px solid rgba(255,255,255,.04);border-radius:var(--radius);padding:28px}
+.card-be{background:var(--beige);border:1px solid rgba(0,0,0,.06);border-radius:var(--radius);padding:28px}
+
+/* ── ALLOCATION ── */
+.alloc-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.alloc-chart-wrap{display:flex;align-items:center;justify-content:center;position:relative}
+.alloc-center{position:absolute;text-align:center;pointer-events:none}
+.alloc-center-val{font-size:28px;font-weight:600;color:var(--ink);line-height:1}
+.alloc-center-lbl{font-size:10px;color:var(--ink4);margin-top:4px;letter-spacing:.08em;text-transform:uppercase}
+.alloc-legend{display:flex;flex-direction:column;gap:10px;justify-content:center}
+.al-item{display:flex;align-items:center;gap:12px;cursor:pointer;border-radius:10px;padding:10px 14px;transition:all .15s}
+.al-item:hover,.al-item.active{background:rgba(0,0,0,.04)}
+.al-dot{width:12px;height:12px;border-radius:3px;flex-shrink:0}
+.al-name{font-size:13px;font-weight:500;color:var(--ink);flex:1}
+.al-pct{font-size:14px;font-weight:600;color:var(--ink)}
+.al-tokens{font-size:10px;color:var(--ink4);font-family:monospace}
+.al-detail{margin-top:12px;background:var(--beige);border-radius:12px;padding:14px 18px;display:none;border-left:3px solid var(--green)}
+.al-detail.show{display:block}
+.al-detail p{font-size:12px;color:var(--ink3);line-height:1.7}
+.al-detail strong{color:var(--green);font-weight:600}
+
+/* ── VESTING ── */
+.vest-tabs{display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap}
+.vtab{padding:8px 18px;border-radius:8px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid rgba(0,0,0,.1);background:var(--cream);color:var(--ink3);transition:all .15s;font-family:'Poppins',sans-serif}
+.vtab.active{background:var(--brown);color:#fff;border-color:var(--brown)}
+.vest-panel{display:none}.vest-panel.show{display:block}
+.vest-timeline{display:flex;gap:0;position:relative;margin-top:8px;padding-bottom:16px}
+.vest-timeline::before{content:'';position:absolute;top:32px;left:0;right:0;height:2px;background:rgba(0,0,0,.07)}
+.vt-point{flex:1;display:flex;flex-direction:column;align-items:center;gap:8px;position:relative;z-index:1}
+.vt-dot{width:16px;height:16px;border-radius:50%;border:2px solid var(--cream);flex-shrink:0}
+.vt-dot.locked{background:#ddd}
+.vt-dot.cliff{background:var(--brown)}
+.vt-dot.vest{background:var(--green)}
+.vt-dot.full{background:var(--gold)}
+.vt-label{font-size:10px;font-weight:600;color:var(--ink3);text-align:center;letter-spacing:.04em}
+.vt-pct{font-size:12px;font-weight:600;color:var(--green);text-align:center}
+.vest-bar{display:flex;height:28px;border-radius:8px;overflow:hidden;margin-top:16px;gap:2px}
+.vb-locked{background:#E0E0D0}
+.vb-cliff{background:var(--brown);opacity:.7}
+.vb-vest{background:var(--green)}
+.vb-tge{background:var(--gold)}
+.vest-legend{display:flex;gap:16px;margin-top:10px;flex-wrap:wrap}
+.vleg{display:flex;align-items:center;gap:7px;font-size:11px;color:var(--ink3)}
+.vleg-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+.vest-info{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.vi{background:var(--beige);border-radius:10px;padding:14px;text-align:center}
+.vi-val{font-size:18px;font-weight:600;color:var(--ink)}
+.vi-lbl{font-size:10px;color:var(--ink4);margin-top:3px}
+
+/* ── EMISSION ── */
+.emission-tabs{display:flex;gap:6px;margin-bottom:20px}
+.etab{padding:7px 16px;border-radius:8px;font-size:11px;font-weight:500;cursor:pointer;border:1px solid rgba(0,0,0,.1);background:var(--cream);color:var(--ink3);transition:all .15s;font-family:'Poppins',sans-serif}
+.etab.active{background:var(--green);color:#fff;border-color:var(--green)}
+.emission-summary{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:20px}
+.em-card{border-radius:12px;padding:16px;text-align:center}
+.em-card-val{font-size:20px;font-weight:600;line-height:1}
+.em-card-lbl{font-size:10px;margin-top:5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;opacity:.7}
+.em-card-sub{font-size:10px;margin-top:3px;opacity:.5}
+
+/* ── SUPPLY CURVE ── */
+.supply-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.supply-legend{display:flex;flex-direction:column;gap:14px;justify-content:center}
+.sl-item{display:flex;gap:12px;align-items:flex-start}
+.sl-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:4px}
+.sl-text strong{font-size:13px;font-weight:600;color:var(--ink);display:block}
+.sl-text span{font-size:11px;color:var(--ink4);line-height:1.5}
+
+/* ── UTILITY GRID ── */
+.utility-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.util-card{border-radius:var(--radius);padding:22px;border:1px solid rgba(0,0,0,.05);background:var(--cream);cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
+.util-card:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,.08)}
+.util-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.util-primary::before{background:var(--green)}
+.util-secondary::before{background:var(--gold)}
+.util-gov::before{background:var(--brown)}
+.util-icon{font-size:24px;margin-bottom:12px}
+.util-title{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:6px}
+.util-tag{display:inline-block;font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:20px;margin-bottom:10px}
+.tag-primary{background:var(--green-pale);color:var(--green-dark)}
+.tag-secondary{background:var(--gold-pale);color:var(--gold-dark)}
+.tag-gov{background:var(--brown-pale);color:var(--brown-dark)}
+.util-desc{font-size:11px;color:var(--ink3);line-height:1.65}
+
+/* ── FLYWHEEL ── */
+.flywheel-wrap{display:flex;align-items:center;justify-content:center;padding:20px}
+
+/* ── BURN ── */
+.burn-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.burn-card{background:var(--dark);border:1px solid rgba(255,255,255,.05);border-radius:var(--radius);padding:22px}
+.burn-icon{font-size:20px;margin-bottom:12px}
+.burn-title{font-size:13px;font-weight:600;color:#fff;margin-bottom:6px}
+.burn-pct{font-size:22px;font-weight:600;color:var(--gold);line-height:1;margin-bottom:4px}
+.burn-desc{font-size:11px;color:rgba(255,255,255,.35);line-height:1.65}
+
+/* ── LAUNCH ── */
+.launch-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.l-metric{background:var(--beige);border-radius:12px;padding:18px 22px;display:flex;align-items:center;gap:16px}
+.l-metric-val{font-size:22px;font-weight:600;color:var(--ink);flex:1}
+.l-metric-lbl{font-size:11px;color:var(--ink4);margin-top:2px}
+.l-badge{background:var(--green);color:#fff;border-radius:8px;padding:5px 12px;font-size:11px;font-weight:600;white-space:nowrap}
+
+/* ── RISK TABLE ── */
+.risk-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.risk-do{background:var(--green-pale);border:1.5px solid #C8E6C9;border-radius:var(--radius);padding:20px 22px}
+.risk-dont{background:#FFF3F3;border:1.5px solid #FFCDD2;border-radius:var(--radius);padding:20px 22px}
+.risk-head{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:14px}
+.risk-item{display:flex;gap:8px;font-size:12px;color:var(--ink3);margin-bottom:9px;line-height:1.5}
+.risk-item:last-child{margin-bottom:0}
+
+/* ── FOOTER ── */
+.footer{background:var(--dark);padding:40px;border-top:1px solid rgba(255,255,255,.04);text-align:center;margin-top:0}
+.footer-inner{max-width:1100px;margin:0 auto}
+.footer p{font-size:11px;color:rgba(255,255,255,.3);line-height:1.8}
+.footer strong{color:var(--gold)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:720px){
+  .hero h1{font-size:28px}
+  .alloc-grid,.supply-grid,.launch-grid,.risk-grid{grid-template-columns:1fr}
+  .utility-grid,.burn-grid{grid-template-columns:1fr 1fr}
+  .emission-summary{grid-template-columns:repeat(3,1fr)}
+  .vest-info{grid-template-columns:1fr 1fr}
+  .page{padding:32px 20px}
+  .hero{padding:40px 20px}
+  .nav{padding:0 20px}
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-brand">
+      <div id="nav-mark"></div>
+      <span>dhara <em>DHR</em></span>
+    </div>
+    <div class="nav-links">
+      <button class="nl active" onclick="scrollTo('allocation')">Allocation</button>
+      <button class="nl" onclick="scrollTo('vesting')">Vesting</button>
+      <button class="nl" onclick="scrollTo('emission')">Emission</button>
+      <button class="nl" onclick="scrollTo('utility')">Utility</button>
+      <button class="nl" onclick="scrollTo('flywheel')">Flywheel</button>
+      <button class="nl" onclick="scrollTo('burn')">Burn</button>
+      <button class="nl" onclick="scrollTo('launch')">Launch</button>
+    </div>
+    <div class="nav-pill">Revenue-Backed RWA</div>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-tag">
+      <div id="hero-mark"></div>
+      Dhara Tokenomics — DHR Token Design v1.0
+    </div>
+    <h1>A <span>Revenue-Backed</span><br>Infrastructure Token</h1>
+    <p class="hero-sub">DHR is not speculative. It is a utility, governance, and revenue-linked token that enables access to real-world assets — land, energy, carbon credits, and sustainable development — powered by blockchain.</p>
+    <div class="hero-stats">
+      <div class="hstat">
+        <div class="hstat-val">1B <span>DHR</span></div>
+        <div class="hstat-lbl">Total Max Supply</div>
+        <div class="hstat-sub">Fixed cap · Capped + Controlled</div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-val">120M <span>DHR</span></div>
+        <div class="hstat-lbl">Circulating at TGE</div>
+        <div class="hstat-sub">12% only · Price stability</div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-val">$0.05–<span>$0.10</span></div>
+        <div class="hstat-lbl">Initial Token Price</div>
+        <div class="hstat-sub">$50M–$100M Target FDV</div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-val">4 <span>Years</span></div>
+        <div class="hstat-lbl">Emission Horizon</div>
+        <div class="hstat-sub">Deflationary from Year 4+</div>
+      </div>
+      <div class="hstat">
+        <div class="hstat-val">50% <span>→</span></div>
+        <div class="hstat-lbl">Community + Treasury</div>
+        <div class="hstat-sub">Real asset expansion power</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="page">
+
+<!-- ── 01 ALLOCATION ── -->
+<section class="section" id="allocation">
+  <div class="sec-head">
+    <span class="sec-num">01</span>
+    <span class="sec-title">Token Allocation</span>
+    <span class="sec-badge">1,000,000,000 DHR Total</span>
+  </div>
+  <div class="alloc-grid">
+    <div class="card">
+      <div class="alloc-chart-wrap" style="height:320px">
+        <canvas id="allocChart"></canvas>
+        <div class="alloc-center">
+          <div class="alloc-center-val" id="allocCenterVal">1B</div>
+          <div class="alloc-center-lbl" id="allocCenterLbl">Total DHR</div>
+        </div>
+      </div>
+    </div>
+    <div class="card" style="padding:20px">
+      <div class="alloc-legend" id="allocLegend"></div>
+    </div>
+  </div>
+  <div id="allocDetail" class="al-detail" style="margin-top:12px"></div>
+</section>
+
+<!-- ── 02 VESTING ── -->
+<section class="section" id="vesting">
+  <div class="sec-head">
+    <span class="sec-num">02</span>
+    <span class="sec-title">Vesting Schedule</span>
+    <span class="sec-badge">Anti-Dump Protection</span>
+  </div>
+  <div class="vest-tabs" id="vestTabs"></div>
+  <div class="card" id="vestContent"></div>
+</section>
+
+<!-- ── 03 EMISSION ── -->
+<section class="section" id="emission">
+  <div class="sec-head">
+    <span class="sec-num">03</span>
+    <span class="sec-title">Emission Schedule</span>
+    <span class="sec-badge">4-Year Model</span>
+  </div>
+  <div class="emission-tabs">
+    <button class="etab active" onclick="switchEmission('bar',this)">Bar Chart</button>
+    <button class="etab" onclick="switchEmission('line',this)">Cumulative</button>
+    <button class="etab" onclick="switchEmission('supply',this)">Circulating Supply</button>
+  </div>
+  <div class="card"><canvas id="emissionChart" height="90"></canvas></div>
+  <div class="emission-summary" id="emissionSummary"></div>
+</section>
+
+<!-- ── 04 SUPPLY DYNAMICS ── -->
+<section class="section" id="supply">
+  <div class="sec-head">
+    <span class="sec-num">04</span>
+    <span class="sec-title">Supply Dynamics</span>
+    <span class="sec-badge">Inflation → Deflation</span>
+  </div>
+  <div class="supply-grid">
+    <div class="card"><canvas id="supplyChart" height="160"></canvas></div>
+    <div class="card">
+      <div class="supply-legend" id="supplyLegend">
+        <div style="font-size:13px;font-weight:600;color:var(--ink);margin-bottom:8px">Phase Transitions</div>
+        <div class="sl-item">
+          <div class="sl-dot" style="background:var(--gold)"></div>
+          <div class="sl-text"><strong>Year 1–2 · Bootstrap</strong><span>Emission > burn. Network growth phase. Incentives active to drive adoption and staking.</span></div>
+        </div>
+        <div class="sl-item">
+          <div class="sl-dot" style="background:var(--green-light)"></div>
+          <div class="sl-text"><strong>Year 3 · Equilibrium</strong><span>Emission ≈ burn. Platform mature. Revenue-backed burns offset new supply entering market.</span></div>
+        </div>
+        <div class="sl-item">
+          <div class="sl-dot" style="background:var(--green-dark)"></div>
+          <div class="sl-text"><strong>Year 4+ · Deflationary</strong><span>Burn > emission. Supply contracts. Revenue buyback drives real scarcity narrative.</span></div>
+        </div>
+        <div class="sl-item">
+          <div class="sl-dot" style="background:var(--brown)"></div>
+          <div class="sl-text"><strong>Long-term Reserve</strong><span>25% treasury + strategic reserve never fully circulates. Governed by DAO. Expands real-world assets.</span></div>
+        </div>
+        <div style="background:var(--beige);border-radius:10px;padding:14px 16px;margin-top:8px">
+          <div style="font-size:10px;font-weight:700;color:var(--green);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px">Key Metrics</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <div><div style="font-size:16px;font-weight:600;color:var(--ink)">1–2%</div><div style="font-size:10px;color:var(--ink4)">Tx burn rate</div></div>
+            <div><div style="font-size:16px;font-weight:600;color:var(--ink)">5%</div><div style="font-size:10px;color:var(--ink4)">Revenue buyback</div></div>
+            <div><div style="font-size:16px;font-weight:600;color:var(--ink)">88M</div><div style="font-size:10px;color:var(--ink4)">Est. Year-1 burn</div></div>
+            <div><div style="font-size:16px;font-weight:600;color:var(--ink)">Net–</div><div style="font-size:10px;color:var(--ink4)">Deflationary Y4</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 05 UTILITY ── -->
+<section class="section" id="utility">
+  <div class="sec-head">
+    <span class="sec-num">05</span>
+    <span class="sec-title">Token Utility Design</span>
+    <span class="sec-badge">9 Utility Layers</span>
+  </div>
+  <div class="utility-grid" id="utilityGrid"></div>
+</section>
+
+<!-- ── 06 FLYWHEEL ── -->
+<section class="section" id="flywheel">
+  <div class="sec-head">
+    <span class="sec-num">06</span>
+    <span class="sec-title">Economic Flywheel</span>
+    <span class="sec-badge">Value Compounding Loop</span>
+  </div>
+  <div class="card" style="padding:0;overflow:hidden">
+    <div class="flywheel-wrap">
+      <canvas id="flywheelCanvas" width="680" height="380"></canvas>
+    </div>
+  </div>
+</section>
+
+<!-- ── 07 BURN ── -->
+<section class="section" id="burn">
+  <div class="sec-head">
+    <span class="sec-num">07</span>
+    <span class="sec-title">Deflationary Burn Mechanisms</span>
+    <span class="sec-badge">5 Burn Channels</span>
+  </div>
+  <div class="burn-grid" id="burnGrid"></div>
+</section>
+
+<!-- ── 08 LAUNCH ── -->
+<section class="section" id="launch">
+  <div class="sec-head">
+    <span class="sec-num">08</span>
+    <span class="sec-title">Launch Parameters</span>
+    <span class="sec-badge">TGE Design</span>
+  </div>
+  <div class="launch-grid" id="launchGrid"></div>
+</section>
+
+<!-- ── 09 RISK ── -->
+<section class="section" id="risk">
+  <div class="sec-head">
+    <span class="sec-num">09</span>
+    <span class="sec-title">Strategic Guidelines</span>
+    <span class="sec-badge">VC-Level Discipline</span>
+  </div>
+  <div class="risk-grid">
+    <div class="risk-do">
+      <div class="risk-head" style="color:var(--green-dark)">✓ Critical Principles</div>
+      <div class="risk-item"><span style="color:var(--green);font-weight:700;flex-shrink:0">→</span>Launch utility first, token second — utility must precede token value</div>
+      <div class="risk-item"><span style="color:var(--green);font-weight:700;flex-shrink:0">→</span>Real-world revenue must back buybacks from Day 1 of operations</div>
+      <div class="risk-item"><span style="color:var(--green);font-weight:700;flex-shrink:0">→</span>Community + Treasury must equal 50% minimum for RWA models</div>
+      <div class="risk-item"><span style="color:var(--green);font-weight:700;flex-shrink:0">→</span>Maintain 4-year team vesting — non-negotiable for VC trust</div>
+      <div class="risk-item"><span style="color:var(--green);font-weight:700;flex-shrink:0">→</span>Staking rewards must be tied to usage, not passive farming</div>
+      <div class="risk-item"><span style="color:var(--green);font-weight:700;flex-shrink:0">→</span>All vesting via audited smart contracts — fully transparent on-chain</div>
+    </div>
+    <div class="risk-dont">
+      <div class="risk-head" style="color:#C62828">✕ Fatal Mistakes to Avoid</div>
+      <div class="risk-item"><span style="color:#C62828;font-weight:700;flex-shrink:0">→</span>Never launch token before core utility is live and generating revenue</div>
+      <div class="risk-item"><span style="color:#C62828;font-weight:700;flex-shrink:0">→</span>Never over-allocate to insiders — red flag for community and VCs</div>
+      <div class="risk-item"><span style="color:#C62828;font-weight:700;flex-shrink:0">→</span>Never release &gt;15% supply at TGE — volatility destroys price discovery</div>
+      <div class="risk-item"><span style="color:#C62828;font-weight:700;flex-shrink:0">→</span>Never rely solely on rewards to sustain demand — real utility required</div>
+      <div class="risk-item"><span style="color:#C62828;font-weight:700;flex-shrink:0">→</span>Never allow large investor cliff unlocks without price support mechanism</div>
+      <div class="risk-item"><span style="color:#C62828;font-weight:700;flex-shrink:0">→</span>Never use ETH/stablecoins for core payments — kills value capture loop</div>
+    </div>
+  </div>
+</section>
+
+</div><!-- end .page -->
+
+<!-- ── FOOTER ── -->
+<footer class="footer">
+  <div class="footer-inner">
+    <p><strong>Dhara Token (DHR)</strong> · Tokenomics v1.0 · Revenue-Backed RWA Infrastructure Token<br>
+    Land · Energy · Carbon Credits · Sustainable Development · Powered by Blockchain<br>
+    <span style="opacity:.5">This document is for strategic planning purposes. All projections are estimates. Consult legal and financial advisors before any token issuance.</span></p>
+  </div>
+</footer>
+
+<script>
+/* ══════════════════════════════════════════
+   MARK GENERATOR
+══════════════════════════════════════════ */
+function mark(sz,o){
+  o=o||{};
+  var ring=o.ring||'#2E7D32',leaf=o.leaf||'#2E7D32';
+  var vein=o.vein||'rgba(255,255,255,0.35)';
+  var s1=o.s1||'#43A047',s2=o.s2||'#795548',s3=o.s3||'#4E342E';
+  var seed=o.seed||'#D4AF37',si=o.si||'#F5D040';
+  var sw=sz<24?6:sz<40?5:sz<64?4:3,sR=sz<24?7:sz<40?6:5;
+  var showS=sz>=20,showV=sz>=32;
+  var s='<svg viewBox="0 0 100 100" style="width:'+sz+'px;height:'+sz+'px;flex-shrink:0;display:block" xmlns="http://www.w3.org/2000/svg">';
+  s+='<circle cx="50" cy="50" r="44" fill="none" stroke="'+ring+'" stroke-width="'+sw+'"/>';
+  if(showS){
+    s+='<line x1="14" y1="68" x2="86" y2="68" stroke="'+s1+'" stroke-width="'+sw+'" stroke-linecap="round"/>';
+    s+='<line x1="20" y1="76" x2="80" y2="76" stroke="'+s2+'" stroke-width="'+sw+'" stroke-linecap="round"/>';
+    s+='<line x1="26" y1="83" x2="74" y2="83" stroke="'+s3+'" stroke-width="'+sw+'" stroke-linecap="round"/>';
+  }
+  s+='<path d="M 50,17 C 74,31 74,59 50,67 C 26,59 26,31 50,17 Z" fill="'+leaf+'"/>';
+  if(showV){
+    s+='<line x1="50" y1="21" x2="50" y2="64" stroke="'+vein+'" stroke-width="1.2"/>';
+    s+='<line x1="50" y1="37" x2="61" y2="45" stroke="'+vein+'" stroke-width="0.8"/>';
+    s+='<line x1="50" y1="37" x2="39" y2="45" stroke="'+vein+'" stroke-width="0.8"/>';
+  }
+  s+='<circle cx="50" cy="17" r="'+sR+'" fill="'+seed+'"/>';
+  if(sz>=20) s+='<circle cx="50" cy="17" r="'+(sR*.5)+'" fill="'+si+'"/>';
+  s+='</svg>';
+  return s;
+}
+var W={ring:'rgba(255,255,255,0.7)',leaf:'rgba(255,255,255,0.9)',vein:'rgba(27,94,32,0.25)',s1:'rgba(255,255,255,0.5)',s2:'rgba(255,255,255,0.35)',s3:'rgba(255,255,255,0.18)',seed:'#D4AF37',si:'#F5D040'};
+document.getElementById('nav-mark').innerHTML=mark(24,W);
+document.getElementById('hero-mark').innerHTML=mark(16,W);
+
+function scrollTo(id){
+  var el=document.getElementById(id);
+  if(el) el.scrollIntoView({behavior:'smooth'});
+}
+
+/* ══════════════════════════════════════════
+   ALLOCATION DATA
+══════════════════════════════════════════ */
+var ALLOC=[
+  {name:'Community / Ecosystem',pct:30,tokens:300,color:'#2E7D32',detail:'<strong>300M DHR · 30%</strong><br>Distributed over 5–8 years via decreasing emission curve.<br>Sub-split: Staking Rewards 12% (120M) · Ecosystem Incentives 10% (100M) · Airdrops/User Rewards 5% (50M) · Partnerships 3% (30M).<br><strong>Key rule:</strong> Rewards tied to usage and asset participation — not passive farming.'},
+  {name:'Treasury / Foundation',pct:20,tokens:200,color:'#1B5E20',detail:'<strong>200M DHR · 20%</strong><br>Locked in multisig, released via governance vote.<br>Funds: Solar plant expansion · Land acquisition · Carbon projects · Strategic reserves.<br>10% available Year 1. Remaining over 5–10 years.<br><strong>This is your real power pool</strong> — the capital engine behind asset growth.'},
+  {name:'Investors (Seed + Private)',pct:18,tokens:180,color:'#D4AF37',detail:'<strong>180M DHR · 18%</strong><br>Seed Round (10% = 100M): 6–9 month cliff · 18–24 month linear vesting · 5–10% TGE unlock.<br>Private Round (8% = 80M): 3–6 month cliff · 12–18 month vesting · 10–15% TGE unlock.<br><strong>Target FDV:</strong> $50M–$100M early stage.'},
+  {name:'Team & Founders',pct:15,tokens:150,color:'#8B6914',detail:'<strong>150M DHR · 15%</strong><br>12-month cliff with zero unlock. Then 36 months of linear monthly vesting.<br>Total commitment: 4 years minimum.<br><strong>VC rule:</strong> Anything less than 4 years is a red flag. This signals real long-term commitment to all stakeholders.'},
+  {name:'Liquidity (DEX/CEX/MM)',pct:10,tokens:100,color:'#6D4C41',detail:'<strong>100M DHR · 10%</strong><br>Available at TGE for market stability.<br>DEX Liquidity: 6% (60M) · Market Making: 3% (30M) · CEX Listings: 1% (10M).<br><strong>Rule:</strong> Never release full liquidity at once. Controlled release maintains price depth.'},
+  {name:'Advisors & Partners',pct:7,tokens:70,color:'#9A7B6A',detail:'<strong>70M DHR · 7%</strong><br>Strategic advisors and industry partners.<br>3–6 month cliff · 12–18 month linear vesting.<br>Small but meaningful — attracts real value-add partners without diluting community allocation.'},
+];
+
+/* Donut Chart */
+var aCtx=document.getElementById('allocChart').getContext('2d');
+var allocChart=new Chart(aCtx,{
+  type:'doughnut',
+  data:{
+    labels:ALLOC.map(function(a){return a.name}),
+    datasets:[{data:ALLOC.map(function(a){return a.pct}),backgroundColor:ALLOC.map(function(a){return a.color}),borderWidth:3,borderColor:'#FAFAF8',hoverBorderWidth:4,hoverOffset:6}]
+  },
+  options:{
+    cutout:'68%',responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return ' '+c.label+': '+c.raw+'% ('+ALLOC[c.dataIndex].tokens+'M DHR)'}}}},
+    animation:{animateRotate:true,duration:800}
+  }
+});
+
+/* Legend */
+var leg=document.getElementById('allocLegend');
+ALLOC.forEach(function(a,i){
+  var item=document.createElement('div');
+  item.className='al-item';
+  item.innerHTML='<div class="al-dot" style="background:'+a.color+'"></div><div class="al-name">'+a.name+'</div><div style="text-align:right"><div class="al-pct">'+a.pct+'%</div><div class="al-tokens">'+a.tokens+'M DHR</div></div>';
+  item.onclick=function(){
+    document.querySelectorAll('.al-item').forEach(function(x){x.classList.remove('active')});
+    item.classList.add('active');
+    var det=document.getElementById('allocDetail');
+    det.innerHTML='<p>'+a.detail+'</p>';
+    det.style.borderLeftColor=a.color;
+    det.classList.add('show');
+    document.getElementById('allocCenterVal').textContent=a.pct+'%';
+    document.getElementById('allocCenterLbl').textContent=a.name.split(' ')[0];
+    allocChart.setDatasetVisibility(0,true);
+  };
+  leg.appendChild(item);
+});
+
+/* ══════════════════════════════════════════
+   VESTING DATA
+══════════════════════════════════════════ */
+var VEST=[
+  {name:'Community',color:'#2E7D32',tge:0,cliff:0,duration:84,desc:'Distributed over 5–8 years via decreasing emission curve. No cliff — continuous drip tied to platform usage and staking activity.',cliff_label:'None',vest_label:'5–8 Years',tge_label:'0%',lock_pct:0,cliff_pct:0,vest_pct:100,points:['Month 0: Emission begins','Month 12: Staking pools active','Month 36: Governance rewards','Month 60: Mature ecosystem','Month 84: Final distribution']},
+  {name:'Treasury',color:'#1B5E20',tge:0,cliff:0,duration:120,desc:'Locked in multisig. Governed by DAO votes. 10% unlocked Year 1 for operational expenses, remainder deployed as real assets are acquired.',cliff_label:'Multisig Lock',vest_label:'5–10 Years',tge_label:'0%',lock_pct:10,cliff_pct:10,vest_pct:80,points:['Year 1: 10% for operations','Year 2–3: Solar/land acquisition','Year 4+: Carbon credit programs','Year 7+: Strategic reserve','DAO vote required for all releases']},
+  {name:'Seed Investors',color:'#D4AF37',tge:7,cliff:9,duration:24,desc:'Seed investors receive a small TGE unlock to cover initial liquidity needs. After the 6–9 month cliff, linear monthly vesting begins.',cliff_label:'6–9 months',vest_label:'18–24 months',tge_label:'5–10%',lock_pct:15,cliff_pct:10,vest_pct:75,points:['TGE: 5–10% immediate unlock','Month 1–9: Locked (cliff)','Month 9–33: Linear monthly vest','Max supply shock: 7%/month','Buyback active during cliff period']},
+  {name:'Private Investors',color:'#B8960C',tge:12,cliff:6,duration:18,desc:'Private investors have a shorter cliff due to later-stage entry. TGE unlock is slightly higher with faster vesting to accommodate their capital timeline.',cliff_label:'3–6 months',vest_label:'12–18 months',tge_label:'10–15%',lock_pct:10,cliff_pct:15,vest_pct:75,points:['TGE: 10–15% immediate unlock','Month 1–6: Locked (cliff)','Month 6–24: Linear monthly vest','Anti-dump: staking incentives offered','Price support: market maker active']},
+  {name:'Team & Founders',color:'#6D4C41',tge:0,cliff:12,duration:36,desc:'Strictest vesting in the model. Zero TGE unlock. Absolute 12-month cliff signals genuine long-term commitment. Then 3 years of linear vesting.',cliff_label:'12 months',vest_label:'36 months',tge_label:'0%',lock_pct:20,cliff_pct:0,vest_pct:80,points:['TGE: 0% — zero unlock','Month 1–12: Hard cliff lock','Month 12–48: Monthly linear vest','Total: 4 year full commitment','VC standard: non-negotiable']},
+  {name:'Advisors',color:'#9A7B6A',tge:0,cliff:6,duration:18,desc:'Advisors vest over a shorter period reflecting their advisory role. Cliff ensures they remain engaged through critical early growth phase.',cliff_label:'3–6 months',vest_label:'12–18 months',tge_label:'0%',lock_pct:15,cliff_pct:0,vest_pct:85,points:['TGE: 0% unlock','Month 1–6: Cliff period','Month 6–24: Linear monthly vest','Linked to deliverables where possible','Strategic value-add required']},
+];
+
+var vestTabsEl=document.getElementById('vestTabs');
+var vestContent=document.getElementById('vestContent');
+VEST.forEach(function(v,i){
+  var btn=document.createElement('button');
+  btn.className='vtab'+(i===0?' active':'');
+  btn.textContent=v.name;
+  btn.style.cssText=i===0?'background:'+v.color+';color:#fff;border-color:'+v.color:'';
+  btn.onclick=function(){
+    document.querySelectorAll('.vtab').forEach(function(x){x.className='vtab';x.style.cssText=''});
+    btn.className='vtab active';
+    btn.style.cssText='background:'+v.color+';color:#fff;border-color:'+v.color;
+    renderVest(v);
+  };
+  vestTabsEl.appendChild(btn);
+});
+
+function renderVest(v){
+  var months=['TGE','M3','M6','M9','M12','M18','M24','M36','M48','M60','M84'];
+  var html='<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">';
+  html+='<div>';
+  html+='<div style="font-size:14px;font-weight:600;color:var(--ink);margin-bottom:8px">'+v.name+' Vesting</div>';
+  html+='<p style="font-size:12px;color:var(--ink3);line-height:1.7;margin-bottom:16px">'+v.desc+'</p>';
+  html+='<div class="vest-info"><div class="vi"><div class="vi-val" style="color:'+v.color+'">'+v.tge_label+'</div><div class="vi-lbl">TGE Unlock</div></div><div class="vi"><div class="vi-val">'+v.cliff_label+'</div><div class="vi-lbl">Cliff Period</div></div><div class="vi"><div class="vi-val">'+v.vest_label+'</div><div class="vi-lbl">Vesting Duration</div></div></div>';
+  html+='<div class="vest-bar" style="margin-top:16px">';
+  if(v.tge>0) html+='<div class="vb-tge" style="flex:'+v.tge+'"></div>';
+  if(v.lock_pct>0) html+='<div class="vb-locked" style="flex:'+v.lock_pct+'"></div>';
+  if(v.cliff_pct>0) html+='<div class="vb-cliff" style="flex:'+v.cliff_pct+'"></div>';
+  html+='<div class="vb-vest" style="flex:'+v.vest_pct+';background:'+v.color+'"></div>';
+  html+='</div>';
+  html+='<div class="vest-legend">';
+  if(v.tge>0) html+='<div class="vleg"><div class="vleg-dot" style="background:var(--gold)"></div>TGE Unlock ('+v.tge_label+')</div>';
+  html+='<div class="vleg"><div class="vleg-dot" style="background:#E0E0D0"></div>Locked (Cliff)</div>';
+  html+='<div class="vleg"><div class="vleg-dot" style="background:'+v.color+'"></div>Linear Vesting</div>';
+  html+='</div></div>';
+  html+='<div>';
+  html+='<div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink4);margin-bottom:12px">Key Milestones</div>';
+  v.points.forEach(function(p){
+    html+='<div style="display:flex;gap:10px;align-items:flex-start;margin-bottom:9px"><div style="width:6px;height:6px;border-radius:50%;background:'+v.color+';flex-shrink:0;margin-top:5px"></div><div style="font-size:12px;color:var(--ink3);line-height:1.5">'+p+'</div></div>';
+  });
+  html+='</div></div>';
+  vestContent.innerHTML=html;
+}
+renderVest(VEST[0]);
+
+/* ══════════════════════════════════════════
+   EMISSION CHART
+══════════════════════════════════════════ */
+var emCtx=document.getElementById('emissionChart').getContext('2d');
+var emData={
+  labels:['TGE (Launch)','Year 1','Year 2','Year 3','Year 4','Reserve'],
+  pct:[12,18,22,20,15,13],
+  tokens:[120,180,220,200,150,130],
+};
+var cumulative=[120,300,520,720,870,1000];
+var circulating=[120,290,480,620,710,740]; /* after burns */
+
+var emChart=new Chart(emCtx,{
+  type:'bar',
+  data:{
+    labels:emData.labels,
+    datasets:[{
+      label:'Tokens Released (M)',
+      data:emData.tokens,
+      backgroundColor:['#D4AF37','#43A047','#2E7D32','#1B5E20','#4E342E','#9A9A7A'],
+      borderRadius:8,borderSkipped:false
+    }]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:true,
+    plugins:{legend:{display:false},tooltip:{callbacks:{label:function(c){return ' '+c.raw+'M DHR ('+emData.pct[c.dataIndex]+'%)'}}}},
+    scales:{
+      x:{grid:{display:false},ticks:{font:{family:'Poppins'},color:'#9A9A7A'}},
+      y:{grid:{color:'rgba(0,0,0,.05)'},ticks:{font:{family:'Poppins'},color:'#9A9A7A',callback:function(v){return v+'M'}}}
+    }
+  }
+});
+
+var emModes={
+  bar:{type:'bar',label:'Tokens Released (M)',data:emData.tokens,colors:['#D4AF37','#43A047','#2E7D32','#1B5E20','#4E342E','#9A9A7A'],isLine:false},
+  line:{type:'line',label:'Cumulative Supply (M)',data:cumulative,color:'#2E7D32',isLine:true},
+  supply:{type:'line',label:'Est. Circulating (M)',data:circulating,color:'#D4AF37',isLine:true},
+};
+function switchEmission(mode,btn){
+  document.querySelectorAll('.etab').forEach(function(x){x.className='etab'});
+  btn.className='etab active';
+  var m=emModes[mode];
+  emChart.config.type=m.type;
+  if(m.isLine){
+    emChart.data.datasets=[{label:m.label,data:m.data,borderColor:m.color,backgroundColor:m.color+'22',fill:true,tension:0.4,pointBackgroundColor:m.color,pointRadius:5}];
+  } else {
+    emChart.data.datasets=[{label:m.label,data:m.data,backgroundColor:m.colors,borderRadius:8,borderSkipped:false}];
+  }
+  emChart.update('active');
+}
+
+/* Emission summary cards */
+var emCards=[
+  {label:'TGE Launch',val:'120M',pct:'12%',bg:'#FFF8E1',c:'#8B6914'},
+  {label:'Year 1',val:'180M',pct:'18%',bg:'#E8F5E9',c:'#1B5E20'},
+  {label:'Year 2',val:'220M',pct:'22%',bg:'#E8F5E9',c:'#2E7D32'},
+  {label:'Year 3',val:'200M',pct:'20%',bg:'#EFEBE9',c:'#4E342E'},
+  {label:'Year 4',val:'150M',pct:'15%',bg:'#EFEBE9',c:'#6D4C41'},
+];
+var eSummary=document.getElementById('emissionSummary');
+emCards.forEach(function(c){
+  var el=document.createElement('div');
+  el.className='em-card';
+  el.style.cssText='background:'+c.bg;
+  el.innerHTML='<div class="em-card-val" style="color:'+c.c+'">'+c.val+'</div><div class="em-card-lbl" style="color:'+c.c+'">'+c.pct+'</div><div class="em-card-sub" style="color:'+c.c+'">'+c.label+'</div>';
+  eSummary.appendChild(el);
+});
+
+/* ══════════════════════════════════════════
+   SUPPLY DYNAMICS CHART
+══════════════════════════════════════════ */
+var sCtx=document.getElementById('supplyChart').getContext('2d');
+var quarters=['TGE','Q2','Q3','Q4','Y2','Y2Q2','Y2Q3','Y2Q4','Y3','Y3Q2','Y3Q3','Y3Q4','Y4','Y4Q2','Y4Q3','Y5+'];
+var emission=[120,155,180,210,290,350,420,490,540,580,620,660,700,720,730,740];
+var burned=[0,5,12,22,45,70,100,135,170,205,240,278,320,365,410,460];
+var circSupply=emission.map(function(e,i){return e-burned[i]});
+new Chart(sCtx,{
+  type:'line',
+  data:{
+    labels:quarters,
+    datasets:[
+      {label:'Gross Emission',data:emission,borderColor:'#43A047',backgroundColor:'rgba(67,160,71,0.08)',fill:true,tension:0.4,pointRadius:0,borderWidth:2},
+      {label:'Cumulative Burned',data:burned,borderColor:'#D4AF37',backgroundColor:'rgba(212,175,55,0.08)',fill:true,tension:0.4,pointRadius:0,borderWidth:2},
+      {label:'Net Circulating',data:circSupply,borderColor:'#2E7D32',backgroundColor:'rgba(46,125,50,0.15)',fill:true,tension:0.4,pointRadius:0,borderWidth:2.5},
+    ]
+  },
+  options:{
+    responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{position:'top',labels:{font:{family:'Poppins',size:11},boxWidth:10,padding:16}}},
+    scales:{
+      x:{grid:{display:false},ticks:{font:{family:'Poppins',size:10},color:'#9A9A7A'}},
+      y:{grid:{color:'rgba(0,0,0,.04)'},ticks:{font:{family:'Poppins',size:10},color:'#9A9A7A',callback:function(v){return v+'M'}},min:0}
+    }
+  }
+});
+
+/* ══════════════════════════════════════════
+   UTILITY CARDS
+══════════════════════════════════════════ */
+var UTILS=[
+  {icon:'💳',title:'Payment Layer',tag:'Primary · Mandatory',tagClass:'tag-primary',cls:'util-primary',desc:'Pay for energy units (kWh), real estate fractional investment, carbon credits, and AI/DNA services. DHR must be required — creates direct transactional demand that cannot be replaced by ETH or stablecoins.'},
+  {icon:'🔒',title:'Revenue Staking',tag:'Primary · Mandatory',tagClass:'tag-primary',cls:'util-primary',desc:'Stake DHR to earn revenue share from real-world assets, unlock premium early investment access, and participate in ecosystem yield pools. Revenue-backed staking is the dominant model in 2025.'},
+  {icon:'🗳️',title:'DAO Governance',tag:'Primary · Mandatory',tagClass:'tag-primary',cls:'util-primary',desc:'Vote on asset allocation (solar/land expansion), treasury deployment, buyback decisions, and emission schedule adjustments. Drives community ownership and long-term holding behavior.'},
+  {icon:'💰',title:'Revenue Sharing',tag:'Primary · Power Feature',tagClass:'tag-primary',cls:'util-primary',desc:'Token holders receive % of platform revenue and % of asset yield. This is your biggest differentiator — revenue-linked tokens attract long-term investors and distinguish DHR from purely speculative assets.'},
+  {icon:'🔥',title:'Burn Mechanism',tag:'Primary · Deflationary',tagClass:'tag-primary',cls:'util-primary',desc:'% of every platform fee and transaction is permanently burned. Creates supply reduction and price support without speculative narrative. Real burn = real scarcity.'},
+  {icon:'🎟️',title:'Access Layer',tag:'Secondary · Growth',tagClass:'tag-secondary',cls:'util-secondary',desc:'Hold or stake DHR to get early access to new land projects, energy investment pools, and tokenized asset launches. Creates holding incentive beyond yield.'},
+  {icon:'🧾',title:'Fee Discounts',tag:'Secondary · Engagement',tagClass:'tag-secondary',cls:'util-secondary',desc:'Pay platform fees in DHR to receive lower fee rates and better pricing. Creates recurring demand from active users who would otherwise use stablecoins.'},
+  {icon:'🏆',title:'Loyalty Tier',tag:'Secondary · Retention',tagClass:'tag-secondary',cls:'util-secondary',desc:'Long-term holders earn higher staking multipliers, priority allocations, and reputation scores. Gamifies long-term holding without artificial inflation.'},
+  {icon:'🌐',title:'Cross-Ecosystem',tag:'Secondary · Network',tagClass:'tag-secondary',cls:'util-secondary',desc:'DHR is usable across energy platform, AI services, DNA data marketplace, and real estate exchange. Multi-utility creates a stronger demand loop across verticals.'},
+];
+var ugrid=document.getElementById('utilityGrid');
+UTILS.forEach(function(u){
+  var el=document.createElement('div');
+  el.className='util-card '+u.cls;
+  el.innerHTML='<div class="util-icon">'+u.icon+'</div><div class="util-title">'+u.title+'</div><div class="util-tag '+u.tagClass+'">'+u.tag+'</div><div class="util-desc">'+u.desc+'</div>';
+  ugrid.appendChild(el);
+});
+
+/* ══════════════════════════════════════════
+   FLYWHEEL CANVAS
+══════════════════════════════════════════ */
+(function(){
+  var cvs=document.getElementById('flywheelCanvas');
+  var ctx=cvs.getContext('2d');
+  var W=cvs.width,H=cvs.height;
+  var cx=W/2,cy=H/2-10;
+  var R=130;
+  var steps=[
+    {label:'Users Buy DHR',sub:'Token demand increases',angle:-90,color:'#2E7D32'},
+    {label:'Ecosystem Usage',sub:'Energy · Land · Carbon',angle:-30,color:'#43A047'},
+    {label:'Revenue Generated',sub:'Real-world income',angle:30,color:'#D4AF37'},
+    {label:'Revenue Shared',sub:'& Tokens Burned',angle:90,color:'#8B6914'},
+    {label:'Supply Decreases',sub:'Scarcity strengthens',angle:150,color:'#6D4C41'},
+    {label:'Token Value ↑',sub:'Price appreciation',angle:210,color:'#1B5E20'},
+  ];
+
+  var tick=0;
+  function deg2rad(d){return d*Math.PI/180}
+  function nodePos(a){return {x:cx+R*Math.cos(deg2rad(a)),y:cy+R*Math.sin(deg2rad(a))}}
+
+  function drawArrow(from,to,color){
+    var dx=to.x-from.x,dy=to.y-from.y;
+    var len=Math.sqrt(dx*dx+dy*dy);
+    var ux=dx/len,uy=dy/len;
+    var gap=38;
+    var sx=from.x+ux*gap,sy=from.y+uy*gap;
+    var ex=to.x-ux*(gap+4),ey=to.y-uy*(gap+4);
+    ctx.beginPath();
+    ctx.moveTo(sx,sy);
+    ctx.lineTo(ex,ey);
+    ctx.strokeStyle=color;
+    ctx.lineWidth=2;
+    ctx.setLineDash([5,4]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    /* arrowhead */
+    var angle=Math.atan2(ey-sy,ex-sx);
+    ctx.beginPath();
+    ctx.moveTo(ex,ey);
+    ctx.lineTo(ex-10*Math.cos(angle-0.4),ey-10*Math.sin(angle-0.4));
+    ctx.lineTo(ex-10*Math.cos(angle+0.4),ey-10*Math.sin(angle+0.4));
+    ctx.closePath();
+    ctx.fillStyle=color;
+    ctx.fill();
+  }
+
+  function drawNode(s,highlight){
+    var p=nodePos(s.angle);
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,36,0,Math.PI*2);
+    ctx.fillStyle=highlight?s.color:s.color+'33';
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,36,0,Math.PI*2);
+    ctx.strokeStyle=s.color;
+    ctx.lineWidth=highlight?2.5:1.5;
+    ctx.stroke();
+    ctx.fillStyle=highlight?'#fff':s.color;
+    ctx.font='bold 11px Poppins,sans-serif';
+    ctx.textAlign='center';
+    var words=s.label.split(' ');
+    if(words.length<=2){
+      ctx.fillText(s.label,p.x,p.y+4);
+    } else {
+      ctx.fillText(words.slice(0,2).join(' '),p.x,p.y-2);
+      ctx.fillText(words.slice(2).join(' '),p.x,p.y+12);
+    }
+    /* sub label */
+    ctx.fillStyle=highlight?'rgba(255,255,255,0.7)':s.color+'99';
+    ctx.font='9px Poppins,sans-serif';
+    ctx.fillText(s.sub,p.x,p.y+(words.length<=2?20:24));
+  }
+
+  function drawCenter(){
+    ctx.beginPath();
+    ctx.arc(cx,cy,38,0,Math.PI*2);
+    ctx.fillStyle='#1C1C0E';
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(cx,cy,38,0,Math.PI*2);
+    ctx.strokeStyle='#2E7D32';
+    ctx.lineWidth=2;
+    ctx.stroke();
+    /* draw leaf mark in center */
+    var sz=28;
+    var lx=cx,ly=cy-sz*0.32,lBot=cy+sz*0.28,cp=sz*0.25;
+    ctx.beginPath();
+    ctx.moveTo(lx,ly);
+    ctx.bezierCurveTo(lx+cp,ly+sz*0.13,lx+cp,ly+sz*0.4,lx,lBot);
+    ctx.bezierCurveTo(lx-cp,ly+sz*0.4,lx-cp,ly+sz*0.13,lx,ly);
+    ctx.fillStyle='rgba(255,255,255,0.9)';
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(lx,ly,4,0,Math.PI*2);
+    ctx.fillStyle='#D4AF37';
+    ctx.fill();
+    ctx.fillStyle='rgba(212,175,55,0.7)';
+    ctx.font='bold 8px Poppins,sans-serif';
+    ctx.textAlign='center';
+    ctx.fillText('DHR',cx,cy+22);
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    var hi=Math.floor(tick/30)%steps.length;
+    for(var i=0;i<steps.length;i++){
+      var next=(i+1)%steps.length;
+      drawArrow(nodePos(steps[i].angle),nodePos(steps[next].angle),steps[i].color);
+    }
+    for(var i=0;i<steps.length;i++) drawNode(steps[i],i===hi);
+    drawCenter();
+    /* legend */
+    ctx.font='11px Poppins,sans-serif';
+    ctx.fillStyle='#9A9A7A';
+    ctx.textAlign='center';
+    ctx.fillText('Economic Value Flywheel — Hover nodes to explore',W/2,H-14);
+    tick++;
+    requestAnimationFrame(draw);
+  }
+  draw();
+
+  cvs.addEventListener('mousemove',function(e){
+    var rect=cvs.getBoundingClientRect();
+    var mx=e.clientX-rect.left,my=e.clientY-rect.top;
+    var scX=W/rect.width,scY=H/rect.height;
+    mx*=scX; my*=scY;
+    for(var i=0;i<steps.length;i++){
+      var p=nodePos(steps[i].angle);
+      var d=Math.sqrt((mx-p.x)*(mx-p.x)+(my-p.y)*(my-p.y));
+      if(d<40){tick=i*30; break;}
+    }
+  });
+})();
+
+/* ══════════════════════════════════════════
+   BURN MECHANISMS
+══════════════════════════════════════════ */
+var BURNS=[
+  {icon:'🔥',title:'Transaction Burn',pct:'1–2%',desc:'1–2% of every on-platform transaction — payments, marketplace trades, energy purchases — is permanently burned. Creates continuous deflationary pressure at the point of usage.'},
+  {icon:'💎',title:'Revenue Buyback & Burn',pct:'5%',desc:'Most powerful mechanism. 5% of all platform revenue (energy sales, real estate income, carbon credit trading) is used to buyback DHR on open market and permanently burn. Real revenue → real scarcity.'},
+  {icon:'🤖',title:'Service Fee Burn',pct:'2–3%',desc:'AI service fees and DNA data usage fees partially burned. Remaining goes to treasury. Creates demand loop from technology verticals of the ecosystem beyond just RWA.'},
+  {icon:'🔐',title:'Staking Lock',pct:'Soft',desc:'Tokens locked in staking contracts reduce effective circulating supply without permanent burn. Acts as soft deflation — supply locked for 3–12 months per staking tier reduces market sell pressure.'},
+  {icon:'🏛️',title:'Premium Access Lock',pct:'Soft',desc:'To access high-value investment rounds, exclusive land tokenization, or early energy pools — users must lock DHR. Creates utility-driven holding without yield dependency.'},
+  {icon:'📊',title:'Governance Lock',pct:'Soft',desc:'Meaningful DAO participation requires locked voting stake. Encourages long-term holders to engage with governance, further reducing circulating supply during active proposal periods.'},
+];
+var bgrid=document.getElementById('burnGrid');
+BURNS.forEach(function(b){
+  var el=document.createElement('div');
+  el.className='burn-card';
+  el.innerHTML='<div class="burn-icon">'+b.icon+'</div><div class="burn-title">'+b.title+'</div><div class="burn-pct">'+b.pct+'</div><div class="burn-desc">'+b.desc+'</div>';
+  bgrid.appendChild(el);
+});
+
+/* ══════════════════════════════════════════
+   LAUNCH PARAMS
+══════════════════════════════════════════ */
+var LAUNCH=[
+  {label:'Total Max Supply',val:'1,000,000,000 DHR',badge:'Fixed Cap'},
+  {label:'Circulating at TGE',val:'120,000,000 DHR (12%)',badge:'Low Float'},
+  {label:'Target FDV at Launch',val:'$50M – $100M USD',badge:'Early Stage'},
+  {label:'Initial Token Price',val:'$0.05 – $0.10 USD',badge:'Demand-driven'},
+  {label:'Network',val:'Polygon Mainnet',badge:'EVM Compatible'},
+  {label:'Token Standard',val:'ERC-20 / Polygon ERC-20',badge:'Audited SC'},
+  {label:'Vesting Contracts',val:'Fully on-chain · Multisig',badge:'Transparent'},
+  {label:'Governance Model',val:'DAO + Snapshot voting',badge:'Community-first'},
+];
+var lgrid=document.getElementById('launchGrid');
+LAUNCH.forEach(function(l){
+  var el=document.createElement('div');
+  el.className='l-metric';
+  el.innerHTML='<div><div class="l-metric-val">'+l.val+'</div><div class="l-metric-lbl">'+l.label+'</div></div><div class="l-badge">'+l.badge+'</div>';
+  lgrid.appendChild(el);
+});
+
+/* ── Scroll spy ── */
+var sections=['allocation','vesting','emission','utility','flywheel','burn','launch'];
+window.addEventListener('scroll',function(){
+  var scrollY=window.pageYOffset+80;
+  sections.forEach(function(id){
+    var el=document.getElementById(id);
+    if(!el) return;
+    if(el.offsetTop<=scrollY && el.offsetTop+el.offsetHeight>scrollY){
+      document.querySelectorAll('.nl').forEach(function(n){n.classList.remove('active')});
+      var match=document.querySelector('[onclick*="'+id+'"]');
+      if(match) match.classList.add('active');
+    }
+  });
+});
+</script>
+</body>
+</html>
