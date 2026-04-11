@@ -156,7 +156,12 @@
     background: #F0F3F8;
     color: var(--navy);
     line-height: 1.6;
+    -webkit-text-size-adjust: 100%;
+    overflow-x: hidden;
   }
+
+  /* Make inline SVGs scale within their containers on small screens */
+  svg { max-width: 100%; height: auto; }
 
   /* ── COVER ── */
   .cover {
@@ -169,6 +174,12 @@
     position: relative;
     overflow: hidden;
     padding: 4rem 2rem;
+  }
+
+  /* Prefer dynamic viewport height on modern mobile browsers */
+  @supports (height: 100dvh) {
+    .cover { min-height: 100dvh; }
+    .intro-overlay { min-height: 100dvh; }
   }
 
   .cover-grid {
@@ -489,6 +500,48 @@
   @media (max-width: 700px) {
     .logo-grid, .coin-showcase, .usage-grid { grid-template-columns: 1fr; }
     .color-row { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  /* ── ADDITIONAL RESPONSIVE TWEAKS ── */
+  @media (max-width: 1024px) {
+    .section { padding: 4rem 1.75rem; }
+    .logo-cell { padding: 3rem 2rem; }
+  }
+
+  @media (max-width: 820px) {
+    .section { padding: 3.5rem 1.5rem; }
+    .cover { padding: 3.5rem 1.5rem; }
+    .cover-meta { gap: 1.25rem; font-size: 10px; }
+    .color-swatch { height: 140px; }
+    .logo-cell { min-height: 180px; }
+  }
+
+  @media (max-width: 640px) {
+    .section-title { font-size: clamp(24px, 6vw, 34px); }
+    .section-desc { font-size: 14px; margin-bottom: 2.25rem; }
+    .cover-badge { margin-bottom: 2rem; padding: 6px 16px; font-size: 10px; letter-spacing: 2px; }
+    .cover-tagline { font-size: 12px; letter-spacing: 1.5px; }
+    .cover-meta {
+      position: static;
+      margin-top: 1.75rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .type-block { padding: 2.25rem 1.75rem; }
+    .icon-grid { padding: 2rem; gap: 1.25rem; }
+    .usage-card { padding: 1.75rem; }
+    .color-swatch { height: 120px; padding: 1rem; }
+    .coin-cell { padding: 3rem 1.5rem; }
+    .logo-cell { padding: 2.25rem 1.5rem; }
+  }
+
+  @media (max-width: 420px) {
+    .section { padding: 2.75rem 1.1rem; }
+    .cover { padding: 2.75rem 1.1rem; }
+    .color-row { grid-template-columns: repeat(2, 1fr); }
+    .color-swatch { height: 110px; }
+    .type-scale-meta { min-width: 84px; font-size: 9px; letter-spacing: 1.5px; }
+    .intro-skip { bottom: calc(16px + env(safe-area-inset-bottom, 0px)); padding: 7px 14px; }
   }
 </style>
 </head>

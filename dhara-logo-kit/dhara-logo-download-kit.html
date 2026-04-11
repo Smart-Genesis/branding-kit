@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dhara — Logo Download Kit</title>
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/poppins@5.0.8/400.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/@fontsource/poppins@5.0.8/600.css" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Poppins',system-ui,sans-serif;background:#EDE8DE;color:#1A1A0A;line-height:1.5;min-height:100vh}
+.page{max-width:1040px;margin:0 auto;padding:48px 32px}
+h1{font-size:22px;font-weight:600;color:#2E7D32;letter-spacing:.04em}
+.subtitle{font-size:12px;color:#6B6B52;margin-top:4px;margin-bottom:40px}
+.platform-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
+.tab{padding:8px 18px;border-radius:30px;font-size:12px;font-weight:500;cursor:pointer;border:1px solid rgba(0,0,0,.12);background:#FAFAF8;color:#5C5844;transition:all .15s}
+.tab.active{background:#2E7D32;color:#fff;border-color:#2E7D32}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+.card{background:#FAFAF8;border-radius:16px;border:1px solid rgba(0,0,0,.06);overflow:hidden;display:flex;flex-direction:column}
+.preview{display:flex;align-items:center;justify-content:center;min-height:170px;position:relative;cursor:pointer;transition:opacity .15s}
+.preview:hover{opacity:.9}
+.preview canvas{display:block}
+.card-info{padding:14px 16px;border-top:1px solid rgba(0,0,0,.05)}
+.card-name{font-size:12px;font-weight:600;color:#1A1A0A;margin-bottom:2px}
+.card-dim{font-size:10px;font-family:monospace;color:#9A9A7A;margin-bottom:10px}
+.dl-btn{display:flex;align-items:center;justify-content:center;gap:6px;background:#2E7D32;color:#fff;border:none;border-radius:8px;padding:8px 0;font-size:11px;font-weight:600;cursor:pointer;width:100%;letter-spacing:.04em;transition:background .15s;font-family:'Poppins',sans-serif}
+.dl-btn:hover{background:#1B5E20}
+.dl-btn svg{flex-shrink:0}
+.dl-all{display:inline-flex;align-items:center;gap:8px;background:#1C1C0E;color:#D4AF37;border:none;border-radius:10px;padding:11px 24px;font-size:13px;font-weight:600;cursor:pointer;margin-bottom:28px;font-family:'Poppins',sans-serif;letter-spacing:.03em;transition:background .15s}
+.dl-all:hover{background:#2E7D32;color:#fff}
+.sec-label{font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#9A9A7A;margin-bottom:14px;margin-top:6px}
+.variant-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:22px}
+.vtab{padding:6px 14px;border-radius:6px;font-size:11px;font-weight:500;cursor:pointer;border:1px solid rgba(0,0,0,.1);background:#FAFAF8;color:#5C5844;transition:all .15s}
+.vtab.active{background:#6D4C41;color:#fff;border-color:#6D4C41}
+.status{font-size:11px;color:#43A047;text-align:center;padding:4px 0 2px;min-height:18px;font-weight:500}
+.legend{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:24px}
+.leg{display:flex;align-items:center;gap:7px;font-size:11px;color:#5C5844}
+.leg-dot{width:12px;height:12px;border-radius:3px;flex-shrink:0}
+</style>
+</head>
+<body>
+<div class="page">
+  <h1>Dhara — Logo Download Kit</h1>
+  <div class="subtitle">All formats · All platforms · Click any card or Download button to save PNG · Use "Download All" for bulk export</div>
+
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:28px;flex-wrap:wrap">
+    <button class="dl-all" id="dlAllBtn">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2v8M5 7l3 3 3-3M3 12h10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Download All Variants
+    </button>
+    <div class="status" id="globalStatus"></div>
+  </div>
+
+  <div class="sec-label">Filter by Platform</div>
+  <div class="platform-tabs" id="platformTabs">
+    <button class="tab active" data-plat="all">All Platforms</button>
+    <button class="tab" data-plat="instagram">Instagram</button>
+    <button class="tab" data-plat="facebook">Facebook</button>
+    <button class="tab" data-plat="twitter">X / Twitter</button>
+    <button class="tab" data-plat="linkedin">LinkedIn</button>
+    <button class="tab" data-plat="whatsapp">WhatsApp</button>
+    <button class="tab" data-plat="app">App / Favicon</button>
+    <button class="tab" data-plat="print">Print / HD</button>
+  </div>
+
+  <div class="sec-label" style="margin-top:4px">Filter by Variant</div>
+  <div class="variant-tabs" id="variantTabs">
+    <button class="vtab active" data-var="all">All Variants</button>
+    <button class="vtab" data-var="light">Light Mode</button>
+    <button class="vtab" data-var="dark">Dark Mode</button>
+    <button class="vtab" data-var="green">Earth Green</button>
+    <button class="vtab" data-var="gold">Gold Premium</button>
+    <button class="vtab" data-var="transparent">Transparent BG</button>
+  </div>
+
+  <div class="legend">
+    <div class="leg"><div class="leg-dot" style="background:#FAFAF8;border:1px solid rgba(0,0,0,.12)"></div>Light BG</div>
+    <div class="leg"><div class="leg-dot" style="background:#1C1C0E"></div>Dark BG</div>
+    <div class="leg"><div class="leg-dot" style="background:#2E7D32"></div>Green BG</div>
+    <div class="leg"><div class="leg-dot" style="background:#F5F0E8;border:1px solid rgba(0,0,0,.12)"></div>Beige BG</div>
+    <div class="leg"><div class="leg-dot" style="background: repeating-conic-gradient(#ccc 0% 25%, #fff 0% 50%) 0 0/8px 8px"></div>Transparent</div>
+  </div>
+
+  <div class="grid" id="logoGrid"></div>
+</div>
+
+<script>
+var SPECS = [
+  // Instagram
+  {name:'Instagram Profile',platform:'instagram',w:110,h:110,shape:'circle',variant:'green',label:'110×110 · Profile'},
+  {name:'Instagram Profile HD',platform:'instagram',w:320,h:320,shape:'circle',variant:'green',label:'320×320 · Profile HD'},
+  {name:'Instagram Post Square',platform:'instagram',w:1080,h:1080,shape:'square',variant:'light',label:'1080×1080 · Post'},
+  {name:'Instagram Post Dark',platform:'instagram',w:1080,h:1080,shape:'square',variant:'dark',label:'1080×1080 · Post Dark'},
+  {name:'Instagram Story',platform:'instagram',w:1080,h:1920,shape:'story',variant:'green',label:'1080×1920 · Story'},
+  {name:'Instagram Highlight Icon',platform:'instagram',w:160,h:160,shape:'circle',variant:'gold',label:'160×160 · Highlight'},
+  // Facebook
+  {name:'Facebook Profile',platform:'facebook',w:180,h:180,shape:'circle',variant:'green',label:'180×180 · Profile'},
+  {name:'Facebook Cover Logo',platform:'facebook',w:820,h:312,shape:'wide',variant:'dark',label:'820×312 · Cover'},
+  {name:'Facebook Post',platform:'facebook',w:1200,h:630,shape:'wide',variant:'light',label:'1200×630 · Post'},
+  // Twitter / X
+  {name:'X Profile',platform:'twitter',w:400,h:400,shape:'circle',variant:'dark',label:'400×400 · Profile'},
+  {name:'X Header Logo',platform:'twitter',w:1500,h:500,shape:'wide',variant:'dark',label:'1500×500 · Header'},
+  {name:'X Post',platform:'twitter',w:1200,h:675,shape:'wide',variant:'light',label:'1200×675 · Post'},
+  // LinkedIn
+  {name:'LinkedIn Profile',platform:'linkedin',w:400,h:400,shape:'circle',variant:'light',label:'400×400 · Profile'},
+  {name:'LinkedIn Company Logo',platform:'linkedin',w:300,h:300,shape:'square',variant:'green',label:'300×300 · Company'},
+  {name:'LinkedIn Cover',platform:'linkedin',w:1584,h:396,shape:'wide',variant:'dark',label:'1584×396 · Cover'},
+  // WhatsApp
+  {name:'WhatsApp Profile',platform:'whatsapp',w:192,h:192,shape:'circle',variant:'green',label:'192×192 · Profile'},
+  {name:'WhatsApp Sticker',platform:'whatsapp',w:512,h:512,shape:'square',variant:'transparent',label:'512×512 · Sticker'},
+  // App / Favicon
+  {name:'Favicon 16px',platform:'app',w:16,h:16,shape:'square',variant:'transparent',label:'16×16 · Favicon'},
+  {name:'Favicon 32px',platform:'app',w:32,h:32,shape:'square',variant:'transparent',label:'32×32 · Favicon'},
+  {name:'Favicon 48px',platform:'app',w:48,h:48,shape:'square',variant:'transparent',label:'48×48 · Favicon'},
+  {name:'App Icon iOS',platform:'app',w:180,h:180,shape:'ios',variant:'green',label:'180×180 · iOS'},
+  {name:'App Icon Android',platform:'app',w:192,h:192,shape:'ios',variant:'dark',label:'192×192 · Android'},
+  {name:'App Icon 512',platform:'app',w:512,h:512,shape:'ios',variant:'green',label:'512×512 · App Store'},
+  {name:'Apple Touch Icon',platform:'app',w:152,h:152,shape:'ios',variant:'green',label:'152×152 · Touch'},
+  // Print / HD
+  {name:'Logo Light HD',platform:'print',w:800,h:400,shape:'wide',variant:'light',label:'800×400 · HD Light'},
+  {name:'Logo Dark HD',platform:'print',w:800,h:400,shape:'wide',variant:'dark',label:'800×400 · HD Dark'},
+  {name:'Logo Green HD',platform:'print',w:800,h:400,shape:'wide',variant:'green',label:'800×400 · HD Green'},
+  {name:'Logo Gold HD',platform:'print',w:800,h:400,shape:'wide',variant:'gold',label:'800×400 · HD Gold'},
+  {name:'Icon Mark HD',platform:'print',w:600,h:600,shape:'square',variant:'transparent',label:'600×600 · Icon HD'},
+  {name:'Token Coin HD',platform:'print',w:600,h:600,shape:'square',variant:'coin',label:'600×600 · DHR Coin'},
+];
+
+var PREVIEW_MAX = 160;
+
+var BGSMAP = {
+  light:'#FAFAF8', dark:'#1C1C0E', green:'#2E7D32',
+  gold:'#F5F0E8', transparent:null, coin:'#FAFAF8'
+};
+var CHECKER_SIZE = 8;
+
+function bgForVariant(ctx, w, h, variant){
+  if(variant === 'transparent' || variant === null){
+    ctx.clearRect(0,0,w,h);
+    var cs = Math.max(4, Math.round(w/60));
+    for(var r=0;r<Math.ceil(h/cs);r++){
+      for(var c=0;c<Math.ceil(w/cs);c++){
+        ctx.fillStyle=((r+c)%2===0)?'#d0d0d0':'#ffffff';
+        ctx.fillRect(c*cs,r*cs,cs,cs);
+      }
+    }
+  } else {
+    ctx.fillStyle = BGSMAP[variant];
+    ctx.fillRect(0,0,w,h);
+  }
+}
+
+function cleanBg(ctx, w, h, variant){
+  if(variant === 'transparent' || variant === null){
+    ctx.clearRect(0,0,w,h);
+  } else {
+    ctx.fillStyle = BGSMAP[variant];
+    ctx.fillRect(0,0,w,h);
+  }
+}
+
+/* ── Draw DHR logo on canvas ── */
+function drawLogo(ctx, w, h, spec, forDownload){
+  var variant = spec.variant;
+  var shape = spec.shape;
+
+  if(forDownload){
+    cleanBg(ctx, w, h, variant);
+  } else {
+    bgForVariant(ctx, w, h, variant);
+  }
+
+  /* clip shapes */
+  ctx.save();
+  if(shape === 'circle'){
+    ctx.beginPath();
+    ctx.arc(w/2,h/2,Math.min(w,h)/2,0,Math.PI*2);
+    ctx.clip();
+    if(forDownload) cleanBg(ctx,w,h,variant);
+    else bgForVariant(ctx,w,h,variant);
+  } else if(shape === 'ios'){
+    var r = Math.min(w,h)*0.224;
+    roundRect(ctx,0,0,w,h,r);
+    ctx.clip();
+    if(forDownload) cleanBg(ctx,w,h,variant);
+    else bgForVariant(ctx,w,h,variant);
+  }
+
+  /* pick colors */
+  var isLight = (variant==='light'||variant==='gold');
+  var isDark  = (variant==='dark');
+  var isGreen = (variant==='green');
+  var isTransparent = (variant==='transparent');
+  var isCoin = (variant==='coin');
+
+  if(isCoin){
+    drawCoin(ctx,w,h);
+    ctx.restore();
+    return;
+  }
+
+  var leafColor, ringColor, veinColor, soilA, soilB, soilC, seedColor, wmarkColor, taglineColor;
+  if(isLight||isTransparent){
+    leafColor='#2E7D32'; ringColor='#2E7D32'; veinColor='rgba(255,255,255,0.38)';
+    soilA='#43A047'; soilB='#795548'; soilC='#4E342E'; seedColor='#D4AF37';
+    wmarkColor='#2E7D32'; taglineColor='#6D4C41';
+  } else if(isDark){
+    leafColor='rgba(255,255,255,0.92)'; ringColor='rgba(255,255,255,0.72)'; veinColor='rgba(27,94,32,0.28)';
+    soilA='rgba(255,255,255,0.55)'; soilB='rgba(255,255,255,0.36)'; soilC='rgba(255,255,255,0.2)';
+    seedColor='#D4AF37'; wmarkColor='#ffffff'; taglineColor='#D4AF37';
+  } else if(isGreen){
+    leafColor='rgba(245,240,232,0.92)'; ringColor='rgba(245,240,232,0.72)'; veinColor='rgba(27,94,32,0.32)';
+    soilA='rgba(245,240,232,0.6)'; soilB='rgba(245,240,232,0.4)'; soilC='rgba(245,240,232,0.22)';
+    seedColor='#D4AF37'; wmarkColor='#ffffff'; taglineColor='rgba(255,255,255,0.6)';
+  } else { /* gold */
+    leafColor='#D4AF37'; ringColor='#D4AF37'; veinColor='rgba(139,105,20,0.38)';
+    soilA='rgba(212,175,55,0.7)'; soilB='rgba(212,175,55,0.5)'; soilC='rgba(212,175,55,0.32)';
+    seedColor='#8B6914'; wmarkColor='#D4AF37'; taglineColor='#6D4C41';
+  }
+
+  var isWide  = (shape==='wide'||shape==='story');
+  var isStory = (shape==='story');
+
+  if(isWide && !isStory){
+    /* horizontal: mark left-ish, wordmark right */
+    var logoH  = Math.min(h*0.52, w*0.18);
+    var logoH2 = Math.min(h*0.52, w*0.18);
+    var totalW = logoH + logoH * 0.28 + logoH * 2.2;
+    var startX = (w - totalW)/2;
+    var cy2    = h/2;
+    drawMark(ctx, startX, cy2 - logoH/2, logoH, leafColor, ringColor, veinColor, soilA, soilB, soilC, seedColor);
+    var tx2 = startX + logoH + logoH * 0.28;
+    ctx.font = '600 '+Math.round(logoH*0.52)+'px Poppins,sans-serif';
+    ctx.fillStyle = wmarkColor;
+    ctx.letterSpacing = (logoH*0.52*0.07)+'px';
+    ctx.fillText('dhara', tx2, cy2 + logoH*0.18);
+    ctx.font = '400 '+Math.round(logoH*0.18)+'px Poppins,sans-serif';
+    ctx.fillStyle = taglineColor;
+    ctx.letterSpacing = (logoH*0.18*0.22)+'px';
+    ctx.fillText('EARTH · FLOW · LIFE', tx2, cy2 + logoH*0.18 + logoH*0.28);
+  } else if(isStory){
+    /* centered stacked for story */
+    var mSz = Math.min(w,h)*0.32;
+    var mx  = (w-mSz)/2, my = h/2 - mSz*0.72;
+    drawMark(ctx, mx, my, mSz, leafColor, ringColor, veinColor, soilA, soilB, soilC, seedColor);
+    ctx.textAlign = 'center';
+    ctx.font = '600 '+Math.round(mSz*0.52)+'px Poppins,sans-serif';
+    ctx.fillStyle = wmarkColor;
+    ctx.letterSpacing = (mSz*0.52*0.07)+'px';
+    ctx.fillText('dhara', w/2, my + mSz + mSz*0.65);
+    ctx.font = '400 '+Math.round(mSz*0.18)+'px Poppins,sans-serif';
+    ctx.fillStyle = taglineColor;
+    ctx.letterSpacing = (mSz*0.18*0.22)+'px';
+    ctx.fillText('EARTH · FLOW · LIFE', w/2, my + mSz + mSz*0.65 + mSz*0.3);
+    ctx.textAlign = 'left';
+  } else if(shape==='square'||shape==='circle'||shape==='ios'){
+    /* centered stacked */
+    var mSz = Math.min(w,h)*0.44;
+    if(w<=64) mSz = Math.min(w,h)*0.78;
+    var mx = (w-mSz)/2, my = h/2 - mSz*(w<=64?0.5:0.58);
+    drawMark(ctx, mx, my, mSz, leafColor, ringColor, veinColor, soilA, soilB, soilC, seedColor);
+    if(w > 64){
+      ctx.textAlign = 'center';
+      ctx.font = '600 '+Math.round(mSz*0.42)+'px Poppins,sans-serif';
+      ctx.fillStyle = wmarkColor;
+      ctx.letterSpacing = (mSz*0.42*0.07)+'px';
+      ctx.fillText('dhara', w/2, my + mSz + mSz*0.52);
+      if(w>=200){
+        ctx.font = '400 '+Math.round(mSz*0.15)+'px Poppins,sans-serif';
+        ctx.fillStyle = taglineColor;
+        ctx.letterSpacing = (mSz*0.15*0.22)+'px';
+        ctx.fillText('EARTH · FLOW · LIFE', w/2, my + mSz + mSz*0.52 + mSz*0.24);
+      }
+      ctx.textAlign = 'left';
+    }
+  }
+
+  ctx.restore();
+}
+
+function roundRect(ctx,x,y,w,h,r){
+  ctx.beginPath();
+  ctx.moveTo(x+r,y);
+  ctx.lineTo(x+w-r,y);
+  ctx.quadraticCurveTo(x+w,y,x+w,y+r);
+  ctx.lineTo(x+w,y+h-r);
+  ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);
+  ctx.lineTo(x+r,y+h);
+  ctx.quadraticCurveTo(x,y+h,x,y+h-r);
+  ctx.lineTo(x,y+r);
+  ctx.quadraticCurveTo(x,y,x+r,y);
+  ctx.closePath();
+}
+
+function drawMark(ctx, x, y, sz, leafC, ringC, veinC, s1, s2, s3, seedC){
+  var cx = x + sz/2, cy = y + sz/2, r = sz*0.44;
+  var sw = sz < 24 ? sz*0.06 : sz < 40 ? sz*0.05 : sz*0.04;
+  var showSoil = sz >= 18, showVein = sz >= 28;
+
+  /* ring */
+  ctx.beginPath();
+  ctx.arc(cx, cy, r, 0, Math.PI*2);
+  ctx.strokeStyle = ringC;
+  ctx.lineWidth = sw;
+  ctx.stroke();
+
+  if(showSoil){
+    var s = sz*0.44;
+    ctx.lineCap = 'round';
+    ctx.lineWidth = sw;
+    /* soil layers */
+    ctx.strokeStyle=s1; ctx.beginPath();
+    ctx.moveTo(cx-s*0.8,cy+s*0.41); ctx.lineTo(cx+s*0.8,cy+s*0.41); ctx.stroke();
+    ctx.strokeStyle=s2; ctx.beginPath();
+    ctx.moveTo(cx-s*0.68,cy+s*0.62); ctx.lineTo(cx+s*0.68,cy+s*0.62); ctx.stroke();
+    ctx.strokeStyle=s3; ctx.beginPath();
+    ctx.moveTo(cx-s*0.56,cy+s*0.82); ctx.lineTo(cx+s*0.56,cy+s*0.82); ctx.stroke();
+  }
+
+  /* leaf */
+  ctx.beginPath();
+  var lx = cx, ly = y + sz*0.17;
+  var lBot = y + sz*0.67;
+  var cp = sz*0.24;
+  ctx.moveTo(lx, ly);
+  ctx.bezierCurveTo(lx+cp, ly+sz*0.14, lx+cp, ly+sz*0.42, lx, lBot);
+  ctx.bezierCurveTo(lx-cp, ly+sz*0.42, lx-cp, ly+sz*0.14, lx, ly);
+  ctx.fillStyle = leafC;
+  ctx.fill();
+
+  if(showVein){
+    ctx.strokeStyle = veinC;
+    ctx.lineWidth = Math.max(0.8, sz*0.012);
+    ctx.lineCap = 'round';
+    ctx.beginPath(); ctx.moveTo(lx, ly+sz*0.04); ctx.lineTo(lx, lBot-sz*0.03); ctx.stroke();
+    if(sz >= 40){
+      ctx.lineWidth = Math.max(0.5, sz*0.008);
+      var midY = ly + (lBot-ly)*0.45;
+      ctx.beginPath(); ctx.moveTo(lx, midY); ctx.lineTo(lx+sz*0.11, midY+sz*0.08); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(lx, midY); ctx.lineTo(lx-sz*0.11, midY+sz*0.08); ctx.stroke();
+    }
+  }
+
+  /* seed */
+  var sR = sz < 24 ? sz*0.07 : sz < 40 ? sz*0.06 : sz*0.05;
+  ctx.beginPath(); ctx.arc(lx, ly, sR, 0, Math.PI*2);
+  ctx.fillStyle = seedC; ctx.fill();
+  ctx.beginPath(); ctx.arc(lx, ly, sR*0.5, 0, Math.PI*2);
+  ctx.fillStyle = '#F5D040'; ctx.fill();
+}
+
+function drawCoin(ctx, w, h){
+  var r = Math.min(w,h)*0.45, cx = w/2, cy = h/2;
+  /* rings */
+  ctx.beginPath(); ctx.arc(cx,cy,r*0.97,0,Math.PI*2); ctx.fillStyle='#D4AF37'; ctx.fill();
+  ctx.beginPath(); ctx.arc(cx,cy,r*0.90,0,Math.PI*2); ctx.fillStyle='#9A7B0A'; ctx.fill();
+  ctx.beginPath(); ctx.arc(cx,cy,r*0.83,0,Math.PI*2); ctx.fillStyle='#D4AF37'; ctx.fill();
+  /* face */
+  var ir = r*0.77;
+  ctx.beginPath(); ctx.arc(cx,cy,ir,0,Math.PI*2); ctx.fillStyle='#1B5E20'; ctx.fill();
+  /* leaf inside */
+  ctx.save();
+  ctx.beginPath(); ctx.arc(cx,cy,ir-1,0,Math.PI*2); ctx.clip();
+  var mSz = ir*1.6;
+  drawMark(ctx, cx-mSz/2, cy-mSz*0.52, mSz,
+    'rgba(255,255,255,0.92)','rgba(255,255,255,0.4)','rgba(27,94,32,0.22)',
+    'transparent','transparent','transparent','#D4AF37');
+  ctx.restore();
+  /* DHR text */
+  if(r >= 40){
+    ctx.textAlign='center';
+    ctx.font = 'bold '+Math.round(r*0.22)+'px Poppins,sans-serif';
+    ctx.fillStyle='rgba(212,175,55,0.65)';
+    ctx.fillText('DHR', cx, cy+ir*0.75);
+    ctx.textAlign='left';
+  }
+}
+
+/* ── Build grid ── */
+var activePlat = 'all', activeVar = 'all';
+
+function buildGrid(){
+  var grid = document.getElementById('logoGrid');
+  grid.innerHTML = '';
+  SPECS.forEach(function(spec, idx){
+    if(activePlat !== 'all' && spec.platform !== activePlat) return;
+    if(activeVar  !== 'all' && spec.variant  !== activeVar)  return;
+
+    var card = document.createElement('div');
+    card.className = 'card';
+
+    /* preview dimensions */
+    var pw = PREVIEW_MAX, ph;
+    var ratio = spec.h/spec.w;
+    if(ratio > 2){ pw = 80; ph = 160; }
+    else if(ratio > 1){ pw = 100; ph = Math.round(100*ratio); }
+    else { pw = PREVIEW_MAX; ph = Math.round(PREVIEW_MAX*ratio); ph = Math.max(ph, 50); }
+    ph = Math.min(ph, PREVIEW_MAX);
+
+    var previewDiv = document.createElement('div');
+    previewDiv.className = 'preview';
+    previewDiv.style.minHeight = '170px';
+    previewDiv.style.background = 'transparent';
+
+    var cnv = document.createElement('canvas');
+    cnv.width = pw*2; cnv.height = ph*2;
+    cnv.style.width = pw+'px'; cnv.style.height = ph+'px';
+    var pctx = cnv.getContext('2d');
+    pctx.scale(2,2);
+    drawLogo(pctx, pw, ph, spec, false);
+
+    previewDiv.appendChild(cnv);
+    previewDiv.title = 'Click to download';
+    previewDiv.onclick = function(){ downloadSpec(spec); };
+
+    var info = document.createElement('div');
+    info.className = 'card-info';
+    info.innerHTML =
+      '<div class="card-name">'+spec.name+'</div>'+
+      '<div class="card-dim">'+spec.label+'</div>'+
+      '<div class="status" id="st'+idx+'"></div>'+
+      '<button class="dl-btn" data-idx="'+idx+'">'+
+      '<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M6 1v7M3 6l3 3 3-3M1 10h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>'+
+      ' Download PNG</button>';
+
+    card.appendChild(previewDiv);
+    card.appendChild(info);
+    grid.appendChild(card);
+  });
+
+  grid.querySelectorAll('.dl-btn').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var i = parseInt(btn.dataset.idx);
+      downloadSpec(SPECS[i], btn.parentElement.querySelector('.status'));
+    });
+  });
+}
+
+function downloadSpec(spec, statusEl){
+  var cnv = document.createElement('canvas');
+  cnv.width = spec.w; cnv.height = spec.h;
+  var ctx = cnv.getContext('2d');
+
+  /* fill solid BG for non-transparent */
+  if(spec.variant !== 'transparent'){
+    cleanBg(ctx, spec.w, spec.h, spec.variant);
+  }
+
+  /* apply clip shape before drawing */
+  ctx.save();
+  if(spec.shape === 'circle'){
+    ctx.beginPath();
+    ctx.arc(spec.w/2, spec.h/2, Math.min(spec.w,spec.h)/2, 0, Math.PI*2);
+    ctx.clip();
+    cleanBg(ctx, spec.w, spec.h, spec.variant);
+  } else if(spec.shape === 'ios'){
+    var iosR = Math.min(spec.w,spec.h)*0.224;
+    roundRect(ctx,0,0,spec.w,spec.h,iosR);
+    ctx.clip();
+    cleanBg(ctx, spec.w, spec.h, spec.variant);
+  }
+
+  drawLogo(ctx, spec.w, spec.h, spec, true);
+  ctx.restore();
+
+  cnv.toBlob(function(blob){
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = 'dhara-'+spec.name.toLowerCase().replace(/[^a-z0-9]+/g,'-')+'-'+spec.w+'x'+spec.h+'.png';
+    a.click();
+    URL.revokeObjectURL(url);
+    if(statusEl){ statusEl.textContent='Downloaded!'; setTimeout(function(){statusEl.textContent=''},2500); }
+  }, 'image/png');
+}
+
+function downloadAll(){
+  var gs = document.getElementById('globalStatus');
+  var filtered = SPECS.filter(function(s){
+    return (activePlat==='all'||s.platform===activePlat) && (activeVar==='all'||s.variant===activeVar);
+  });
+  gs.textContent='Preparing '+filtered.length+' files…';
+  var i=0;
+  function next(){
+    if(i>=filtered.length){ gs.textContent='All '+filtered.length+' files downloaded!'; setTimeout(function(){gs.textContent=''},3000); return; }
+    gs.textContent='Downloading '+(i+1)+' / '+filtered.length+'…';
+    downloadSpec(filtered[i]);
+    i++;
+    setTimeout(next, 300);
+  }
+  next();
+}
+
+/* tabs */
+document.getElementById('platformTabs').addEventListener('click', function(e){
+  var t = e.target.closest('.tab'); if(!t) return;
+  document.querySelectorAll('.tab').forEach(function(x){x.classList.remove('active')});
+  t.classList.add('active');
+  activePlat = t.dataset.plat;
+  buildGrid();
+});
+document.getElementById('variantTabs').addEventListener('click', function(e){
+  var t = e.target.closest('.vtab'); if(!t) return;
+  document.querySelectorAll('.vtab').forEach(function(x){x.classList.remove('active')});
+  t.classList.add('active');
+  activeVar = t.dataset.var;
+  buildGrid();
+});
+document.getElementById('dlAllBtn').addEventListener('click', downloadAll);
+
+buildGrid();
+</script>
+</body>
+</html>
