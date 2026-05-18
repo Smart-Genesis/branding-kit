@@ -1,0 +1,1696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Getwedge — Brand Kit v1.0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    /* Type system — Inter for everything, JetBrains Mono for data
+       Inter: used by GitHub, Mozilla, Figma. The SaaS standard.
+       JetBrains Mono: from a dev tools company; clean, readable, no AI association.
+       No italics, no decorative curves, no display serifs. */
+    --display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --mono: 'JetBrains Mono', 'SF Mono', Consolas, 'Liberation Mono', monospace;
+
+    /* Signature accent — deep, considered (used in both themes) */
+    --signal: #2D4A2B;         /* deep forest green — distinct from typical SaaS blue */
+    --signal-soft: #4A6B47;
+    --signal-tint: #E8EDE6;
+
+    /* Functional accents */
+    --alert: #8B1F1F;          /* deep oxblood — not bright red */
+    --warning: #8B5A1F;         /* burnt amber */
+    --success: #1F5C3F;         /* deep emerald */
+  }
+
+  /* ============ LIGHT THEME (default) ============ */
+  :root,
+  [data-theme="light"] {
+    --ink: #0A0A0B;           /* primary text */
+    --ink-soft: #1C1C1F;
+    --paper: #FAFAF7;          /* primary background */
+    --paper-pure: #FFFFFF;
+    --bone: #F4F2EC;           /* secondary surface */
+    --stone-100: #ECEAE3;      /* borders */
+    --stone-200: #D6D3CB;
+    --stone-300: #A8A29E;      /* muted */
+    --stone-400: #57534E;      /* secondary text */
+    --stone-500: #292524;
+    --nav-bg: rgba(250, 250, 247, 0.85);
+    --signal-accent: var(--signal);
+    --alert-accent: var(--alert);
+    --rule-bg: var(--paper-pure);
+    --alert-bg: #FBE9E9;
+  }
+
+  /* ============ DARK THEME ============ */
+  [data-theme="dark"] {
+    --ink: #F5F5F2;            /* primary text (was light surface) */
+    --ink-soft: #E8E8E3;
+    --paper: #0E0E10;          /* primary background */
+    --paper-pure: #18181B;
+    --bone: #1C1C1F;           /* secondary surface */
+    --stone-100: #2A2A2D;      /* borders */
+    --stone-200: #3A3A3E;
+    --stone-300: #6B6B70;      /* muted */
+    --stone-400: #9C9C9E;      /* secondary text */
+    --stone-500: #C8C8CA;
+    --nav-bg: rgba(14, 14, 16, 0.85);
+    --signal-accent: #8FB28A;  /* brightened signal for dark mode contrast */
+    --alert-accent: #D87878;   /* brightened alert for dark mode contrast */
+    --rule-bg: var(--paper-pure);
+    --alert-bg: #3A1F1F;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--sans);
+    background: var(--paper);
+    color: var(--ink);
+    font-weight: 400;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background-color .3s ease, color .3s ease;
+  }
+
+  /* ============ NAV ============ */
+  .nav {
+    position: sticky;
+    top: 0;
+    background: var(--nav-bg);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid var(--stone-100);
+    z-index: 100;
+    padding: 16px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background-color .3s ease, border-color .3s ease;
+  }
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: -0.02em;
+  }
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    font-size: 13px;
+    color: var(--stone-400);
+  }
+  .nav-links a {
+    color: var(--stone-400);
+    text-decoration: none;
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-version {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--stone-300);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+  }
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+  .theme-toggle {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: 1px solid var(--stone-200);
+    color: var(--ink);
+    cursor: pointer;
+    transition: all .2s ease;
+    border-radius: 4px;
+  }
+  .theme-toggle:hover {
+    background: var(--bone);
+    border-color: var(--stone-300);
+  }
+  .theme-toggle svg { display: block; }
+  .theme-toggle .icon-sun { display: none; }
+  .theme-toggle .icon-moon { display: block; }
+  [data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+  [data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+
+  /* ============ HERO ============ */
+  .hero {
+    padding: 120px 48px 80px;
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 80px;
+    right: 48px;
+    width: 380px;
+    height: 380px;
+    background: radial-gradient(circle, var(--signal-tint) 0%, transparent 70%);
+    z-index: 0;
+    pointer-events: none;
+  }
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--stone-400);
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero h1 {
+    font-family: var(--sans);
+    font-size: clamp(56px, 8vw, 120px);
+    font-weight: 700;
+    line-height: 0.98;
+    letter-spacing: -0.035em;
+    margin-bottom: 32px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--signal-accent);
+    font-weight: 700;
+  }
+  .hero-meta {
+    display: flex;
+    gap: 48px;
+    flex-wrap: wrap;
+    margin-top: 56px;
+    padding-top: 32px;
+    border-top: 1px solid var(--stone-100);
+    position: relative;
+    z-index: 1;
+  }
+  .hero-meta div {
+    flex: 1;
+    min-width: 180px;
+  }
+  .hero-meta dt {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--stone-300);
+    margin-bottom: 8px;
+  }
+  .hero-meta dd {
+    font-size: 15px;
+    color: var(--ink);
+  }
+
+  /* ============ SECTIONS ============ */
+  section {
+    padding: 96px 48px;
+    max-width: 1400px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 32px;
+    margin-bottom: 56px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--stone-100);
+  }
+  .section-num {
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--stone-300);
+    letter-spacing: 0.1em;
+  }
+  .section-title {
+    font-family: var(--sans);
+    font-size: 48px;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+  }
+  .section-title em { font-style: normal; color: var(--signal-accent); font-weight: 700; }
+  .section-intro {
+    max-width: 640px;
+    color: var(--stone-400);
+    font-size: 17px;
+    line-height: 1.6;
+    margin-left: auto;
+  }
+
+  /* ============ LOGO SHOWCASE ============ */
+  .logo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1px;
+    background: var(--stone-100);
+    border: 1px solid var(--stone-100);
+  }
+  .logo-card {
+    background: var(--paper);
+    padding: 48px 32px 32px;
+    position: relative;
+    transition: background .25s;
+  }
+  .logo-card.dark { background: #0A0A0B; color: #FAFAF7; }
+  .logo-card.cream { background: #F4F2EC; color: #0A0A0B; }
+  .logo-card.signal { background: var(--signal); }
+  /* In dark theme, the cream card still shows the asset on its native cream — keep label text dark */
+  [data-theme="dark"] .logo-card.cream .logo-card-label { color: #57534E; }
+  [data-theme="dark"] .logo-card.cream .logo-card-name { color: #0A0A0B; }
+  [data-theme="dark"] .logo-card.cream .download-btn { color: #0A0A0B; border-color: #D6D3CB; }
+  [data-theme="dark"] .logo-card.cream .download-btn:hover { background: #0A0A0B; color: #FAFAF7; border-color: #0A0A0B; }
+  .logo-card-display {
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+  }
+  .logo-card-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--stone-300);
+    margin-bottom: 8px;
+  }
+  .logo-card.dark .logo-card-label,
+  .logo-card.signal .logo-card-label { color: rgba(250,250,247,0.5); }
+  .logo-card-name {
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+  .download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 8px 12px;
+    background: transparent;
+    border: 1px solid var(--stone-200);
+    color: var(--ink);
+    cursor: pointer;
+    transition: all .2s;
+    text-decoration: none;
+  }
+  .download-btn:hover {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+  .logo-card.dark .download-btn {
+    border-color: rgba(250,250,247,0.2);
+    color: #FAFAF7;
+  }
+  .logo-card.dark .download-btn:hover {
+    background: #FAFAF7;
+    color: #0A0A0B;
+    border-color: #FAFAF7;
+  }
+  .logo-card.signal .download-btn {
+    border-color: rgba(250,250,247,0.3);
+    color: #FAFAF7;
+  }
+  .logo-card.signal .download-btn:hover {
+    background: #FAFAF7;
+    color: var(--signal);
+    border-color: #FAFAF7;
+  }
+
+  /* ============ COLOR PALETTE ============ */
+  .color-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1px;
+    background: var(--stone-100);
+  }
+  .swatch {
+    padding: 40px 24px 24px;
+    aspect-ratio: 1.1;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    cursor: pointer;
+    transition: transform .25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .swatch:hover { transform: scale(0.99); }
+  .swatch::after {
+    content: 'Click to copy';
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity .25s;
+  }
+  .swatch:hover::after { opacity: 0.6; }
+  .swatch-name {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 22px;
+    letter-spacing: -0.02em;
+    margin-bottom: 4px;
+  }
+  .swatch-hex {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    margin-bottom: 4px;
+    opacity: 0.7;
+  }
+  .swatch-role {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.5;
+  }
+
+  /* ============ TYPOGRAPHY ============ */
+  .type-specimens {
+    display: grid;
+    gap: 80px;
+  }
+  .type-specimen {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 48px;
+    align-items: start;
+    padding-bottom: 56px;
+    border-bottom: 1px solid var(--stone-100);
+  }
+  .type-meta h3 {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 26px;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+  }
+  .type-meta .type-role {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--stone-300);
+    margin-bottom: 16px;
+  }
+  .type-meta p {
+    font-size: 14px;
+    color: var(--stone-400);
+    margin-bottom: 8px;
+    line-height: 1.6;
+  }
+  .type-display.display-font {
+    font-family: var(--sans);
+    font-size: 80px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.035em;
+  }
+  .type-display.sans-font {
+    font-family: var(--sans);
+    font-size: 48px;
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+  }
+  .type-display.mono-font {
+    font-family: var(--mono);
+    font-size: 26px;
+    letter-spacing: -0.02em;
+  }
+  .type-scale {
+    margin-top: 32px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    align-items: baseline;
+    color: var(--stone-400);
+  }
+  .type-scale span {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+  }
+
+  /* ============ LOGO ANATOMY ============ */
+  .anatomy-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+  }
+  .anatomy-panel {
+    background: #F4F2EC;
+    color: #0A0A0B;
+    padding: 64px;
+    aspect-ratio: 1.4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .anatomy-panel .anatomy-label { color: #57534E; }
+  .anatomy-panel.grid::before {
+    content: '';
+    position: absolute;
+    inset: 32px;
+    background-image:
+      linear-gradient(var(--stone-200) 1px, transparent 1px),
+      linear-gradient(90deg, var(--stone-200) 1px, transparent 1px);
+    background-size: 24px 24px;
+    opacity: 0.4;
+  }
+  .anatomy-label {
+    position: absolute;
+    bottom: 24px;
+    left: 24px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--stone-400);
+  }
+
+  /* ============ APPLICATIONS ============ */
+  .app-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+    gap: 32px;
+  }
+  .app-card {
+    aspect-ratio: 4/3;
+    border-radius: 0;
+    overflow: hidden;
+    position: relative;
+    background: var(--bone);
+  }
+  .app-card.business-card {
+    background: #0A0A0B;
+    color: #FAFAF7;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .app-card.business-card .top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .app-card.business-card .bottom {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.05em;
+  }
+  .app-card.business-card .bottom .name {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 22px;
+    letter-spacing: -0.02em;
+    margin-bottom: 8px;
+    color: #FAFAF7;
+  }
+  .app-card.business-card .bottom .role {
+    color: var(--stone-300);
+    margin-bottom: 16px;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+  }
+  .app-card.business-card .bottom .contact {
+    color: var(--stone-200);
+    font-size: 11px;
+    line-height: 1.7;
+  }
+
+  .app-card.email-preview {
+    background: var(--paper-pure);
+    padding: 32px;
+    overflow: hidden;
+  }
+  .email-header {
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--stone-100);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .email-subject {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 20px;
+    letter-spacing: -0.02em;
+    margin-bottom: 12px;
+    line-height: 1.25;
+    color: var(--ink);
+  }
+  .email-body {
+    font-size: 13px;
+    color: var(--stone-400);
+    line-height: 1.7;
+  }
+  .email-insight {
+    margin-top: 16px;
+    padding: 12px;
+    background: var(--signal-tint);
+    border-left: 2px solid var(--signal-accent);
+  }
+  .email-insight-label {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--signal-accent);
+    margin-bottom: 4px;
+  }
+  .email-insight-text {
+    font-size: 12px;
+    color: var(--ink);
+    line-height: 1.5;
+  }
+
+  .app-card.app-icon {
+    background: linear-gradient(135deg, var(--ink) 0%, var(--ink-soft) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .app-card.app-icon::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 30% 30%, rgba(45,74,43,0.3) 0%, transparent 60%);
+  }
+
+  /* ============ USAGE RULES ============ */
+  .rules-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .rule {
+    padding: 32px;
+    border: 1px solid var(--stone-100);
+    background: var(--rule-bg);
+  }
+  .rule-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .rule-icon {
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+  }
+  .rule-icon.do { background: var(--signal-tint); color: var(--signal-accent); }
+  .rule-icon.dont { background: var(--alert-bg); color: var(--alert-accent); }
+  .rule h4 {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 20px;
+    letter-spacing: -0.02em;
+  }
+  .rule p {
+    color: var(--stone-400);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* ============ VOICE & TONE ============ */
+  .voice-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--stone-100);
+    border: 1px solid var(--stone-100);
+  }
+  .voice-col {
+    padding: 40px;
+    background: var(--paper);
+  }
+  .voice-col.we { background: var(--paper); }
+  .voice-col.we-dont { background: var(--bone); }
+  .voice-col h4 {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--stone-400);
+    margin-bottom: 24px;
+  }
+  .voice-list {
+    list-style: none;
+  }
+  .voice-list li {
+    padding: 12px 0;
+    border-bottom: 1px solid var(--stone-100);
+    font-size: 16px;
+    color: var(--ink);
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .voice-list li::before {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--signal-accent);
+    margin-top: 9px;
+    flex-shrink: 0;
+  }
+  .voice-col.we-dont .voice-list li::before {
+    background: var(--stone-300);
+  }
+  .voice-col.we-dont .voice-list li {
+    color: var(--stone-400);
+    text-decoration: line-through;
+    text-decoration-color: var(--stone-300);
+  }
+
+  /* ============ FOOTER ============ */
+  footer {
+    background: #0A0A0B;
+    color: #FAFAF7;
+    padding: 96px 48px 48px;
+    margin-top: 96px;
+  }
+  .footer-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+  .footer-cta {
+    font-family: var(--sans);
+    font-size: 52px;
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    margin-bottom: 64px;
+  }
+  .footer-cta em { font-style: normal; color: #8FB28A; font-weight: 600; }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    padding-top: 32px;
+    border-top: 1px solid rgba(250,250,247,0.1);
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #A8A29E;
+  }
+  .footer-bottom .download-all {
+    background: #8FB28A;
+    color: #0A0A0B;
+    padding: 16px 24px;
+    border: none;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background .2s;
+  }
+  .footer-bottom .download-all:hover { background: #FAFAF7; }
+
+  /* ============ TOAST ============ */
+  .toast {
+    position: fixed;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%) translateY(120%);
+    background: #0A0A0B;
+    color: #FAFAF7;
+    padding: 14px 24px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: transform .35s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1000;
+    border: 1px solid rgba(250,250,247,0.1);
+  }
+  .toast.show {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 768px) {
+    .nav { padding: 12px 24px; }
+    .nav-links { display: none; }
+    .hero, section { padding: 64px 24px; }
+    section { padding-top: 56px; padding-bottom: 56px; }
+    .section-header { flex-direction: column; gap: 16px; }
+    .section-intro { margin-left: 0; }
+    .section-title { font-size: 36px; }
+    .type-specimen { grid-template-columns: 1fr; gap: 24px; }
+    .type-display.display-font { font-size: 56px; }
+    .type-display.sans-font { font-size: 36px; }
+    .anatomy-grid, .rules-grid, .voice-grid { grid-template-columns: 1fr; }
+    .footer-cta { font-size: 36px; }
+    .footer-bottom { flex-direction: column; gap: 24px; align-items: start; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav class="nav">
+  <div class="nav-logo">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M3 20L12 4L21 20H3Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+      <path d="M12 4L12 20" stroke="currentColor" stroke-width="1.5"/>
+    </svg>
+    Getwedge
+  </div>
+  <div class="nav-links">
+    <a href="#logo">Logo</a>
+    <a href="#color">Color</a>
+    <a href="#type">Typography</a>
+    <a href="#apply">Application</a>
+    <a href="#voice">Voice</a>
+  </div>
+  <div class="nav-right">
+    <div class="nav-version">Brand Kit · v1.0</div>
+    <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme" title="Toggle color theme">
+      <svg class="icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+      </svg>
+      <svg class="icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="4"/>
+        <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/>
+      </svg>
+    </button>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="eyebrow">Brand Identity System</div>
+  <h1>Find your <em>wedge</em>.</h1>
+  <dl class="hero-meta">
+    <div>
+      <dt>Product</dt>
+      <dd>Getwedge — Competitive intelligence for bootstrapped B2B SaaS founders.</dd>
+    </div>
+    <div>
+      <dt>Brand Position</dt>
+      <dd>Editorial. Considered. Quietly confident. The opposite of dashboard-as-cockpit.</dd>
+    </div>
+    <div>
+      <dt>Released</dt>
+      <dd>May 2026 · v1.0 · Living document</dd>
+    </div>
+  </dl>
+</header>
+
+<!-- ============ LOGO ============ -->
+<section id="logo">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2 class="section-title">The <em>mark</em>.</h2>
+    <p class="section-intro">A geometric wedge — half arrowhead, half compass needle. It points forward without shouting. The vertical center line is the fulcrum: the moment of leverage where strategy meets action. Built on a 24×24 grid for pixel-perfect rendering at every size.</p>
+  </div>
+
+  <div class="logo-grid">
+    <!-- Primary Wordmark Light -->
+    <div class="logo-card">
+      <div class="logo-card-display">
+        <svg width="240" height="60" viewBox="0 0 240 60" xmlns="http://www.w3.org/2000/svg" id="logo-primary">
+          <path d="M8 50L24 10L40 50H8Z" stroke="#0A0A0B" stroke-width="2" stroke-linejoin="round" fill="none"/>
+          <path d="M24 10L24 50" stroke="#0A0A0B" stroke-width="2"/>
+          <text x="60" y="40" font-family="Inter, sans-serif" font-weight="600" font-size="28" fill="#0A0A0B" letter-spacing="-0.02em">Getwedge</text>
+        </svg>
+      </div>
+      <div class="logo-card-label">Primary · Horizontal</div>
+      <div class="logo-card-name">Wordmark on Paper</div>
+      <button class="download-btn" data-svg="logo-primary" data-name="getwedge-primary-light">↓ SVG</button>
+    </div>
+
+    <!-- Primary Wordmark Dark -->
+    <div class="logo-card dark">
+      <div class="logo-card-display">
+        <svg width="240" height="60" viewBox="0 0 240 60" xmlns="http://www.w3.org/2000/svg" id="logo-primary-dark">
+          <path d="M8 50L24 10L40 50H8Z" stroke="#FAFAF7" stroke-width="2" stroke-linejoin="round" fill="none"/>
+          <path d="M24 10L24 50" stroke="#FAFAF7" stroke-width="2"/>
+          <text x="60" y="40" font-family="Inter, sans-serif" font-weight="600" font-size="28" fill="#FAFAF7" letter-spacing="-0.02em">Getwedge</text>
+        </svg>
+      </div>
+      <div class="logo-card-label">Primary · Horizontal</div>
+      <div class="logo-card-name">Wordmark on Ink</div>
+      <button class="download-btn" data-svg="logo-primary-dark" data-name="getwedge-primary-dark">↓ SVG</button>
+    </div>
+
+    <!-- Signal Background -->
+    <div class="logo-card signal">
+      <div class="logo-card-display">
+        <svg width="240" height="60" viewBox="0 0 240 60" xmlns="http://www.w3.org/2000/svg" id="logo-primary-signal">
+          <path d="M8 50L24 10L40 50H8Z" stroke="#FAFAF7" stroke-width="2" stroke-linejoin="round" fill="none"/>
+          <path d="M24 10L24 50" stroke="#FAFAF7" stroke-width="2"/>
+          <text x="60" y="40" font-family="Inter, sans-serif" font-weight="600" font-size="28" fill="#FAFAF7" letter-spacing="-0.02em">Getwedge</text>
+        </svg>
+      </div>
+      <div class="logo-card-label">Primary · Horizontal</div>
+      <div class="logo-card-name">Wordmark on Signal</div>
+      <button class="download-btn" data-svg="logo-primary-signal" data-name="getwedge-primary-signal">↓ SVG</button>
+    </div>
+
+    <!-- Symbol Only -->
+    <div class="logo-card cream">
+      <div class="logo-card-display">
+        <svg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" id="logo-symbol">
+          <path d="M12 68L40 12L68 68H12Z" stroke="#0A0A0B" stroke-width="3" stroke-linejoin="round" fill="none"/>
+          <path d="M40 12L40 68" stroke="#0A0A0B" stroke-width="3"/>
+        </svg>
+      </div>
+      <div class="logo-card-label">Symbol · Standalone</div>
+      <div class="logo-card-name">The Wedge Mark</div>
+      <button class="download-btn" data-svg="logo-symbol" data-name="getwedge-symbol">↓ SVG</button>
+    </div>
+
+    <!-- Filled Symbol -->
+    <div class="logo-card">
+      <div class="logo-card-display">
+        <svg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" id="logo-symbol-filled">
+          <path d="M12 68L40 12L68 68H12Z" fill="#2D4A2B"/>
+          <path d="M40 12L40 68" stroke="#FAFAF7" stroke-width="2"/>
+        </svg>
+      </div>
+      <div class="logo-card-label">Symbol · Solid</div>
+      <div class="logo-card-name">For App Icons & Favicon</div>
+      <button class="download-btn" data-svg="logo-symbol-filled" data-name="getwedge-symbol-filled">↓ SVG</button>
+    </div>
+
+    <!-- Stacked -->
+    <div class="logo-card">
+      <div class="logo-card-display" style="flex-direction:column;gap:8px;color:var(--ink);">
+        <svg width="64" height="64" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 68L40 12L68 68H12Z" stroke="currentColor" stroke-width="3" stroke-linejoin="round" fill="none"/>
+          <path d="M40 12L40 68" stroke="currentColor" stroke-width="3"/>
+        </svg>
+        <span style="font-family:var(--sans);font-weight:600;font-size:22px;letter-spacing:-0.02em;color:var(--ink);">Getwedge</span>
+      </div>
+      <div class="logo-card-label">Stacked · Vertical</div>
+      <div class="logo-card-name">For Square Spaces</div>
+      <button class="download-btn" data-stacked="true" data-name="getwedge-stacked">↓ SVG</button>
+    </div>
+
+    <!-- Favicon -->
+    <div class="logo-card cream">
+      <div class="logo-card-display">
+        <div style="width:48px;height:48px;background:#2D4A2B;border-radius:8px;display:flex;align-items:center;justify-content:center;">
+          <svg width="28" height="28" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 68L40 12L68 68H12Z" stroke="#FAFAF7" stroke-width="4" stroke-linejoin="round" fill="none"/>
+            <path d="M40 12L40 68" stroke="#FAFAF7" stroke-width="4"/>
+          </svg>
+        </div>
+      </div>
+      <div class="logo-card-label">Favicon · 48×48</div>
+      <div class="logo-card-name">Browser Tab Icon</div>
+      <button class="download-btn" data-favicon="48" data-name="getwedge-favicon-48">↓ PNG</button>
+    </div>
+
+    <!-- App Icon -->
+    <div class="logo-card cream">
+      <div class="logo-card-display">
+        <div style="width:96px;height:96px;background:linear-gradient(135deg,#0A0A0B 0%,#1C1C1F 100%);border-radius:20px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.12);">
+          <div style="position:absolute;inset:0;background:radial-gradient(circle at 30% 30%, rgba(45,74,43,0.4) 0%, transparent 60%);"></div>
+          <svg width="48" height="48" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" style="position:relative;z-index:1;">
+            <path d="M12 68L40 12L68 68H12Z" stroke="#FAFAF7" stroke-width="3" stroke-linejoin="round" fill="none"/>
+            <path d="M40 12L40 68" stroke="#FAFAF7" stroke-width="3"/>
+          </svg>
+        </div>
+      </div>
+      <div class="logo-card-label">App Icon · 1024×1024</div>
+      <div class="logo-card-name">iOS / macOS / Web</div>
+      <button class="download-btn" data-appicon="true" data-name="getwedge-app-icon">↓ PNG</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ LOGO ANATOMY ============ -->
+<section>
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2 class="section-title">The <em>anatomy</em>.</h2>
+    <p class="section-intro">The mark is constructed from three geometric beats: the rising left edge, the falling right edge, and the vertical fulcrum line. Built on a 24-unit grid with 2px stroke at base size. Apex sits at unit 12; base spans unit 4 to 20. The fulcrum is the visual hinge — never remove it.</p>
+  </div>
+
+  <div class="anatomy-grid">
+    <div class="anatomy-panel grid">
+      <svg width="320" height="320" viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg" style="position:relative;z-index:1;">
+        <!-- Construction lines -->
+        <line x1="50" y1="270" x2="160" y2="50" stroke="#A8A29E" stroke-width="0.5" stroke-dasharray="2,4"/>
+        <line x1="160" y1="50" x2="270" y2="270" stroke="#A8A29E" stroke-width="0.5" stroke-dasharray="2,4"/>
+        <line x1="50" y1="270" x2="270" y2="270" stroke="#A8A29E" stroke-width="0.5" stroke-dasharray="2,4"/>
+        <!-- Mark -->
+        <path d="M50 270L160 50L270 270H50Z" stroke="#0A0A0B" stroke-width="4" stroke-linejoin="round" fill="none"/>
+        <path d="M160 50L160 270" stroke="#0A0A0B" stroke-width="4"/>
+        <!-- Annotations -->
+        <circle cx="160" cy="50" r="4" fill="#2D4A2B"/>
+        <circle cx="50" cy="270" r="4" fill="#2D4A2B"/>
+        <circle cx="270" cy="270" r="4" fill="#2D4A2B"/>
+        <text x="170" y="50" font-family="JetBrains Mono, monospace" font-size="10" fill="#57534E" letter-spacing="0.1em">APEX</text>
+        <text x="20" y="290" font-family="JetBrains Mono, monospace" font-size="10" fill="#57534E" letter-spacing="0.1em">BASE</text>
+        <text x="170" y="170" font-family="JetBrains Mono, monospace" font-size="10" fill="#2D4A2B" letter-spacing="0.1em">FULCRUM</text>
+      </svg>
+      <span class="anatomy-label">Construction Grid · 24u</span>
+    </div>
+    <div class="anatomy-panel">
+      <div style="display:flex;align-items:flex-end;gap:32px;">
+        <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 20L12 4L21 20H3Z" stroke="#0A0A0B" stroke-width="1.5" stroke-linejoin="round" fill="none"/>
+          <path d="M12 4L12 20" stroke="#0A0A0B" stroke-width="1.5"/>
+        </svg>
+        <svg width="48" height="48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+          <path d="M6 40L24 8L42 40H6Z" stroke="#0A0A0B" stroke-width="2" stroke-linejoin="round" fill="none"/>
+          <path d="M24 8L24 40" stroke="#0A0A0B" stroke-width="2"/>
+        </svg>
+        <svg width="96" height="96" viewBox="0 0 96 96" xmlns="http://www.w3.org/2000/svg">
+          <path d="M14 80L48 16L82 80H14Z" stroke="#0A0A0B" stroke-width="3" stroke-linejoin="round" fill="none"/>
+          <path d="M48 16L48 80" stroke="#0A0A0B" stroke-width="3"/>
+        </svg>
+        <svg width="160" height="160" viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg">
+          <path d="M24 132L80 28L136 132H24Z" stroke="#0A0A0B" stroke-width="4" stroke-linejoin="round" fill="none"/>
+          <path d="M80 28L80 132" stroke="#0A0A0B" stroke-width="4"/>
+        </svg>
+      </div>
+      <span class="anatomy-label">Scale · 24px to 160px</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ COLOR ============ -->
+<section id="color">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2 class="section-title">The <em>palette</em>.</h2>
+    <p class="section-intro">A grounded, editorial palette anchored by warm neutrals and a single confident accent. We avoided the SaaS-cliché blue and the AI-startup purple. Forest signal-green carries the brand without screaming. Click any swatch to copy.</p>
+  </div>
+
+  <h3 style="font-family:var(--display);font-size:24px;margin-bottom:24px;color:var(--stone-400);">Primary</h3>
+  <div class="color-grid" style="margin-bottom:48px;">
+    <div class="swatch" style="background:#0A0A0B;color:#FAFAF7;" data-color="#0A0A0B">
+      <div class="swatch-name">Ink</div>
+      <div class="swatch-hex">#0A0A0B</div>
+      <div class="swatch-role">Primary Text · Brand Base</div>
+    </div>
+    <div class="swatch" style="background:#FAFAF7;color:#0A0A0B;border:1px solid #ECEAE3;" data-color="#FAFAF7">
+      <div class="swatch-name">Paper</div>
+      <div class="swatch-hex">#FAFAF7</div>
+      <div class="swatch-role">Background · Surfaces</div>
+    </div>
+    <div class="swatch" style="background:#2D4A2B;color:#FAFAF7;" data-color="#2D4A2B">
+      <div class="swatch-name">Signal</div>
+      <div class="swatch-hex">#2D4A2B</div>
+      <div class="swatch-role">Accent · Wedge · CTA</div>
+    </div>
+    <div class="swatch" style="background:#F4F2EC;color:#0A0A0B;" data-color="#F4F2EC">
+      <div class="swatch-name">Bone</div>
+      <div class="swatch-hex">#F4F2EC</div>
+      <div class="swatch-role">Secondary Surface</div>
+    </div>
+  </div>
+
+  <h3 style="font-family:var(--display);font-size:24px;margin-bottom:24px;color:var(--stone-400);">Neutrals — Stone Scale</h3>
+  <div class="color-grid" style="margin-bottom:48px;">
+    <div class="swatch" style="background:#ECEAE3;color:#0A0A0B;" data-color="#ECEAE3">
+      <div class="swatch-name">Stone 100</div>
+      <div class="swatch-hex">#ECEAE3</div>
+      <div class="swatch-role">Borders · Dividers</div>
+    </div>
+    <div class="swatch" style="background:#D6D3CB;color:#0A0A0B;" data-color="#D6D3CB">
+      <div class="swatch-name">Stone 200</div>
+      <div class="swatch-hex">#D6D3CB</div>
+      <div class="swatch-role">Hover States</div>
+    </div>
+    <div class="swatch" style="background:#A8A29E;color:#0A0A0B;" data-color="#A8A29E">
+      <div class="swatch-name">Stone 300</div>
+      <div class="swatch-hex">#A8A29E</div>
+      <div class="swatch-role">Muted Labels</div>
+    </div>
+    <div class="swatch" style="background:#57534E;color:#FAFAF7;" data-color="#57534E">
+      <div class="swatch-name">Stone 400</div>
+      <div class="swatch-hex">#57534E</div>
+      <div class="swatch-role">Secondary Text</div>
+    </div>
+  </div>
+
+  <h3 style="font-family:var(--display);font-size:24px;margin-bottom:24px;color:var(--stone-400);">Functional Accents</h3>
+  <div class="color-grid">
+    <div class="swatch" style="background:#8B1F1F;color:#FAFAF7;" data-color="#8B1F1F">
+      <div class="swatch-name">Oxblood</div>
+      <div class="swatch-hex">#8B1F1F</div>
+      <div class="swatch-role">High Importance · Alert</div>
+    </div>
+    <div class="swatch" style="background:#8B5A1F;color:#FAFAF7;" data-color="#8B5A1F">
+      <div class="swatch-name">Burnt</div>
+      <div class="swatch-hex">#8B5A1F</div>
+      <div class="swatch-role">Medium · Warning</div>
+    </div>
+    <div class="swatch" style="background:#1F5C3F;color:#FAFAF7;" data-color="#1F5C3F">
+      <div class="swatch-name">Emerald</div>
+      <div class="swatch-hex">#1F5C3F</div>
+      <div class="swatch-role">Success · Positive</div>
+    </div>
+    <div class="swatch" style="background:#E8EDE6;color:#2D4A2B;" data-color="#E8EDE6">
+      <div class="swatch-name">Signal Tint</div>
+      <div class="swatch-hex">#E8EDE6</div>
+      <div class="swatch-role">Wedge Highlight BG</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TYPOGRAPHY ============ -->
+<section id="type">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2 class="section-title">The <em>typography</em>.</h2>
+    <p class="section-intro">A simplified two-family system. Inter handles everything from oversized display to small UI labels — the same family at different weights, for a clean and consistent SaaS-platform feel. JetBrains Mono carries any moment that should read as data: timestamps, importance scores, source citations, code. Both are open-source, free, and battle-tested by major SaaS companies.</p>
+  </div>
+
+  <div class="type-specimens">
+    <!-- Display -->
+    <div class="type-specimen">
+      <div class="type-meta">
+        <h3>Inter — Display</h3>
+        <div class="type-role">Display · Headlines · Hero</div>
+        <p>The same Inter family used everywhere else, set heavy (700) at oversized sizes for hero moments. Emphasize the key word with the Signal color, not weight or italics — color carries the brand voice.</p>
+        <p style="color:var(--ink);font-family:var(--mono);font-size:11px;margin-top:16px;">fonts.google.com/specimen/Inter</p>
+      </div>
+      <div>
+        <div class="type-display display-font">Find your <em style="font-style:normal;color:var(--signal-accent);font-weight:700;">wedge.</em></div>
+        <div class="type-scale">
+          <span>120 / 88 / 56 / 40 / 28 / 22</span>
+          <span>·</span>
+          <span>Weight 700</span>
+          <span>·</span>
+          <span>Letter-spacing -0.035em</span>
+          <span>·</span>
+          <span>Line-height 0.98</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sans -->
+    <div class="type-specimen">
+      <div class="type-meta">
+        <h3>Inter — Body & UI</h3>
+        <div class="type-role">UI · Body · Interface</div>
+        <p>Inter is the de facto SaaS standard — used by GitHub, Figma, Mozilla, and most modern product interfaces. Calm, geometric, highly readable, no decorative curves. Used for all body copy, buttons, navigation, dashboard UI, and labels.</p>
+        <p style="color:var(--ink);font-family:var(--mono);font-size:11px;margin-top:16px;">fonts.google.com/specimen/Inter</p>
+      </div>
+      <div>
+        <div class="type-display sans-font">Every Monday, know exactly what your competitors did last week.</div>
+        <div class="type-scale">
+          <span>56 / 36 / 24 / 17 / 15 / 13 / 11</span>
+          <span>·</span>
+          <span>Weights 300 / 400 / 500 / 600 / 700</span>
+          <span>·</span>
+          <span>Line-height 1.5</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mono -->
+    <div class="type-specimen">
+      <div class="type-meta">
+        <h3>JetBrains Mono</h3>
+        <div class="type-role">Labels · Data · Metadata</div>
+        <p>From JetBrains, makers of developer tools. Used for timestamps, importance scores, source citations, code blocks, and uppercase eyebrow labels. Tracking +0.10em on uppercase. Never used for body copy.</p>
+        <p style="color:var(--ink);font-family:var(--mono);font-size:11px;margin-top:16px;">fonts.google.com/specimen/JetBrains+Mono</p>
+      </div>
+      <div>
+        <div class="type-display mono-font" style="text-transform:uppercase;letter-spacing:0.1em;font-size:18px;color:var(--stone-400);margin-bottom:12px;">WEEK 18 · MAY 5 · IMPORTANCE 8</div>
+        <div class="type-display mono-font">competitor.signal.parse()</div>
+        <div class="type-scale">
+          <span>24 / 18 / 14 / 12 / 11 / 10 / 9</span>
+          <span>·</span>
+          <span>Weights 400 / 500 / 600</span>
+          <span>·</span>
+          <span>Uppercase letter-spacing +0.10em to +0.18em</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ APPLICATIONS ============ -->
+<section id="apply">
+  <div class="section-header">
+    <span class="section-num">05</span>
+    <h2 class="section-title">In <em>application</em>.</h2>
+    <p class="section-intro">How the system holds together across surfaces. The discipline: warm paper backgrounds, generous whitespace, heavy Inter for moments of voice, mono for any data or metadata, signal-green only for the moments that earn it.</p>
+  </div>
+
+  <div class="app-grid">
+    <!-- Business Card -->
+    <div class="app-card business-card">
+      <div class="top">
+        <svg width="28" height="28" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg">
+          <path d="M4 24L14 4L24 24H4Z" stroke="#FAFAF7" stroke-width="2" stroke-linejoin="round" fill="none"/>
+          <path d="M14 4L14 24" stroke="#FAFAF7" stroke-width="2"/>
+        </svg>
+        <span style="font-family:var(--mono);font-size:10px;letter-spacing:0.15em;text-transform:uppercase;color:var(--stone-300);">Getwedge · v1</span>
+      </div>
+      <div class="bottom">
+        <div class="name">Alex Kerr</div>
+        <div class="role">Founder</div>
+        <div class="contact">
+          alex@getwedge.ai<br>
+          getwedge.ai
+        </div>
+      </div>
+    </div>
+
+    <!-- Email Preview -->
+    <div class="app-card email-preview">
+      <div class="email-header">
+        <span style="font-family:var(--mono);font-size:9px;letter-spacing:0.15em;text-transform:uppercase;color:var(--stone-300);">MAY 5 · WEEK 18</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3 20L12 4L21 20H3Z" stroke="#0A0A0B" stroke-width="1.5" stroke-linejoin="round" fill="none"/>
+          <path d="M12 4L12 20" stroke="#0A0A0B" stroke-width="1.5"/>
+        </svg>
+      </div>
+      <div class="email-subject">Linear shipped <em style="font-style:normal;color:var(--signal-accent);font-weight:600;">threading</em> this week.</div>
+      <div class="email-body">Three competitor moves to know about. Karri's mobile hiring spree continues — two iOS engineers added this week alone.</div>
+      <div class="email-insight">
+        <div class="email-insight-label">▲ This is your wedge</div>
+        <div class="email-insight-text">Customers complained about slow Jira imports in three Reddit threads.</div>
+      </div>
+    </div>
+
+    <!-- App Icon -->
+    <div class="app-card app-icon">
+      <div style="width:140px;height:140px;background:linear-gradient(135deg,#0A0A0B 0%,#1C1C1F 100%);border-radius:32px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;box-shadow:0 24px 48px rgba(0,0,0,0.4);">
+        <div style="position:absolute;inset:0;background:radial-gradient(circle at 30% 30%, rgba(45,74,43,0.5) 0%, transparent 60%);"></div>
+        <svg width="72" height="72" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" style="position:relative;z-index:1;">
+          <path d="M12 68L40 12L68 68H12Z" stroke="#FAFAF7" stroke-width="3" stroke-linejoin="round" fill="none"/>
+          <path d="M40 12L40 68" stroke="#FAFAF7" stroke-width="3"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ USAGE RULES ============ -->
+<section>
+  <div class="section-header">
+    <span class="section-num">06</span>
+    <h2 class="section-title">The <em>rules</em>.</h2>
+    <p class="section-intro">A brand becomes itself through what it refuses. These are the choices that will keep Getwedge from drifting into generic SaaS territory as the team grows.</p>
+  </div>
+
+  <div class="rules-grid">
+    <div class="rule">
+      <div class="rule-header">
+        <div class="rule-icon do">✓</div>
+        <h4>Use Signal color for emphasis</h4>
+      </div>
+      <p>Emphasize the moment that matters with the Signal color — the word, the verb, the wedge. One word per headline, never two. Color does the heavy lifting; weight stays consistent.</p>
+    </div>
+    <div class="rule">
+      <div class="rule-header">
+        <div class="rule-icon dont">✕</div>
+        <h4>Don't bold mid-sentence</h4>
+      </div>
+      <p>Heavy weights (600/700) are reserved for headlines and UI labels. Don't bold individual words in body copy to draw attention — color it Signal green or restructure the sentence instead.</p>
+    </div>
+
+    <div class="rule">
+      <div class="rule-header">
+        <div class="rule-icon do">✓</div>
+        <h4>Reserve Signal green for moments</h4>
+      </div>
+      <p>The wedge insight. The CTA. The brand accent. Treat Signal green like a precious resource — used sparingly, it carries weight. Used everywhere, it loses all of it.</p>
+    </div>
+    <div class="rule">
+      <div class="rule-header">
+        <div class="rule-icon dont">✕</div>
+        <h4>Don't use gradient backgrounds</h4>
+      </div>
+      <p>No purple-to-pink. No blue-to-cyan. No "AI shimmer." The brand is built on warm neutrals and one confident color. Atmospheric depth comes from typography and spacing, not effects.</p>
+    </div>
+
+    <div class="rule">
+      <div class="rule-header">
+        <div class="rule-icon do">✓</div>
+        <h4>Use the fulcrum line</h4>
+      </div>
+      <p>The vertical line through the wedge is non-negotiable. It's the moment of leverage, the visual hinge. Without it, the mark is just a triangle. Always keep it visible.</p>
+    </div>
+    <div class="rule">
+      <div class="rule-header">
+        <div class="rule-icon dont">✕</div>
+        <h4>Don't rotate or stretch the mark</h4>
+      </div>
+      <p>The wedge always points up. Always. No diagonal versions, no horizontal lay-downs, no perspective transforms. If a layout needs a different orientation, choose a different asset.</p>
+    </div>
+
+    <div class="rule">
+      <div class="rule-header">
+        <div class="rule-icon do">✓</div>
+        <h4>Pair display & mono together</h4>
+      </div>
+      <p>The Inter heavy display + JetBrains Mono uppercase kicker is a brand signature. A bold headline with a small all-caps mono label above it is the Getwedge layout move. Use it confidently.</p>
+    </div>
+    <div class="rule">
+      <div class="rule-header">
+        <div class="rule-icon dont">✕</div>
+        <h4>Don't add icons everywhere</h4>
+      </div>
+      <p>Icons should be functional, never decorative. Don't add an icon next to every label, every section header, every nav item. Whitespace and type hierarchy carry the meaning.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VOICE ============ -->
+<section id="voice">
+  <div class="section-header">
+    <span class="section-num">07</span>
+    <h2 class="section-title">The <em>voice</em>.</h2>
+    <p class="section-intro">Getwedge sounds like a sharp friend with a strong opinion — never like an enterprise software vendor or a hyped AI startup. We write like we'd talk to a fellow founder over coffee.</p>
+  </div>
+
+  <div class="voice-grid">
+    <div class="voice-col we">
+      <h4>How we write</h4>
+      <ul class="voice-list">
+        <li>Find your wedge.</li>
+        <li>This is what they shipped.</li>
+        <li>Here's why it matters.</li>
+        <li>Three moves to know about.</li>
+        <li>That's your opening.</li>
+        <li>Their customers are complaining about imports.</li>
+      </ul>
+    </div>
+    <div class="voice-col we-dont">
+      <h4>How we don't write</h4>
+      <ul class="voice-list">
+        <li>Leverage AI-powered competitive insights.</li>
+        <li>Unlock strategic intelligence at scale.</li>
+        <li>Empower your team with data-driven decisions.</li>
+        <li>Comprehensive analytics for modern businesses.</li>
+        <li>Synergize your competitive positioning.</li>
+        <li>Robust enterprise-grade solutions.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-cta">
+      A brand isn't<br>
+      a logo. <em>It's<br>
+      a hundred small<br>
+      choices held together.</em>
+    </div>
+    <div class="footer-bottom">
+      <div>
+        Getwedge · Brand Kit v1.0 · May 2026<br>
+        <span style="opacity:0.6;text-transform:none;letter-spacing:0;font-family:var(--sans);font-size:13px;display:block;margin-top:8px;">Living document. Iterate against customer feedback after first 50 users.</span>
+      </div>
+      <button class="download-all" id="downloadAll">↓ Download Full Kit</button>
+    </div>
+  </div>
+</footer>
+
+<div class="toast" id="toast">Copied</div>
+
+<script>
+  // ============ Theme toggle ============
+  // Persists choice to localStorage. Respects prefers-color-scheme on first visit.
+  (function initTheme() {
+    const stored = localStorage.getItem('gw-theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const initial = stored || (prefersDark ? 'dark' : 'light');
+    document.documentElement.setAttribute('data-theme', initial);
+  })();
+
+  const themeToggle = document.getElementById('themeToggle');
+  if (themeToggle) {
+    themeToggle.addEventListener('click', () => {
+      const current = document.documentElement.getAttribute('data-theme') || 'light';
+      const next = current === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('gw-theme', next);
+      showToast(`${next === 'dark' ? 'Dark' : 'Light'} mode`);
+    });
+  }
+
+  // ============ Toast ============
+  const toast = document.getElementById('toast');
+  function showToast(msg) {
+    toast.textContent = msg;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 1800);
+  }
+
+  // ============ Copy color on click ============
+  document.querySelectorAll('.swatch').forEach(s => {
+    s.addEventListener('click', () => {
+      const c = s.dataset.color;
+      navigator.clipboard.writeText(c).then(() => showToast(`Copied ${c}`));
+    });
+  });
+
+  // ============ Download single SVG ============
+  function downloadFile(blob, filename) {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  function svgToBlob(svgEl) {
+    const serializer = new XMLSerializer();
+    let svgString = serializer.serializeToString(svgEl);
+    if (!svgString.includes('xmlns="http://www.w3.org/2000/svg"')) {
+      svgString = svgString.replace('<svg', '<svg xmlns="http://www.w3.org/2000/svg"');
+    }
+    return new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+  }
+
+  // SVG button handlers
+  document.querySelectorAll('[data-svg]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const svg = document.getElementById(btn.dataset.svg);
+      if (svg) {
+        downloadFile(svgToBlob(svg), `${btn.dataset.name}.svg`);
+        showToast(`Downloaded ${btn.dataset.name}.svg`);
+      }
+    });
+  });
+
+  // Stacked logo download — build inline
+  document.querySelectorAll('[data-stacked]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const svgString = `<svg xmlns="http://www.w3.org/2000/svg" width="200" height="240" viewBox="0 0 200 240">
+        <path d="M60 140L100 60L140 140H60Z" stroke="#0A0A0B" stroke-width="3" stroke-linejoin="round" fill="none"/>
+        <path d="M100 60L100 140" stroke="#0A0A0B" stroke-width="3"/>
+        <text x="100" y="200" font-family="Inter, -apple-system, sans-serif" font-weight="600" font-size="36" fill="#0A0A0B" letter-spacing="-0.02em" text-anchor="middle">Getwedge</text>
+      </svg>`;
+      downloadFile(new Blob([svgString], { type: 'image/svg+xml' }), `${btn.dataset.name}.svg`);
+      showToast(`Downloaded ${btn.dataset.name}.svg`);
+    });
+  });
+
+  // PNG download (favicon/app icon) — render SVG to canvas
+  function svgToPngDownload(svgString, size, filename) {
+    const img = new Image();
+    const blob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      canvas.width = size;
+      canvas.height = size;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, size, size);
+      canvas.toBlob(pngBlob => {
+        downloadFile(pngBlob, filename);
+        URL.revokeObjectURL(url);
+      }, 'image/png');
+    };
+    img.src = url;
+  }
+
+  document.querySelectorAll('[data-favicon]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const size = parseInt(btn.dataset.favicon);
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 48 48">
+        <rect width="48" height="48" fill="#2D4A2B" rx="8"/>
+        <path d="M10 36L24 10L38 36H10Z" stroke="#FAFAF7" stroke-width="3" stroke-linejoin="round" fill="none"/>
+        <path d="M24 10L24 36" stroke="#FAFAF7" stroke-width="3"/>
+      </svg>`;
+      svgToPngDownload(svg, size, `${btn.dataset.name}.png`);
+      showToast(`Downloaded ${btn.dataset.name}.png`);
+    });
+  });
+
+  document.querySelectorAll('[data-appicon]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+        <defs>
+          <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#0A0A0B"/>
+            <stop offset="100%" stop-color="#1C1C1F"/>
+          </linearGradient>
+          <radialGradient id="glow" cx="0.3" cy="0.3" r="0.5">
+            <stop offset="0%" stop-color="#2D4A2B" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#2D4A2B" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <rect width="1024" height="1024" fill="url(#bg)" rx="200"/>
+        <rect width="1024" height="1024" fill="url(#glow)" rx="200"/>
+        <path d="M256 800L512 224L768 800H256Z" stroke="#FAFAF7" stroke-width="32" stroke-linejoin="round" fill="none"/>
+        <path d="M512 224L512 800" stroke="#FAFAF7" stroke-width="32"/>
+      </svg>`;
+      svgToPngDownload(svg, 1024, `${btn.dataset.name}.png`);
+      showToast(`Downloaded ${btn.dataset.name}.png`);
+    });
+  });
+
+  // ============ Download Full Kit ============
+  // Bundles all assets + a CSS file + a brand-tokens.json + README into a zip-style multi-file download
+  document.getElementById('downloadAll').addEventListener('click', async () => {
+    showToast('Bundling kit…');
+
+    // Brand tokens JSON
+    const tokens = {
+      brand: { name: 'Getwedge', tagline: 'Find your wedge.', version: '1.0' },
+      color: {
+        ink: '#0A0A0B',
+        'ink-soft': '#1C1C1F',
+        paper: '#FAFAF7',
+        'paper-pure': '#FFFFFF',
+        bone: '#F4F2EC',
+        stone: { 100: '#ECEAE3', 200: '#D6D3CB', 300: '#A8A29E', 400: '#57534E', 500: '#292524' },
+        signal: '#2D4A2B',
+        'signal-soft': '#4A6B47',
+        'signal-tint': '#E8EDE6',
+        oxblood: '#8B1F1F',
+        burnt: '#8B5A1F',
+        emerald: '#1F5C3F'
+      },
+      typography: {
+        display: { family: 'Inter', sizes: [120, 88, 56, 40, 28, 22], weights: [700], tracking: '-0.035em' },
+        sans: { family: 'Inter', sizes: [56, 36, 24, 17, 15, 13, 11], weights: [300, 400, 500, 600, 700] },
+        mono: { family: 'JetBrains Mono', sizes: [24, 18, 14, 12, 11, 10, 9], weights: [400, 500, 600], tracking: '+0.10em uppercase' }
+      },
+      spacing: { base: 8, scale: [4, 8, 12, 16, 24, 32, 48, 64, 96, 128] }
+    };
+    downloadFile(new Blob([JSON.stringify(tokens, null, 2)], { type: 'application/json' }), 'getwedge-brand-tokens.json');
+
+    // CSS variables
+    const css = `/* Getwedge Brand Tokens v1.0
+   Light + dark theme support. Toggle by setting data-theme="dark" on <html> or <body>. */
+
+:root,
+[data-theme="light"] {
+  /* Surfaces */
+  --gw-ink: #0A0A0B;
+  --gw-ink-soft: #1C1C1F;
+  --gw-paper: #FAFAF7;
+  --gw-paper-pure: #FFFFFF;
+  --gw-bone: #F4F2EC;
+  --gw-stone-100: #ECEAE3;
+  --gw-stone-200: #D6D3CB;
+  --gw-stone-300: #A8A29E;
+  --gw-stone-400: #57534E;
+  --gw-stone-500: #292524;
+
+  /* Accent */
+  --gw-signal: #2D4A2B;
+  --gw-signal-soft: #4A6B47;
+  --gw-signal-tint: #E8EDE6;
+  --gw-signal-accent: #2D4A2B;
+
+  /* Functional */
+  --gw-oxblood: #8B1F1F;
+  --gw-burnt: #8B5A1F;
+  --gw-emerald: #1F5C3F;
+}
+
+[data-theme="dark"] {
+  --gw-ink: #F5F5F2;
+  --gw-ink-soft: #E8E8E3;
+  --gw-paper: #0E0E10;
+  --gw-paper-pure: #18181B;
+  --gw-bone: #1C1C1F;
+  --gw-stone-100: #2A2A2D;
+  --gw-stone-200: #3A3A3E;
+  --gw-stone-300: #6B6B70;
+  --gw-stone-400: #9C9C9E;
+  --gw-stone-500: #C8C8CA;
+
+  --gw-signal: #2D4A2B;
+  --gw-signal-soft: #4A6B47;
+  --gw-signal-tint: #1A2A19;
+  --gw-signal-accent: #8FB28A;
+
+  --gw-oxblood: #C25555;
+  --gw-burnt: #C28A55;
+  --gw-emerald: #5FA68A;
+}
+
+:root {
+  /* Typography — load Inter + JetBrains Mono from Google Fonts */
+  --gw-display: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --gw-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --gw-mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+}
+`;
+    setTimeout(() => {
+      downloadFile(new Blob([css], { type: 'text/css' }), 'getwedge-brand.css');
+    }, 200);
+
+    // README
+    const readme = `GETWEDGE — Brand Kit v1.0
+==========================
+
+Files in this kit:
+  getwedge-brand-tokens.json   — All brand tokens as JSON
+  getwedge-brand.css            — CSS variables to drop into your app
+  getwedge-primary-light.svg    — Primary horizontal wordmark (light bg)
+  getwedge-primary-dark.svg     — Primary horizontal wordmark (dark bg)
+  getwedge-primary-signal.svg   — Primary wordmark (signal-green bg)
+  getwedge-symbol.svg           — Standalone wedge mark (outlined)
+  getwedge-symbol-filled.svg    — Standalone wedge mark (solid)
+  getwedge-stacked.svg          — Stacked vertical version
+  getwedge-favicon-48.png       — Browser favicon
+  getwedge-app-icon.png         — 1024px iOS / web app icon
+
+How to use:
+  1. Drop getwedge-brand.css into your /public/styles directory.
+  2. Load fonts from Google Fonts:
+       Inter — https://fonts.google.com/specimen/Inter
+       JetBrains Mono — https://fonts.google.com/specimen/JetBrains+Mono
+  3. Reference SVGs directly or inline them into components for theming.
+  4. Signal green (#2D4A2B) is sacred — use sparingly.
+  5. Light + dark themes ship together. Toggle by setting data-theme="dark"
+     on the <html> element. The CSS variables handle the rest.
+  6. Read the full brand guidelines (this HTML doc) for rules and voice.
+
+Questions or revisions:
+  This is v1. Plan to iterate after 50 paying customers.
+`;
+    setTimeout(() => {
+      downloadFile(new Blob([readme], { type: 'text/plain' }), 'README.txt');
+    }, 400);
+
+    // Download each SVG logo
+    let delay = 600;
+    const logoIds = [
+      'logo-primary', 'logo-primary-dark', 'logo-primary-signal',
+      'logo-symbol', 'logo-symbol-filled'
+    ];
+    const names = {
+      'logo-primary': 'getwedge-primary-light',
+      'logo-primary-dark': 'getwedge-primary-dark',
+      'logo-primary-signal': 'getwedge-primary-signal',
+      'logo-symbol': 'getwedge-symbol',
+      'logo-symbol-filled': 'getwedge-symbol-filled'
+    };
+    logoIds.forEach(id => {
+      const svg = document.getElementById(id);
+      if (svg) {
+        setTimeout(() => {
+          downloadFile(svgToBlob(svg), `${names[id]}.svg`);
+        }, delay);
+        delay += 200;
+      }
+    });
+
+    // Stacked
+    setTimeout(() => {
+      const stacked = `<svg xmlns="http://www.w3.org/2000/svg" width="200" height="240" viewBox="0 0 200 240">
+        <path d="M60 140L100 60L140 140H60Z" stroke="#0A0A0B" stroke-width="3" stroke-linejoin="round" fill="none"/>
+        <path d="M100 60L100 140" stroke="#0A0A0B" stroke-width="3"/>
+        <text x="100" y="200" font-family="Inter, -apple-system, sans-serif" font-weight="600" font-size="36" fill="#0A0A0B" letter-spacing="-0.02em" text-anchor="middle">Getwedge</text>
+      </svg>`;
+      downloadFile(new Blob([stacked], { type: 'image/svg+xml' }), 'getwedge-stacked.svg');
+    }, delay);
+    delay += 200;
+
+    // Favicon PNG
+    setTimeout(() => {
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
+        <rect width="48" height="48" fill="#2D4A2B" rx="8"/>
+        <path d="M10 36L24 10L38 36H10Z" stroke="#FAFAF7" stroke-width="3" stroke-linejoin="round" fill="none"/>
+        <path d="M24 10L24 36" stroke="#FAFAF7" stroke-width="3"/>
+      </svg>`;
+      svgToPngDownload(svg, 48, 'getwedge-favicon-48.png');
+    }, delay);
+    delay += 400;
+
+    // App icon PNG
+    setTimeout(() => {
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+        <defs>
+          <linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#0A0A0B"/>
+            <stop offset="100%" stop-color="#1C1C1F"/>
+          </linearGradient>
+          <radialGradient id="glow2" cx="0.3" cy="0.3" r="0.5">
+            <stop offset="0%" stop-color="#2D4A2B" stop-opacity="0.5"/>
+            <stop offset="100%" stop-color="#2D4A2B" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+        <rect width="1024" height="1024" fill="url(#bg2)" rx="200"/>
+        <rect width="1024" height="1024" fill="url(#glow2)" rx="200"/>
+        <path d="M256 800L512 224L768 800H256Z" stroke="#FAFAF7" stroke-width="32" stroke-linejoin="round" fill="none"/>
+        <path d="M512 224L512 800" stroke="#FAFAF7" stroke-width="32"/>
+      </svg>`;
+      svgToPngDownload(svg, 1024, 'getwedge-app-icon.png');
+    }, delay);
+
+    setTimeout(() => showToast('Brand kit downloaded'), delay + 600);
+  });
+</script>
+</body>
+</html>
