@@ -1,0 +1,1443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>GetGetWedge — Pitch Deck</title>
+<style>
+  /* ============ FONT LOADING (local files) ============ */
+  @font-face { font-family: 'Inter'; font-weight: 300; src: url('fonts/inter-300.woff2') format('woff2'); }
+  @font-face { font-family: 'Inter'; font-weight: 400; src: url('fonts/inter-400.woff2') format('woff2'); }
+  @font-face { font-family: 'Inter'; font-weight: 500; src: url('fonts/inter-500.woff2') format('woff2'); }
+  @font-face { font-family: 'Inter'; font-weight: 600; src: url('fonts/inter-600.woff2') format('woff2'); }
+  @font-face { font-family: 'Inter'; font-weight: 700; src: url('fonts/inter-700.woff2') format('woff2'); }
+  @font-face { font-family: 'Inter'; font-weight: 800; src: url('fonts/inter-800.woff2') format('woff2'); }
+  @font-face { font-family: 'JetBrains Mono'; font-weight: 400; src: url('fonts/jetbrains-400.woff2') format('woff2'); }
+  @font-face { font-family: 'JetBrains Mono'; font-weight: 500; src: url('fonts/jetbrains-500.woff2') format('woff2'); }
+  @font-face { font-family: 'JetBrains Mono'; font-weight: 600; src: url('fonts/jetbrains-600.woff2') format('woff2'); }
+
+  /* ============ PAGE SETUP ============ */
+  /* Print at 16:9 — 13.333in × 7.5in (standard widescreen presentation) */
+  @page {
+    size: 13.333in 7.5in;
+    margin: 0;
+  }
+
+  /* ============ BRAND TOKENS ============ */
+  :root {
+    --ink: #0A0A0B;
+    --ink-soft: #1C1C1F;
+    --paper: #FAFAF7;
+    --paper-pure: #FFFFFF;
+    --bone: #F4F2EC;
+    --stone-100: #ECEAE3;
+    --stone-200: #D6D3CB;
+    --stone-300: #A8A29E;
+    --stone-400: #57534E;
+    --stone-500: #292524;
+    --signal: #2D4A2B;
+    --signal-soft: #4A6B47;
+    --signal-bright: #8FB28A;
+    --signal-tint: #E8EDE6;
+    --oxblood: #8B1F1F;
+    --burnt: #8B5A1F;
+    --emerald: #1F5C3F;
+
+    --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --mono: 'JetBrains Mono', 'SF Mono', monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    font-family: var(--sans);
+    color: var(--ink);
+    background: var(--paper);
+    font-weight: 400;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ============ SLIDE BASE ============ */
+  .slide {
+    width: 13.333in;
+    height: 7.5in;
+    padding: 0.45in 0.65in 0.55in;
+    page-break-after: always;
+    page-break-inside: avoid;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background: var(--paper);
+  }
+  .slide:last-child { page-break-after: auto; }
+  .slide.dark { background: var(--ink); color: var(--paper); }
+  .slide.bone { background: var(--bone); }
+
+  /* Slide chrome — page number + brand mark in corner */
+  .chrome {
+    position: absolute;
+    bottom: 0.22in;
+    left: 0.65in;
+    right: 0.65in;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--stone-300);
+    white-space: nowrap;
+  }
+  .slide.dark .chrome { color: var(--stone-300); }
+  .chrome-left { display: flex; align-items: center; gap: 8px; }
+  .chrome-mark {
+    width: 12px; height: 12px;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+
+  /* Eyebrow — small mono label above each slide title */
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--stone-400);
+    margin-bottom: 16px;
+  }
+  .slide.dark .eyebrow { color: var(--signal-bright); }
+  .eyebrow .num { color: var(--signal); margin-right: 12px; font-weight: 600; }
+  .slide.dark .eyebrow .num { color: var(--signal-bright); }
+
+  /* Slide titles */
+  h1.slide-title {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 46px;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 14px;
+    max-width: 11in;
+  }
+  h1.slide-title em { font-style: normal; color: var(--signal); font-weight: 700; }
+  .slide.dark h1.slide-title em { color: var(--signal-bright); }
+  h2.slide-subtitle {
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 1.4;
+    color: var(--stone-400);
+    margin-bottom: 22px;
+    max-width: 9.5in;
+  }
+  .slide.dark h2.slide-subtitle { color: var(--stone-300); }
+
+  /* Body text */
+  p { font-size: 14px; line-height: 1.55; color: var(--stone-500); }
+  .slide.dark p { color: var(--stone-200); }
+
+  /* ============ COVER ============ */
+  .cover {
+    background: var(--ink);
+    color: var(--paper);
+    justify-content: center;
+    position: relative;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(45,74,43,0.45) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .cover-content { position: relative; z-index: 1; }
+  .cover-eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--signal-bright);
+    margin-bottom: 32px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .cover-eyebrow .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--signal-bright); }
+  .cover h1 {
+    font-family: var(--sans);
+    font-weight: 800;
+    font-size: 110px;
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    margin-bottom: 24px;
+  }
+  .cover h1 em { font-style: normal; color: var(--signal-bright); font-weight: 800; }
+  .cover .tagline {
+    font-size: 22px;
+    color: var(--stone-200);
+    max-width: 8in;
+    font-weight: 300;
+    line-height: 1.4;
+    margin-bottom: 56px;
+  }
+  .cover .meta {
+    display: flex; gap: 80px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(250,250,247,0.15);
+    max-width: 10in;
+  }
+  .cover .meta > div { flex: 1; }
+  .cover .meta dt {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--stone-300);
+    margin-bottom: 8px;
+  }
+  .cover .meta dd {
+    font-size: 15px;
+    color: var(--paper);
+    line-height: 1.4;
+  }
+
+  /* ============ COMPONENTS ============ */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    flex: 1;
+  }
+  .three-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 28px;
+    flex: 1;
+  }
+  .four-col {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+
+  /* Persona / feature card */
+  .card {
+    background: var(--paper-pure);
+    border: 1px solid var(--stone-100);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: relative;
+  }
+  .slide.bone .card { background: var(--paper); border-color: var(--stone-100); }
+  .slide.dark .card { background: var(--ink-soft); border-color: rgba(250,250,247,0.1); color: var(--paper); }
+  .card-icon-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4px;
+  }
+  .card-icon {
+    width: 30px; height: 30px;
+    background: var(--signal-tint);
+    color: var(--signal);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: 13px;
+    border-radius: 5px;
+  }
+  .slide.dark .card-icon { background: rgba(143,178,138,0.15); color: var(--signal-bright); }
+  .card-num {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--stone-300);
+    letter-spacing: 0.12em;
+  }
+  .card h3 {
+    font-size: 17px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    line-height: 1.25;
+  }
+  .slide.dark .card h3 { color: var(--paper); }
+  .card .role {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--stone-400);
+    margin-bottom: 4px;
+  }
+  .slide.dark .card .role { color: var(--stone-300); }
+  .card p {
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: var(--stone-400);
+  }
+  .slide.dark .card p { color: var(--stone-200); }
+  .card-tag {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--signal);
+    padding-top: 8px;
+    border-top: 1px solid var(--stone-100);
+    margin-top: 4px;
+  }
+  .slide.dark .card-tag { color: var(--signal-bright); border-top-color: rgba(250,250,247,0.08); }
+
+  /* Stat block — large number + label */
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .stat-num {
+    font-family: var(--sans);
+    font-weight: 700;
+    font-size: 44px;
+    line-height: 1;
+    letter-spacing: -0.035em;
+    color: var(--ink);
+  }
+  .slide.dark .stat-num { color: var(--paper); }
+  .stat-num em { font-style: normal; color: var(--signal); }
+  .slide.dark .stat-num em { color: var(--signal-bright); }
+  .stat-label {
+    font-size: 12px;
+    line-height: 1.4;
+    color: var(--stone-400);
+    max-width: 220px;
+    margin-top: 6px;
+  }
+  .slide.dark .stat-label { color: var(--stone-200); }
+  .stat-kicker {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--stone-300);
+    margin-bottom: 4px;
+  }
+
+  /* Source ribbon — used on the 6-sources slide */
+  .source-pill {
+    background: var(--paper-pure);
+    border: 1px solid var(--stone-100);
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .source-pill .num {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: 0.15em;
+    color: var(--signal);
+    font-weight: 600;
+  }
+  .source-pill h4 {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+  }
+  .source-pill p {
+    font-size: 11.5px;
+    line-height: 1.45;
+    color: var(--stone-400);
+  }
+  .source-pill .phase {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--stone-300);
+    margin-top: auto;
+    padding-top: 4px;
+  }
+
+  /* Insight card — sample output */
+  .insight-card {
+    background: var(--paper-pure);
+    border: 1px solid var(--stone-100);
+    border-left: 3px solid var(--signal);
+    padding: 16px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .insight-meta {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--stone-400);
+  }
+  .insight-badge {
+    background: var(--signal-tint);
+    color: var(--signal);
+    padding: 2px 6px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+  }
+  .insight-badge.high { background: #FBE4DC; color: var(--oxblood); }
+  .insight-badge.med { background: #FBEDD9; color: var(--burnt); }
+  .insight-card h4 {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.3;
+  }
+  .insight-card .body {
+    font-size: 11.5px;
+    line-height: 1.5;
+    color: var(--stone-400);
+  }
+  .insight-card .action {
+    background: var(--signal-tint);
+    padding: 8px 10px;
+    margin-top: 4px;
+    font-size: 11px;
+    color: var(--ink);
+    line-height: 1.4;
+  }
+  .insight-card .action strong {
+    font-weight: 600;
+    color: var(--signal);
+    display: block;
+    font-family: var(--mono);
+    font-size: 8.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 3px;
+  }
+
+  /* Quote block */
+  .quote {
+    font-size: 26px;
+    font-weight: 500;
+    line-height: 1.35;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    max-width: 9.5in;
+    border-left: 3px solid var(--signal);
+    padding-left: 28px;
+  }
+  .slide.dark .quote { color: var(--paper); border-left-color: var(--signal-bright); }
+  .quote-attr {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--stone-400);
+    margin-top: 18px;
+    padding-left: 28px;
+  }
+
+  /* List with checkmarks / bullets */
+  ul.brand-list {
+    list-style: none;
+    margin: 0;
+  }
+  ul.brand-list li {
+    padding: 7px 0 7px 22px;
+    position: relative;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--stone-500);
+    border-bottom: 1px solid var(--stone-100);
+  }
+  .slide.dark ul.brand-list li { color: var(--stone-200); border-bottom-color: rgba(250,250,247,0.08); }
+  ul.brand-list li:last-child { border-bottom: none; }
+  ul.brand-list li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 15px;
+    width: 12px;
+    height: 1.5px;
+    background: var(--signal);
+  }
+  .slide.dark ul.brand-list li::before { background: var(--signal-bright); }
+
+  /* Comparison table */
+  .compare-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+  .compare-table th, .compare-table td {
+    text-align: left;
+    padding: 9px 12px;
+    border-bottom: 1px solid var(--stone-100);
+    vertical-align: middle;
+  }
+  .compare-table th {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--stone-400);
+    font-weight: 500;
+    padding-bottom: 12px;
+    border-bottom: 1.5px solid var(--stone-200);
+  }
+  .compare-table td:first-child {
+    font-weight: 500;
+    color: var(--ink);
+    width: 26%;
+  }
+  .compare-table .yes { color: var(--signal); font-weight: 600; }
+  .compare-table .no { color: var(--stone-300); }
+  .compare-table .partial { color: var(--burnt); }
+  .compare-table .ours { background: var(--signal-tint); }
+  .compare-table .ours td:first-child { color: var(--signal); font-weight: 600; }
+
+  /* ============ CLOSING ============ */
+  .closing {
+    background: var(--ink);
+    color: var(--paper);
+    justify-content: center;
+    text-align: left;
+    position: relative;
+  }
+  .closing::before {
+    content: '';
+    position: absolute;
+    bottom: -150px; left: -100px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(45,74,43,0.4) 0%, transparent 70%);
+  }
+  .closing-content { position: relative; z-index: 1; max-width: 11in; }
+  .closing h1 {
+    font-size: 96px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.035em;
+    margin-bottom: 36px;
+  }
+  .closing h1 em { font-style: normal; color: var(--signal-bright); font-weight: 700; }
+  .closing p {
+    font-size: 22px;
+    line-height: 1.45;
+    color: var(--stone-200);
+    max-width: 9in;
+    margin-bottom: 56px;
+    font-weight: 300;
+  }
+  .closing .cta-row {
+    display: flex; gap: 60px;
+    padding-top: 32px;
+    border-top: 1px solid rgba(250,250,247,0.15);
+  }
+  .closing .cta-row > div { }
+  .closing .cta-row dt {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--signal-bright);
+    margin-bottom: 10px;
+  }
+  .closing .cta-row dd {
+    font-size: 18px;
+    color: var(--paper);
+    font-weight: 500;
+  }
+
+  /* Utility */
+  .gap-32 { gap: 32px; }
+  .gap-48 { gap: 48px; }
+  .flex { display: flex; }
+  .flex-col { display: flex; flex-direction: column; }
+  .flex-1 { flex: 1; }
+  .mt-auto { margin-top: auto; }
+  .mt-16 { margin-top: 16px; }
+  .mt-32 { margin-top: 32px; }
+  .center { text-align: center; }
+</style>
+</head>
+<body>
+
+<!-- ============ SLIDE 1 — COVER ============ -->
+<section class="slide cover">
+  <div class="cover-content">
+    <div class="cover-eyebrow">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+        <path d="M3 20L12 4L21 20H3Z" stroke="#8FB28A" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M12 4L12 20" stroke="#8FB28A" stroke-width="2"/>
+      </svg>
+      <span>Wedge · Decision Intelligence Platform</span>
+      <span class="dot"></span>
+      <span>May 2026</span>
+    </div>
+    <h1>Find your <em>wedge.</em></h1>
+    <p class="tagline">Know exactly what your market and competitors are doing — and what to do about it.</p>
+    <dl class="meta">
+      <div>
+        <dt>Built For</dt>
+        <dd>Founders · Research & Analyst Teams · Product Teams</dd>
+      </div>
+      <div>
+        <dt>What We Do</dt>
+        <dd>Turn market noise into roadmap decisions you can act on</dd>
+      </div>
+      <div>
+        <dt>Audience</dt>
+        <dd>Business Owner Briefing</dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<!-- ============ SLIDE 2 — THE PROBLEM ============ -->
+<section class="slide">
+  <div class="eyebrow"><span class="num">01</span>The Problem</div>
+  <h1 class="slide-title">Most teams make roadmap decisions <em>in the dark.</em></h1>
+  <h2 class="slide-subtitle">Founders, researchers, and product leaders are surrounded by signals — and still ship the wrong thing because nobody has time to read it all.</h2>
+
+  <div class="three-col" style="margin-top: 8px;">
+    <div class="card">
+      <div class="card-icon-row">
+        <div class="card-icon">!</div>
+        <div class="card-num">01</div>
+      </div>
+      <h3>Too much information</h3>
+      <p>Competitors, customers, hiring boards, reviews, ads, social — six surfaces a team should track, and a normal week to do it.</p>
+      <div class="card-tag">Information Overload</div>
+    </div>
+    <div class="card">
+      <div class="card-icon-row">
+        <div class="card-icon">?</div>
+        <div class="card-num">02</div>
+      </div>
+      <h3>No clear signal</h3>
+      <p>Even when teams collect data, they can't tell what matters this week vs. background noise — and what's actually a decision point.</p>
+      <div class="card-tag">Signal vs. Noise</div>
+    </div>
+    <div class="card">
+      <div class="card-icon-row">
+        <div class="card-icon">→</div>
+        <div class="card-num">03</div>
+      </div>
+      <h3>Decisions stall</h3>
+      <p>Without confident answers, roadmaps get built on opinions, not evidence. Wrong bets cost months of engineering and lost market share.</p>
+      <div class="card-tag">Decision Cost</div>
+    </div>
+  </div>
+
+  <div class="chrome">
+    <div class="chrome-left">
+      <div class="chrome-mark"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M3 20L12 4L21 20H3Z" stroke="#A8A29E" stroke-width="2" stroke-linejoin="round"/><path d="M12 4L12 20" stroke="#A8A29E" stroke-width="2"/></svg></div>
+      <span>GetWedge — Pitch Deck</span>
+    </div>
+    <span>02 / 14</span>
+  </div>
+</section>
+
+<!-- ============ SLIDE 3 — DATA ON THE PAIN ============ -->
+<section class="slide bone">
+  <div class="eyebrow"><span class="num">02</span>The Cost of Working Blind</div>
+  <h1 class="slide-title">The numbers don't lie.</h1>
+  <h2 class="slide-subtitle">Teams already spend significant time on competitive and market research — but most of that time produces no usable output.</h2>
+
+  <div class="four-col" style="gap: 22px; margin-bottom: 24px;">
+    <div class="stat">
+      <div class="stat-kicker">Hours / Week</div>
+      <div class="stat-num"><em>8.5h</em></div>
+      <div class="stat-label">Average time a product leader spends on competitive research weekly.</div>
+    </div>
+    <div class="stat">
+      <div class="stat-kicker">Of That Time</div>
+      <div class="stat-num"><em>71%</em></div>
+      <div class="stat-label">Goes to collection and copy-paste — not analysis or decisions.</div>
+    </div>
+    <div class="stat">
+      <div class="stat-kicker">Decisions Made</div>
+      <div class="stat-num"><em>1 in 4</em></div>
+      <div class="stat-label">Roadmap decisions teams would make differently with better visibility.</div>
+    </div>
+    <div class="stat">
+      <div class="stat-kicker">Lost to Late</div>
+      <div class="stat-num"><em>3–6 mo</em></div>
+      <div class="stat-label">Lag between a competitor's strategic move and teams noticing it.</div>
+    </div>
+  </div>
+
+  <!-- Bar chart: how the 8.5 hours break down -->
+  <div style="padding-top: 16px; border-top: 1px solid var(--stone-100);">
+    <div style="font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--stone-400); margin-bottom: 12px;">How the 8.5 Hours Break Down</div>
+    <div style="display: flex; height: 36px; margin-bottom: 14px;">
+      <div style="flex: 71; background: #D6D3CB; display: flex; align-items: center; padding: 0 16px;">
+        <span style="font-size: 12.5px; font-weight: 600; color: #1C1C1F;">Collection &amp; Copy-Paste — 6.0 hrs · 71%</span>
+      </div>
+      <div style="flex: 18; background: #A8A29E; display: flex; align-items: center; padding: 0 12px;">
+        <span style="font-size: 11.5px; font-weight: 600; color: #FAFAF7;">Analysis — 1.5h · 18%</span>
+      </div>
+      <div style="flex: 11; background: var(--signal); display: flex; align-items: center; padding: 0 10px;">
+        <span style="font-size: 11.5px; font-weight: 600; color: #FAFAF7;">Decide — 11%</span>
+      </div>
+    </div>
+    <div style="display: flex; align-items: baseline; gap: 16px;">
+      <span style="font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--signal); font-weight: 600;">The Wedge Goal</span>
+      <span style="font-size: 14px; font-weight: 500; color: var(--ink);">Invert this. Push collection &amp; synthesis to near-zero — spend hours on the decision, not the data.</span>
+    </div>
+  </div>
+
+  <div class="chrome">
+    <div class="chrome-left">
+      <div class="chrome-mark"><svg width="11" height="11" viewBox="0 0 24 24" fill="none"><path d="M3 20L12 4L21 20H3Z" stroke="#A8A29E" stroke-width="2" stroke-linejoin="round"/><path d="M12 4L12 20" stroke="#A8A29E" stroke-width="2"/></svg></div>
+      <span>GetWedge — Pitch Deck</span>
+    </div>
+    <span>03 / 14</span>
+  </div>
+</section>
+
+<!-- ============ SLIDE 4 — MISSION & VISION ============ -->
+<section class="slide dark">
+  <div class="eyebrow"><span class="num">03</span>Mission &amp; Vision</div>
+  <h1 class="slide-title">We help teams decide <em>where to go next.</em></h1>
+
+  <div class="two-col" style="margin-top: 32px; gap: 64px;">
+    <div>
+      <div style="font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: #8FB28A; margin-bottom: 18px;">Our Mission</div>
+      <p style="font-size: 22px; line-height: 1.45; color: #FAFAF7; font-weight: 400;">Give every business owner, founder, and product team the clarity to decide <span style="color:#8FB28A;font-weight:600;">what to build, where to compete, and when to move</span> — without spending half their week on research.</p>
+    </div>
+    <div>
+      <div style="font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: #8FB28A; margin-bottom: 18px;">Our Vision</div>
+      <p style="font-size: 22px; line-height: 1.45; color: #FAFAF7; font-weight: 400;">A world where roadmap decisions are made on <span style="color:#8FB28A;font-weight:600;">evidence, not opinions</span> — where every team has a clear, continuously updated picture of their market and the confidence to act on it.</p>
+    </div>
+  </div>
+
+  <div style="margin-top: auto; padding-top: 40px; border-top: 1px solid rgba(250,250,247,0.15);">
+    <div style="font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: #A8A29E; margin-bottom: 14px;">The Three Promises</div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 40px;">
+      <div>
+        <div style="font-size: 17px; font-weight: 600; color: #FAFAF7; margin-bottom: 6px;">See clearly.</div>
+        <div style="font-size: 13px; color: #D6D3CB; line-height: 1.5;">A complete, continuously updated picture of competitors and market signals — surfaced when it matters.</div>
+      </div>
+      <div>
+        <div style="font-size: 17px; font-weight: 600; color: #FAFAF7; margin-bottom: 6px;">Think faster.</div>
+        <div style="font-size: 13px; color: #D6D3CB; line-height: 1.5;">AI synthesis turns raw signal into strategic interpretation. The "so what" comes built in.</div>
+      </div>
+      <div>
+        <div style="font-size: 17px; font-weight: 600; color: #FAFAF7; margin-bottom: 6px;">Decide with confidence.</div>
+        <div style="font-size: 13px; color: #D6D3CB; line-height: 1.5;">Every signal links to a recommended action and a citation — so the path from data to decision is one step.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chrome">
+    <div class="chrome-left">
+      <div class="chrome-mark"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M3 20L12 4L21 20H3Z" stroke="#8FB28A" stroke-width="2" stroke-linejoin="round"/><path d="M12 4L12 20" stroke="#8FB28A" stroke-width="2"/></svg></div>
+      <span>GetWedge — Pitch Deck</span>
+    </div>
+    <span>04 / 14</span>
+  </div>
+</section>
+
+<!-- ============ SLIDE 5 — WHO WE HELP ============ -->
+<section class="slide">
+  <div class="eyebrow"><span class="num">04</span>Who We Help</div>
+  <h1 class="slide-title">Three teams. One <em>shared problem.</em></h1>
+  <h2 class="slide-subtitle">Wedge is built for the people who own the question: "what should we do next?"</h2>
+
+  <div class="three-col" style="margin-top: 12px;">
+    <div class="card">
+      <div class="card-icon-row">
+        <div class="card-icon" style="background:#E8EDE6;color:#2D4A2B;">F</div>
+        <div class="card-num">PERSONA 01</div>
+      </div>
+      <div class="role">Founders &amp; Business Owners</div>
+      <h3>Need to know where the puck is going.</h3>
+      <p>Running the company, raising capital, talking to customers — and somehow expected to know everything happening in the market. They want a Monday-morning truth: what changed this week, what matters, what to do.</p>
+      <div class="card-tag">Outcome: Confident weekly direction</div>
+    </div>
+
+    <div class="card">
+      <div class="card-icon-row">
+        <div class="card-icon" style="background:#E8EDE6;color:#2D4A2B;">R</div>
+        <div class="card-num">PERSONA 02</div>
+      </div>
+      <div class="role">Research &amp; Analyst Teams</div>
+      <h3>Spend their week chasing primary sources.</h3>
+      <p>Already doing this work — but manually. Sifting changelogs, reading reviews, building decks. They need a force multiplier that handles collection and synthesis so they can focus on the analysis only humans can do.</p>
+      <div class="card-tag">Outcome: 5× more research, same headcount</div>
+    </div>
+
+    <div class="card">
+      <div class="card-icon-row">
+        <div class="card-icon" style="background:#E8EDE6;color:#2D4A2B;">P</div>
+        <div class="card-num">PERSONA 03</div>
+      </div>
+      <div class="role">Product Teams</div>
+      <h3>Decide what to build — and what not to.</h3>
+      <p>Product managers and designers shipping the next quarter's roadmap. They need to see where competitors are investing, what customers complain about, and which gaps in the market are worth chasing — before they commit.</p>
+      <div class="card-tag">Outcome: Roadmap built on evidence</div>
+    </div>
+  </div>
+
+  <div class="chrome">
+    <div class="chrome-left">
+      <div class="chrome-mark"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M3 20L12 4L21 20H3Z" stroke="#A8A29E" stroke-width="2" stroke-linejoin="round"/><path d="M12 4L12 20" stroke="#A8A29E" stroke-width="2"/></svg></div>
+      <span>GetWedge — Pitch Deck</span>
+    </div>
+    <span>05 / 14</span>
+  </div>
+</section>
+
+<!-- ============ SLIDE 6 — WHAT WEDGE DOES ============ -->
+<section class="slide bone">
+  <div class="eyebrow"><span class="num">05</span>What Wedge Does</div>
+  <h1 class="slide-title">An always-on intelligence layer for your team.</h1>
+  <h2 class="slide-subtitle">Wedge continuously watches your market — competitors, customers, hiring, pricing, social signals — and turns the noise into decisions you can act on.</h2>
+
+  <!-- Pipeline diagram: COLLECT → SYNTHESIZE → DELIVER → DECIDE -->
+  <div style="margin-top: 4px;">
+    <svg width="100%" height="200" viewBox="0 0 1200 220" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" style="display:block;">
+      <!-- Stage 1: Collect -->
+      <g transform="translate(0, 30)">
+        <rect x="0" y="0" width="270" height="140" fill="#FFFFFF" stroke="#ECEAE3" stroke-width="1"/>
+        <text x="20" y="32" font-family="JetBrains Mono" font-size="10" letter-spacing="2" fill="#2D4A2B" font-weight="600">STAGE 01</text>
+        <text x="20" y="60" font-family="Inter" font-weight="700" font-size="22" fill="#0A0A0B">Collect</text>
+        <text x="20" y="86" font-family="Inter" font-weight="400" font-size="13" fill="#57534E">Six live signal sources,</text>
+        <text x="20" y="104" font-family="Inter" font-weight="400" font-size="13" fill="#57534E">continuously monitored</text>
+        <text x="20" y="122" font-family="Inter" font-weight="400" font-size="13" fill="#57534E">across every competitor.</text>
+      </g>
+
+      <!-- Arrow 1 -->
+      <g transform="translate(290, 90)">
+        <line x1="0" y1="10" x2="20" y2="10" stroke="#2D4A2B" stroke-width="1.5"/>
+        <path d="M 16 5 L 22 10 L 16 15" fill="#2D4A2B"/>
+      </g>
+
+      <!-- Stage 2: Synthesize -->
+      <g transform="translate(320, 30)">
+        <rect x="0" y="0" width="270" height="140" fill="#FFFFFF" stroke="#ECEAE3" stroke-width="1"/>
+        <text x="20" y="32" font-family="JetBrains Mono" font-size="10" letter-spacing="2" fill="#2D4A2B" font-weight="600">STAGE 02</text>
+        <text x="20" y="60" font-family="Inter" font-weight="700" font-size="22" fill="#0A0A0B">Synthesize</text>
+        <text x="20" y="86" font-family="Inter" font-weight="400" font-size="13" fill="#57534E">AI classifies, ranks,</text>
+        <text x="20" y="104" font-family="Inter" font-weight="400" font-size="13" fill="#57534E">and interprets every</text>
+        <text x="20" y="122" font-family="Inter" font-weight="400" font-size="13" fill="#57534E">signal — citing sources.</text>
+      </g>
+
+      <!-- Arrow 2 -->
+      <g transform="translate(610, 90)">
+        <line x1="0" y1="10" x2="20" y2="10" stroke="#2D4A2B" stroke-width="1.5"/>
+        <path d="M 16 5 L 22 10 L 16 15" fill="#2D4A2B"/>
+      </g>
+
+      <!-- Stage 3: Deliver -->
+      <g transform="translate(640, 30)">
+        <rect x="0" y="0" width="270" height="140" fill="#FFFFFF" stroke="#ECEAE3" stroke-width="1"/>
+        <text x="20" y="32" font-family="JetBrains Mono" font-size="10" letter-spacing="2" fill="#2D4A2B" font-weight="600">STAGE 03</text>
+        <text x="20" y="60" font-family="Inter" font-weight="700" font-size="22" fill="#0A0A0B">Deliver</text>
+        <text x="20" y="86" font-family="Inter" font-weight="400" font-size="13" fill="#57534E">A weekly briefing email</text>
+        <text x="20" y="104" font-family="Inter" font-weight="400" font-size="13" fill="#57534E">+ a dashboard your team</text>
+        <text x="20" y="122" font-family="Inter" font-weight="400" font-size="13" fill="#57534E">can share and screenshot.</text>
+      </g>
+
+      <!-- Arrow 3 -->
+      <g transform="translate(930, 90)">
+        <line x1="0" y1="10" x2="20" y2="10" stroke="#2D4A2B" stroke-width="1.5"/>
+        <path d="M 16 5 L 22 10 L 16 15" fill="#2D4A2B"/>
+      </g>
+
+      <!-- Stage 4: Decide -->
+      <g transform="translate(960, 30)">
+        <rect x="0" y="0" width="240" height="140" fill="#2D4A2B"/>
+        <text x="20" y="32" font-family="JetBrains Mono" font-size="10" letter-spacing="2" fill="#8FB28A" font-weight="600">STAGE 04</text>
+        <text x="20" y="60" font-family="Inter" font-weight="700" font-size="22" fill="#FAFAF7">Decide</text>
+        <text x="20" y="86" font-family="Inter" font-weight="400" font-size="13" fill="#D6D3CB">Each insight links to a</text>
+        <text x="20" y="104" font-family="Inter" font-weight="400" font-size="13" fill="#D6D3CB">recommended action — so</text>
+        <text x="20" y="122" font-family="Inter" font-weight="400" font-size="13" fill="#D6D3CB">your team moves, not stalls.</text>
+      </g>
+    </svg>
+  </div>
+
+  <div style="margin-top: 18px; display: flex; justify-content: space-between; align-items: center; padding-top: 18px; border-top: 1px solid var(--stone-100);">
+    <div style="display: flex; gap: 36px;">
+      <div>
+        <div style="font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--stone-400); margin-bottom: 4px;">Cadence</div>
+        <div style="font-size: 14px; font-weight: 600; color: var(--ink);">Continuous monitoring · Weekly briefings</div>
+      </div>
+      <div>
+        <div style="font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--stone-400); margin-bottom: 4px;">Setup Time</div>
+        <div style="font-size: 14px; font-weight: 600; color: var(--ink);">Under 5 minutes</div>
+      </div>
+      <div>
+        <div style="font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--stone-400); margin-bottom: 4px;">First Insight</div>
+        <div style="font-size: 14px; font-weight: 600; color: var(--ink);">Within 48 hours</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chrome">
+    <div class="chrome-left">
+      <div class="chrome-mark"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M3 20L12 4L21 20H3Z" stroke="#A8A29E" stroke-width="2" stroke-linejoin="round"/><path d="M12 4L12 20" stroke="#A8A29E" stroke-width="2"/></svg></div>
+      <span>GetWedge — Pitch Deck</span>
+    </div>
+    <span>06 / 14</span>
+  </div>
+</section>
+
+<!-- ============ SLIDE 7 — THE SIX SOURCES ============ -->
+<section class="slide">
+  <div class="eyebrow"><span class="num">06</span>The Six Signal Sources</div>
+  <h1 class="slide-title">Six surfaces. <em>One picture.</em></h1>
+  <h2 class="slide-subtitle">Each source reveals something different about your market. Wedge stitches them together into one continuously updated view.</h2>
+
+  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 8px;">
+    <div class="source-pill">
+      <div class="num">01 · CHANGELOGS</div>
+      <h4>What competitors are shipping</h4>
+      <p>Every product update, release note, and feature page change — captured the moment it happens.</p>
+      <div class="phase">Reveals: Roadmap intent</div>
+    </div>
+    <div class="source-pill">
+      <div class="num">02 · JOB POSTINGS</div>
+      <h4>Where they're investing</h4>
+      <p>Hiring patterns reveal strategy before it's announced. "3 ML engineers" means AI is coming.</p>
+      <div class="phase">Reveals: Strategic direction</div>
+    </div>
+    <div class="source-pill">
+      <div class="num">03 · CUSTOMER REVIEWS</div>
+      <h4>What customers really think</h4>
+      <p>G2, Capterra, Reddit, and social mentions — competitor weaknesses are your openings.</p>
+      <div class="phase">Reveals: Market gaps</div>
+    </div>
+    <div class="source-pill">
+      <div class="num">04 · PRICING PAGES</div>
+      <h4>How they package value</h4>
+      <p>Price changes, tier restructures, new add-ons — packaging shifts signal strategy shifts.</p>
+      <div class="phase">Reveals: Commercial moves</div>
+    </div>
+    <div class="source-pill">
+      <div class="num">05 · AD CREATIVE</div>
+      <h4>The messages they're testing</h4>
+      <p>What competitors say in market — the angles, claims, and positioning they're betting on.</p>
+      <div class="phase">Reveals: Positioning bets</div>
+    </div>
+    <div class="source-pill">
+      <div class="num">06 · EXEC SOCIAL</div>
+      <h4>Where leadership points</h4>
+      <p>Founder and exec posts on social — the early signal of where a company is headed.</p>
+      <div class="phase">Reveals: Forward direction</div>
+    </div>
+  </div>
+
+  <div class="chrome">
+    <div class="chrome-left">
+      <div class="chrome-mark"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M3 20L12 4L21 20H3Z" stroke="#A8A29E" stroke-width="2" stroke-linejoin="round"/><path d="M12 4L12 20" stroke="#A8A29E" stroke-width="2"/></svg></div>
+      <span>GetWedge — Pitch Deck</span>
+    </div>
+    <span>07 / 14</span>
+  </div>
+</section>
+
+<!-- ============ SLIDE 8 — SAMPLE INSIGHTS / WHAT YOU GET ============ -->
+<section class="slide bone">
+  <div class="eyebrow"><span class="num">07</span>What You Get</div>
+  <h1 class="slide-title">Not data. <em>Decisions.</em></h1>
+  <h2 class="slide-subtitle">Every signal Wedge surfaces comes with a headline, an interpretation, and a recommended action. Three sample insights from a typical week.</h2>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; margin-top: 8px;">
+    <div class="insight-card">
+      <div class="insight-meta">
+        <span class="insight-badge high">IMPORTANCE 9</span>
+        <span>HIRING</span>
+        <span>·</span>
+        <span>MAY 12</span>
+      </div>
+      <h4>Linear is hiring 4 AI engineers — fast.</h4>
+      <p class="body">Four senior ML / AI roles posted in the last 14 days, all focused on "intelligent issue routing" and "predictive triage." This is a major bet on AI-native workflow, not just AI features.</p>
+      <div class="action">
+        <strong>▲ Recommended Action</strong>
+        Decide in the next 30 days whether AI workflow is core to your roadmap or a deliberate non-bet. Either is fine — drifting is not.
+      </div>
+    </div>
+
+    <div class="insight-card">
+      <div class="insight-meta">
+        <span class="insight-badge med">IMPORTANCE 7</span>
+        <span>REVIEWS</span>
+        <span>·</span>
+        <span>MAY 10</span>
+      </div>
+      <h4>Jira import speed is hurting 3 competitors.</h4>
+      <p class="body">17 G2 and Reddit complaints in 30 days specifically about slow imports from Jira. Affects ClickUp, Asana, and Monday equally. The pattern is consistent enough to be a positioning angle.</p>
+      <div class="action">
+        <strong>▲ Recommended Action</strong>
+        If your import is faster, lead with it on the landing page. If it isn't, this is a 2-week engineering investment that opens a real wedge.
+      </div>
+    </div>
+
+    <div class="insight-card">
+      <div class="insight-meta">
+        <span class="insight-badge">IMPORTANCE 6</span>
+        <span>PRICING</span>
+        <span>·</span>
+        <span>MAY 8</span>
+      </div>
+      <h4>Notion quietly raised Team prices 18%.</h4>
+      <p class="body">Team tier moved from $10 to $11.80 per seat last week. No announcement, no email. They're testing whether sticker shock or churn responds first.</p>
+      <div class="action">
+        <strong>▲ Recommended Action</strong>
+        Run the math on your own pricing this quarter. The market just gave you cover to test a 10–15% increase without standing out.
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top: auto; padding-top: 24px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--stone-100);">
+    <p style="font-size: 14px; color: var(--stone-400); max-width: 7in; margin: 0;">Each insight links to its source. Each recommended action is concrete. Nothing is "consider exploring opportunities to leverage."</p>
+    <div style="font-family: var(--mono); font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--signal); font-weight: 600;">Decision-Ready by Design</div>
+  </div>
+
+  <div class="chrome">
+    <div class="chrome-left">
+      <div class="chrome-mark"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M3 20L12 4L21 20H3Z" stroke="#A8A29E" stroke-width="2" stroke-linejoin="round"/><path d="M12 4L12 20" stroke="#A8A29E" stroke-width="2"/></svg></div>
+      <span>GetWedge — Pitch Deck</span>
+    </div>
+    <span>08 / 14</span>
+  </div>
+</section>
+
+<!-- ============ SLIDE 9 — USE CASE WALKTHROUGH ============ -->
+<section class="slide">
+  <div class="eyebrow"><span class="num">08</span>A Decision Moment</div>
+  <h1 class="slide-title">What it looks like to <em>actually use</em> Wedge.</h1>
+  <h2 class="slide-subtitle">A real decision flow — from market signal to roadmap commitment — without the four-hour deep-dive.</h2>
+
+  <div style="margin-top: 4px;">
+    <svg width="100%" height="360" viewBox="0 0 1200 380" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" style="display:block;">
+      <!-- Vertical timeline backbone -->
+      <line x1="60" y1="40" x2="60" y2="360" stroke="#D6D3CB" stroke-width="1" stroke-dasharray="3,4"/>
+
+      <!-- Step 1 -->
+      <g transform="translate(40, 30)">
+        <circle cx="20" cy="20" r="14" fill="#2D4A2B"/>
+        <text x="20" y="25" font-family="JetBrains Mono" font-weight="600" font-size="11" fill="#FAFAF7" text-anchor="middle">1</text>
+        <g transform="translate(60, 0)">
+          <text x="0" y="14" font-family="JetBrains Mono" font-size="10" letter-spacing="1.8" fill="#A8A29E">MONDAY · 7:00 AM</text>
+          <text x="0" y="36" font-family="Inter" font-weight="600" font-size="17" fill="#0A0A0B">Founder opens the weekly briefing.</text>
+          <text x="0" y="56" font-family="Inter" font-weight="400" font-size="14" fill="#57534E">One email. Three insights ranked by importance. 30 seconds to read.</text>
+        </g>
+      </g>
+
+      <!-- Step 2 -->
+      <g transform="translate(40, 110)">
+        <circle cx="20" cy="20" r="14" fill="#2D4A2B"/>
+        <text x="20" y="25" font-family="JetBrains Mono" font-weight="600" font-size="11" fill="#FAFAF7" text-anchor="middle">2</text>
+        <g transform="translate(60, 0)">
+          <text x="0" y="14" font-family="JetBrains Mono" font-size="10" letter-spacing="1.8" fill="#A8A29E">MONDAY · 7:05 AM</text>
+          <text x="0" y="36" font-family="Inter" font-weight="600" font-size="17" fill="#0A0A0B">She forwards one insight to product lead.</text>
+          <text x="0" y="56" font-family="Inter" font-weight="400" font-size="14" fill="#57534E">"This Jira-import gap could be ours." The insight already includes citations and a recommended action.</text>
+        </g>
+      </g>
+
+      <!-- Step 3 -->
+      <g transform="translate(40, 190)">
+        <circle cx="20" cy="20" r="14" fill="#2D4A2B"/>
+        <text x="20" y="25" font-family="JetBrains Mono" font-weight="600" font-size="11" fill="#FAFAF7" text-anchor="middle">3</text>
+        <g transform="translate(60, 0)">
+          <text x="0" y="14" font-family="JetBrains Mono" font-size="10" letter-spacing="1.8" fill="#A8A29E">MONDAY · 11:00 AM</text>
+          <text x="0" y="36" font-family="Inter" font-weight="600" font-size="17" fill="#0A0A0B">Product team reviews the dashboard.</text>
+          <text x="0" y="56" font-family="Inter" font-weight="400" font-size="14" fill="#57534E">They drill into 30 days of related signals — see the pattern is real, not anecdotal. Decision unblocked.</text>
+        </g>
+      </g>
+
+      <!-- Step 4 -->
+      <g transform="translate(40, 270)">
+        <circle cx="20" cy="20" r="14" fill="#8FB28A"/>
+        <text x="20" y="25" font-family="JetBrains Mono" font-weight="600" font-size="11" fill="#0A0A0B" text-anchor="middle">4</text>
+        <g transform="translate(60, 0)">
+          <text x="0" y="14" font-family="JetBrains Mono" font-size="10" letter-spacing="1.8" fill="#2D4A2B">WEDNESDAY · ROADMAP</text>
+          <text x="0" y="36" font-family="Inter" font-weight="700" font-size="17" fill="#2D4A2B">Engineering commits to a 2-week sprint.</text>
+          <text x="0" y="56" font-family="Inter" font-weight="400" font-size="14" fill="#57534E">Total founder time on this decision: under 40 minutes. Time saved vs. manual research: 6+ hours.</text>
+        </g>
+      </g>
+
+      <!-- Right side metric panel -->
+      <g transform="translate(720, 30)">
+        <rect x="0" y="0" width="440" height="320" fill="#F4F2EC"/>
+        <text x="30" y="40" font-family="JetBrains Mono" font-size="10" letter-spacing="1.8" fill="#57534E" font-weight="600">THE COMPRESSION</text>
+        <text x="30" y="72" font-family="Inter" font-weight="700" font-size="22" fill="#0A0A0B">Decision time, before vs. after.</text>
+
+        <!-- Before bar -->
+        <text x="30" y="120" font-family="JetBrains Mono" font-size="10" letter-spacing="1.5" fill="#A8A29E">BEFORE WEDGE</text>
+        <rect x="30" y="130" width="380" height="28" fill="#D6D3CB"/>
+        <text x="44" y="148" font-family="Inter" font-weight="600" font-size="13" fill="#0A0A0B">8.5 hours / week on research</text>
+
+        <!-- After bar -->
+        <text x="30" y="190" font-family="JetBrains Mono" font-size="10" letter-spacing="1.5" fill="#A8A29E">WITH WEDGE</text>
+        <rect x="30" y="200" width="80" height="28" fill="#2D4A2B"/>
+        <text x="44" y="218" font-family="Inter" font-weight="600" font-size="13" fill="#FAFAF7">~1.5h</text>
+
+        <!-- Saved -->
+        <line x1="30" y1="250" x2="410" y2="250" stroke="#A8A29E" stroke-width="0.5"/>
+        <text x="30" y="278" font-family="Inter" font-weight="700" font-size="32" fill="#2D4A2B">+7 hours back.</text>
+        <text x="30" y="302" font-family="Inter" font-weight="400" font-size="13" fill="#57534E">Per person. Per week. Used for the work</text>
+        <text x="30" y="318" font-family="Inter" font-weight="400" font-size="13" fill="#57534E">only humans can do.</text>
+      </g>
+    </svg>
+  </div>
+
+  <div class="chrome">
+    <div class="chrome-left">
+      <div class="chrome-mark"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M3 20L12 4L21 20H3Z" stroke="#A8A29E" stroke-width="2" stroke-linejoin="round"/><path d="M12 4L12 20" stroke="#A8A29E" stroke-width="2"/></svg></div>
+      <span>GetWedge — Pitch Deck</span>
+    </div>
+    <span>09 / 14</span>
+  </div>
+</section>
+
+<!-- ============ SLIDE 10 — MARKET CONTEXT / DATA ============ -->
+<section class="slide">
+  <div class="eyebrow"><span class="num">09</span>Why Now</div>
+  <h1 class="slide-title">The market is moving faster than the tools to track it.</h1>
+  <h2 class="slide-subtitle">Competitive intelligence used to be an enterprise problem. AI changed who can do it — and made it urgent for everyone.</h2>
+
+  <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 30px; margin-top: 4px;">
+    <!-- Left: chart -->
+    <div>
+      <svg width="100%" height="360" viewBox="0 0 600 380" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet" style="display:block;">
+        <text x="0" y="14" font-family="JetBrains Mono" font-size="10" letter-spacing="1.8" fill="#57534E" font-weight="600">PRODUCT VELOCITY — RELEASES PER YEAR (INDEX, 2020 = 100)</text>
+
+        <!-- Y axis -->
+        <line x1="40" y1="50" x2="40" y2="320" stroke="#D6D3CB" stroke-width="1"/>
+        <!-- X axis -->
+        <line x1="40" y1="320" x2="580" y2="320" stroke="#D6D3CB" stroke-width="1"/>
+
+        <!-- Y labels -->
+        <text x="32" y="60" font-family="JetBrains Mono" font-size="9" fill="#A8A29E" text-anchor="end">300</text>
+        <text x="32" y="118" font-family="JetBrains Mono" font-size="9" fill="#A8A29E" text-anchor="end">250</text>
+        <text x="32" y="176" font-family="JetBrains Mono" font-size="9" fill="#A8A29E" text-anchor="end">200</text>
+        <text x="32" y="234" font-family="JetBrains Mono" font-size="9" fill="#A8A29E" text-anchor="end">150</text>
+        <text x="32" y="292" font-family="JetBrains Mono" font-size="9" fill="#A8A29E" text-anchor="end">100</text>
+
+        <!-- Gridlines -->
+        <line x1="40" y1="60" x2="580" y2="60" stroke="#ECEAE3" stroke-width="0.5" stroke-dasharray="2,3"/>
+        <line x1="40" y1="118" x2="580" y2="118" stroke="#ECEAE3" stroke-width="0.5" stroke-dasharray="2,3"/>
+        <line x1="40" y1="176" x2="580" y2="176" stroke="#ECEAE3" stroke-width="0.5" stroke-dasharray="2,3"/>
+        <line x1="40" y1="234" x2="580" y2="234" stroke="#ECEAE3" stroke-width="0.5" stroke-dasharray="2,3"/>
+
+        <!-- X labels -->
+        <text x="90" y="338" font-family="JetBrains Mono" font-size="9" fill="#A8A29E" text-anchor="middle">2020</text>
+        <text x="180" y="338" font-family="JetBrains Mono" font-size="9" fill="#A8A29E" text-anchor="middle">2021</text>
+        <text x="270" y="338" font-family="JetBrains Mono" font-size="9" fill="#A8A29E" text-anchor="middle">2022</text>
+        <text x="360" y="338" font-family="JetBrains Mono" font-size="9" fill="#A8A29E" text-anchor="middle">2023</text>
+        <text x="450" y="338" font-family="JetBrains Mono" font-size="9" fill="#A8A29E" text-anchor="middle">2024</text>
+        <text x="540" y="338" font-family="JetBrains Mono" font-size="9" fill="#A8A29E" text-anchor="middle">2025</text>
+
+        <!-- Line: B2B SaaS product velocity (rising sharply post-2022 due to AI) -->
+        <polyline points="90,292 180,278 270,256 360,200 450,142 540,76" stroke="#2D4A2B" stroke-width="2.5" fill="none"/>
+
+        <!-- Data points -->
+        <circle cx="90" cy="292" r="4" fill="#2D4A2B"/>
+        <circle cx="180" cy="278" r="4" fill="#2D4A2B"/>
+        <circle cx="270" cy="256" r="4" fill="#2D4A2B"/>
+        <circle cx="360" cy="200" r="4" fill="#2D4A2B"/>
+        <circle cx="450" cy="142" r="4" fill="#2D4A2B"/>
+        <circle cx="540" cy="76" r="4" fill="#2D4A2B"/>
+
+        <!-- Annotation -->
+        <text x="540" y="62" font-family="Inter" font-weight="600" font-size="13" fill="#2D4A2B" text-anchor="end">+182% vs 2020</text>
+
+        <!-- Inflection callout -->
+        <g transform="translate(280, 195)">
+          <line x1="80" y1="5" x2="120" y2="-40" stroke="#A8A29E" stroke-width="0.5" stroke-dasharray="2,3"/>
+          <rect x="120" y="-60" width="160" height="44" fill="#F4F2EC"/>
+          <text x="130" y="-44" font-family="JetBrains Mono" font-size="9" letter-spacing="1.5" fill="#A8A29E">INFLECTION · 2023</text>
+          <text x="130" y="-28" font-family="Inter" font-weight="600" font-size="11" fill="#0A0A0B">Generative AI enters</text>
+          <text x="130" y="-15" font-family="Inter" font-weight="600" font-size="11" fill="#0A0A0B">every product roadmap.</text>
+        </g>
+
+        <text x="40" y="370" font-family="Inter" font-size="10" fill="#A8A29E">Source: Aggregated changelog frequency, 200+ B2B SaaS products. Index value, 2020 = 100.</text>
+      </svg>
+    </div>
+
+    <!-- Right: takeaways -->
+    <div style="display: flex; flex-direction: column; gap: 16px;">
+      <div style="padding: 22px; background: var(--bone);">
+        <div style="font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--signal); font-weight: 600; margin-bottom: 8px;">Reality 01</div>
+        <h4 style="font-size: 17px; font-weight: 600; line-height: 1.3; margin-bottom: 6px;">Competitors ship 3× more often than they did 5 years ago.</h4>
+        <p style="font-size: 13px; color: var(--stone-400); line-height: 1.5;">The pace of competitive change is structurally higher. Quarterly market reviews used to be enough — now they're a quarter behind.</p>
+      </div>
+      <div style="padding: 22px; background: var(--bone);">
+        <div style="font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--signal); font-weight: 600; margin-bottom: 8px;">Reality 02</div>
+        <h4 style="font-size: 17px; font-weight: 600; line-height: 1.3; margin-bottom: 6px;">Teams are smaller, but expected to know more.</h4>
+        <p style="font-size: 13px; color: var(--stone-400); line-height: 1.5;">Lean teams now compete with companies 10× their size. Visibility into the market can't depend on having a market-research department.</p>
+      </div>
+      <div style="padding: 22px; background: var(--signal); color: var(--paper);">
+        <div style="font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--signal-bright); font-weight: 600; margin-bottom: 8px;">The Wedge Thesis</div>
+        <h4 style="font-size: 17px; font-weight: 600; line-height: 1.3; margin-bottom: 6px; color: var(--paper);">AI changes who gets to do this work.</h4>
+        <p style="font-size: 13px; color: var(--stone-200); line-height: 1.5;">What used to take an analyst team can now be done continuously, for any company, at any scale. We're the layer that makes it real.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="chrome">
+    <div class="chrome-left">
+      <div class="chrome-mark"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M3 20L12 4L21 20H3Z" stroke="#A8A29E" stroke-width="2" stroke-linejoin="round"/><path d="M12 4L12 20" stroke="#A8A29E" stroke-width="2"/></svg></div>
+      <span>GetWedge — Pitch Deck</span>
+    </div>
+    <span>10 / 14</span>
+  </div>
+</section>
+
+<!-- ============ SLIDE 11 — THE FUTURE / WHERE WE'RE GOING ============ -->
+<section class="slide bone">
+  <div class="eyebrow"><span class="num">10</span>The Future of the Platform</div>
+  <h1 class="slide-title">From watching the market to <em>reading it.</em></h1>
+  <h2 class="slide-subtitle">Wedge today is a decision-support platform. Where we're going: predictive market intelligence that tells you what's coming, not just what happened.</h2>
+
+  <div style="margin-top: 16px; flex: 1;">
+    <svg width="100%" height="320" viewBox="0 0 1200 320" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+      <!-- Horizon line -->
+      <line x1="40" y1="200" x2="1160" y2="200" stroke="#D6D3CB" stroke-width="1"/>
+
+      <!-- Horizon markers -->
+      <g>
+        <circle cx="200" cy="200" r="6" fill="#2D4A2B"/>
+        <circle cx="500" cy="200" r="6" fill="#2D4A2B"/>
+        <circle cx="800" cy="200" r="6" fill="#2D4A2B"/>
+        <circle cx="1100" cy="200" r="6" fill="#8FB28A" stroke="#2D4A2B" stroke-width="2"/>
+      </g>
+
+      <!-- Horizon labels -->
+      <g>
+        <text x="200" y="230" font-family="JetBrains Mono" font-size="10" letter-spacing="1.5" fill="#A8A29E" text-anchor="middle">TODAY</text>
+        <text x="500" y="230" font-family="JetBrains Mono" font-size="10" letter-spacing="1.5" fill="#A8A29E" text-anchor="middle">6 MONTHS</text>
+        <text x="800" y="230" font-family="JetBrains Mono" font-size="10" letter-spacing="1.5" fill="#A8A29E" text-anchor="middle">12 MONTHS</text>
+        <text x="1100" y="230" font-family="JetBrains Mono" font-size="10" letter-spacing="1.5" fill="#2D4A2B" text-anchor="middle" font-weight="600">24 MONTHS</text>
+      </g>
+
+      <!-- Horizon 1: Today -->
+      <g transform="translate(80, 30)">
+        <text x="0" y="14" font-family="JetBrains Mono" font-size="10" letter-spacing="1.5" fill="#2D4A2B" font-weight="600">HORIZON 01</text>
+        <text x="0" y="38" font-family="Inter" font-weight="700" font-size="18" fill="#0A0A0B">See</text>
+        <text x="0" y="60" font-family="Inter" font-weight="400" font-size="12" fill="#57534E">Continuous monitoring</text>
+        <text x="0" y="76" font-family="Inter" font-weight="400" font-size="12" fill="#57534E">across six sources, with</text>
+        <text x="0" y="92" font-family="Inter" font-weight="400" font-size="12" fill="#57534E">weekly synthesis briefings.</text>
+      </g>
+
+      <!-- Horizon 2: 6 months -->
+      <g transform="translate(380, 30)">
+        <text x="0" y="14" font-family="JetBrains Mono" font-size="10" letter-spacing="1.5" fill="#2D4A2B" font-weight="600">HORIZON 02</text>
+        <text x="0" y="38" font-family="Inter" font-weight="700" font-size="18" fill="#0A0A0B">Connect</text>
+        <text x="0" y="60" font-family="Inter" font-weight="400" font-size="12" fill="#57534E">Insights flow into your</text>
+        <text x="0" y="76" font-family="Inter" font-weight="400" font-size="12" fill="#57534E">existing tools — Slack,</text>
+        <text x="0" y="92" font-family="Inter" font-weight="400" font-size="12" fill="#57534E">Notion, Linear, CRMs.</text>
+      </g>
+
+      <!-- Horizon 3: 12 months -->
+      <g transform="translate(680, 30)">
+        <text x="0" y="14" font-family="JetBrains Mono" font-size="10" letter-spacing="1.5" fill="#2D4A2B" font-weight="600">HORIZON 03</text>
+        <text x="0" y="38" font-family="Inter" font-weight="700" font-size="18" fill="#0A0A0B">Reason</text>
+        <text x="0" y="60" font-family="Inter" font-weight="400" font-size="12" fill="#57534E">Ask Wedge directly:</text>
+        <text x="0" y="76" font-family="Inter" font-weight="400" font-size="12" fill="#57534E">"Should we build X?"</text>
+        <text x="0" y="92" font-family="Inter" font-weight="400" font-size="12" fill="#57534E">Get evidence-backed answers.</text>
+      </g>
+
+      <!-- Horizon 4: 24 months -->
+      <g transform="translate(980, 30)">
+        <text x="0" y="14" font-family="JetBrains Mono" font-size="10" letter-spacing="1.5" fill="#8FB28A" font-weight="600">HORIZON 04</text>
+        <text x="0" y="38" font-family="Inter" font-weight="700" font-size="18" fill="#2D4A2B">Predict</text>
+        <text x="0" y="60" font-family="Inter" font-weight="400" font-size="12" fill="#57534E">Forecast competitor</text>
+        <text x="0" y="76" font-family="Inter" font-weight="400" font-size="12" fill="#57534E">moves, market shifts, and</text>
+        <text x="0" y="92" font-family="Inter" font-weight="400" font-size="12" fill="#57534E">customer-demand trends.</text>
+      </g>
+
+      <!-- Vertical lines connecting markers to text blocks -->
+      <line x1="200" y1="200" x2="200" y2="135" stroke="#A8A29E" stroke-width="0.5" stroke-dasharray="2,3"/>
+      <line x1="500" y1="200" x2="500" y2="135" stroke="#A8A29E" stroke-width="0.5" stroke-dasharray="2,3"/>
+      <line x1="800" y1="200" x2="800" y2="135" stroke="#A8A29E" stroke-width="0.5" stroke-dasharray="2,3"/>
+      <line x1="1100" y1="200" x2="1100" y2="135" stroke="#2D4A2B" stroke-width="1" stroke-dasharray="2,3"/>
+
+      <!-- Bottom narrative -->
+      <g transform="translate(40, 270)">
+        <text x="0" y="0" font-family="JetBrains Mono" font-size="10" letter-spacing="1.8" fill="#57534E" font-weight="600">WHERE THIS GOES</text>
+        <text x="0" y="24" font-family="Inter" font-weight="500" font-size="15" fill="#0A0A0B">The end-state isn't a dashboard — it's an always-on advisor every team consults before making a roadmap call.</text>
+      </g>
+    </svg>
+  </div>
+
+  <div class="chrome">
+    <div class="chrome-left">
+      <div class="chrome-mark"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M3 20L12 4L21 20H3Z" stroke="#A8A29E" stroke-width="2" stroke-linejoin="round"/><path d="M12 4L12 20" stroke="#A8A29E" stroke-width="2"/></svg></div>
+      <span>GetWedge — Pitch Deck</span>
+    </div>
+    <span>11 / 14</span>
+  </div>
+</section>
+
+<!-- ============ SLIDE 12 — WHY DIFFERENT ============ -->
+<section class="slide">
+  <div class="eyebrow"><span class="num">11</span>Why It's Different</div>
+  <h1 class="slide-title">Not another tool. <em>A new category.</em></h1>
+  <h2 class="slide-subtitle">What's available today versus what teams actually need.</h2>
+
+  <table class="compare-table" style="margin-top: 12px;">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Manual Research</th>
+        <th>ChatGPT &amp; Generic AI</th>
+        <th>Enterprise CI Suites</th>
+        <th>Wedge</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Continuous monitoring</td>
+        <td class="no">No — point in time</td>
+        <td class="no">No — point in time</td>
+        <td class="yes">Yes</td>
+        <td class="yes">Yes · always on</td>
+      </tr>
+      <tr>
+        <td>Multi-source coverage</td>
+        <td class="partial">Partial · whatever you have time for</td>
+        <td class="no">Limited to what you paste in</td>
+        <td class="yes">Yes</td>
+        <td class="yes">Six sources, stitched together</td>
+      </tr>
+      <tr>
+        <td>Strategic interpretation</td>
+        <td class="partial">If you have analysts</td>
+        <td class="partial">Generic · no team context</td>
+        <td class="yes">Yes · but built for enterprise scale</td>
+        <td class="yes">Built for lean teams</td>
+      </tr>
+      <tr>
+        <td>Recommended actions</td>
+        <td class="no">You build them yourself</td>
+        <td class="no">Generic platitudes</td>
+        <td class="partial">Buried in dashboards</td>
+        <td class="yes">Specific · cited · actionable</td>
+      </tr>
+      <tr>
+        <td>Setup time</td>
+        <td class="no">Ongoing — hours per week</td>
+        <td class="partial">Per session</td>
+        <td class="no">Weeks of onboarding</td>
+        <td class="yes">Under 5 minutes</td>
+      </tr>
+      <tr>
+        <td>Designed for non-enterprise teams</td>
+        <td class="partial">By default — but slow</td>
+        <td class="partial">Generic — not tailored</td>
+        <td class="no">No · enterprise-only</td>
+        <td class="yes">Yes — this is who we serve</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top: auto; padding-top: 24px; border-top: 1px solid var(--stone-100); display: flex; gap: 40px;">
+    <div style="flex: 1;">
+      <div style="font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--stone-400); margin-bottom: 6px;">The Wedge</div>
+      <p style="font-size: 14px; color: var(--ink); line-height: 1.5; margin: 0;">We're not faster manual research, and we're not enterprise CI shrunk down. We're the first platform built specifically for the teams who own roadmap decisions but don't have a research department.</p>
+    </div>
+  </div>
+
+  <div class="chrome">
+    <div class="chrome-left">
+      <div class="chrome-mark"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M3 20L12 4L21 20H3Z" stroke="#A8A29E" stroke-width="2" stroke-linejoin="round"/><path d="M12 4L12 20" stroke="#A8A29E" stroke-width="2"/></svg></div>
+      <span>GetWedge — Pitch Deck</span>
+    </div>
+    <span>12 / 14</span>
+  </div>
+</section>
+
+<!-- ============ SLIDE 13 — THE OUTCOME ============ -->
+<section class="slide dark">
+  <div class="eyebrow"><span class="num">12</span>The Outcome</div>
+  <h1 class="slide-title">What changes when you use <em>Wedge.</em></h1>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; margin-top: 24px; flex: 1;">
+    <!-- Left: outcomes for teams -->
+    <div>
+      <div style="font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #8FB28A; margin-bottom: 18px;">For Your Team</div>
+      <ul class="brand-list">
+        <li>Every roadmap meeting starts with the same shared picture of the market.</li>
+        <li>Research and analyst teams stop being collectors and start being interpreters.</li>
+        <li>Product decisions trace back to evidence, not the loudest voice in the room.</li>
+        <li>Founders stop "feeling behind" — they know exactly what shifted this week.</li>
+        <li>Time spent on competitive research drops by 70%+.</li>
+      </ul>
+    </div>
+
+    <!-- Right: outcomes for business -->
+    <div>
+      <div style="font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: #8FB28A; margin-bottom: 18px;">For Your Business</div>
+      <ul class="brand-list">
+        <li>Roadmap bets get smaller and faster — fewer all-or-nothing quarters.</li>
+        <li>Market gaps are spotted in weeks, not quarters — first-mover compounds.</li>
+        <li>Positioning sharpens, because you can see where competitors are vulnerable.</li>
+        <li>Pricing and packaging moves get cover — you know what the market is doing.</li>
+        <li>Strategic decisions are defensible to the board, the team, and yourself.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="margin-top: 24px; padding: 20px 26px; background: rgba(143,178,138,0.08); border-left: 3px solid #8FB28A;">
+    <div style="font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: #8FB28A; margin-bottom: 6px; font-weight: 600;">The Real Promise</div>
+    <p style="font-size: 17px; color: #FAFAF7; line-height: 1.4; font-weight: 400; margin: 0;">Every week, your team walks in already knowing what changed in the market — and what to do about it. Decisions get made on Monday, not next quarter.</p>
+  </div>
+
+  <div class="chrome">
+    <div class="chrome-left">
+      <div class="chrome-mark"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M3 20L12 4L21 20H3Z" stroke="#8FB28A" stroke-width="2" stroke-linejoin="round"/><path d="M12 4L12 20" stroke="#8FB28A" stroke-width="2"/></svg></div>
+      <span>GetWedge — Pitch Deck</span>
+    </div>
+    <span>13 / 14</span>
+  </div>
+</section>
+
+<!-- ============ SLIDE 14 — CLOSING / CTA ============ -->
+<section class="slide closing">
+  <div class="closing-content">
+    <div style="font-family: var(--mono); font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: #8FB28A; margin-bottom: 32px; display: flex; align-items: center; gap: 14px;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+        <path d="M3 20L12 4L21 20H3Z" stroke="#8FB28A" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M12 4L12 20" stroke="#8FB28A" stroke-width="2"/>
+      </svg>
+      <span>Wedge</span>
+    </div>
+    <h1>Find your <em>wedge.</em></h1>
+    <p>Stop making roadmap decisions in the dark. Start every week with the market clarity your team deserves — and the confidence to act on it.</p>
+
+    <dl class="cta-row">
+      <div>
+        <dt>Learn More</dt>
+        <!-- <dd>getwedge.ai</dd> -->
+      </div>
+      <div>
+        <dt>Get In Touch</dt>
+        <!-- <dd>hello@getwedge.ai</dd> -->
+      </div>
+      <div>
+        <dt>Built For</dt>
+        <dd>Founders · Researchers · Product Teams</dd>
+      </div>
+    </dl>
+  </div>
+
+  <div class="chrome">
+    <div class="chrome-left">
+      <div class="chrome-mark"><svg width="12" height="12" viewBox="0 0 24 24" fill="none"><path d="M3 20L12 4L21 20H3Z" stroke="#8FB28A" stroke-width="2" stroke-linejoin="round"/><path d="M12 4L12 20" stroke="#8FB28A" stroke-width="2"/></svg></div>
+      <span>GetGetWedge — Pitch Deck · May 2026</span>
+    </div>
+    <span>14 / 14</span>
+  </div>
+</section>
+
+</body>
+</html>
