@@ -1,0 +1,2294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>LogicGen.dev — Brand Identity System</title>
+<meta name="description" content="The visual identity system for LogicGen.dev — built for non-technical founders shipping their first MVP, and AI agents reaching for advanced capability." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..800&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http%3A//www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Crect width='200' height='200' rx='40' fill='%230E0E14'/%3E%3Cpath d='M 50 56 L 74 56 L 74 124 L 102 124 L 102 144 L 50 144 Z' fill='%23F2EFE6'/%3E%3Cpath d='M 112 56 L 152 100 L 112 144 L 112 124 L 130 100 L 112 76 Z' fill='%23D4FF3A'/%3E%3C/svg%3E">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+<style>
+  /* ============================================
+     LOGICGEN.DEV — BRAND SYSTEM
+     Foundation tokens
+     ============================================ */
+  :root {
+    --bone: #F2EFE6;          /* primary surface */
+    --bone-soft: #EAE6D9;     /* recessed surface */
+    --ink: #0E0E14;            /* primary type, structure */
+    --ink-soft: #1A1A22;       /* secondary surface dark */
+    --pulse: #D4FF3A;          /* signature accent — generation energy */
+    --pulse-deep: #B8E22E;
+    --plasma: #5A3AFF;         /* rare — AI/generative emphasis */
+    --mist: #6B6A78;           /* secondary text */
+    --stone: #D6D2C4;          /* hairlines, borders */
+    --stone-2: #C7C2B2;
+    --paper: #FBF9F2;          /* highlights, modals */
+
+    --sans: 'Geist', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --mono: 'Geist Mono', 'JetBrains Mono', 'IBM Plex Mono', ui-monospace, monospace;
+    --display: var(--sans);   /* unified display family — no serif, no italics */
+
+    /* SEMANTIC THEME TOKENS — light theme defaults
+       These swap on [data-theme="dark"] for full dark-mode support */
+    --bg: var(--bone);
+    --fg: var(--ink);
+    --surface: var(--paper);
+    --surface-2: var(--bone-soft);
+    --surface-deep: var(--ink);            /* inverted sections (manifesto, OOH, dl-bar) */
+    --surface-deep-fg: var(--bone);
+    --surface-deep-muted: rgba(242,239,230,0.55);
+    --surface-deep-hair: rgba(242,239,230,0.14);
+    --border: var(--stone);
+    --border-strong: var(--ink);
+    --muted: var(--mist);
+    --code-bg: var(--bone-soft);
+    --grain-opacity: 0.035;
+    --shadow-card: 0 1px 0 var(--stone), 0 24px 48px -32px rgba(14,14,20,0.18);
+
+    --measure: 1180px;
+    --gutter: clamp(20px, 4vw, 56px);
+    --rule: 1px solid var(--stone);
+    --rule-strong: 1px solid var(--ink);
+
+    --easing: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* ============================================
+     DARK THEME — full inversion with editorial flip
+     The "inverted" sections (manifesto/dl-bar/OOH) become LIGHT in dark mode,
+     creating the same editorial contrast through opposite means.
+     ============================================ */
+  [data-theme="dark"] {
+    --bg: #0B0B11;
+    --fg: var(--bone);
+    --surface: #14141C;
+    --surface-2: #1A1A24;
+    --surface-deep: var(--bone);            /* the flip */
+    --surface-deep-fg: var(--ink);
+    --surface-deep-muted: rgba(14,14,20,0.55);
+    --surface-deep-hair: rgba(14,14,20,0.12);
+    --border: #24242E;
+    --border-strong: var(--bone);
+    --muted: #8C8B9A;
+    --code-bg: #1A1A24;
+    --grain-opacity: 0.02;
+    --shadow-card: 0 1px 0 #24242E, 0 24px 48px -32px rgba(0,0,0,0.55);
+  }
+  /* Respect system preference on first load */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) {
+      --bg: #0B0B11;
+      --fg: var(--bone);
+      --surface: #14141C;
+      --surface-2: #1A1A24;
+      --surface-deep: var(--bone);
+      --surface-deep-fg: var(--ink);
+      --surface-deep-muted: rgba(14,14,20,0.55);
+      --surface-deep-hair: rgba(14,14,20,0.12);
+      --border: #24242E;
+      --border-strong: var(--bone);
+      --muted: #8C8B9A;
+      --code-bg: #1A1A24;
+      --grain-opacity: 0.02;
+      --shadow-card: 0 1px 0 #24242E, 0 24px 48px -32px rgba(0,0,0,0.55);
+    }
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  *::selection { background: var(--pulse); color: #0E0E14; }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--fg);
+    transition: background-color 0.3s var(--easing), color 0.3s var(--easing);
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+  }
+
+  img, svg { display: block; max-width: 100%; }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+
+  /* ============================================
+     SITEWIDE GRAIN OVERLAY — adds material warmth
+     ============================================ */
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: var(--grain-opacity);
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.6 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  }
+
+  /* ============================================
+     LAYOUT PRIMITIVES
+     ============================================ */
+  .wrap { max-width: var(--measure); margin: 0 auto; padding: 0 var(--gutter); }
+  .section { padding: clamp(80px, 12vw, 160px) 0; position: relative; }
+  .section-tight { padding: clamp(48px, 7vw, 96px) 0; }
+
+  /* ============================================
+     TYPE SCALE & UTILITIES
+     ============================================ */
+  .display-xl {
+    font-family: var(--display);
+    font-weight: 350;
+    font-size: clamp(56px, 11vw, 168px);
+    line-height: 0.92;
+    letter-spacing: -0.04em;
+  }
+  .display-lg {
+    font-family: var(--display);
+    font-weight: 380;
+    font-size: clamp(40px, 7vw, 96px);
+    line-height: 0.96;
+    letter-spacing: -0.035em;
+  }
+  .display-md {
+    font-family: var(--display);
+    font-weight: 380;
+    font-size: clamp(32px, 5vw, 64px);
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+  }
+  .it { font-weight: 600; position: relative; }
+  .it::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: -0.04em;
+    height: 0.08em;
+    background: var(--pulse);
+    border-radius: 2px;
+  }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+    color: var(--fg);
+  }
+  .eyebrow-mist { color: var(--muted); }
+
+  .lead {
+    font-family: var(--display);
+    font-weight: 300;
+    font-size: clamp(20px, 2.4vw, 30px);
+    line-height: 1.35;
+    letter-spacing: -0.015em;
+  }
+  .body-lg {
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--fg);
+  }
+  .body { font-size: 15px; line-height: 1.6; }
+  .muted { color: var(--muted); }
+  .mono { font-family: var(--mono); }
+
+  .num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  /* ============================================
+     NAV
+     ============================================ */
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    border-bottom: 1px solid var(--border);
+    transition: background-color 0.3s var(--easing), border-color 0.3s var(--easing);
+  }
+  .nav-links a { color: var(--fg); }
+  .nav-actions { display: flex; align-items: center; gap: 10px; }
+
+  /* Theme toggle */
+  .theme-toggle {
+    width: 36px; height: 36px;
+    display: inline-grid; place-items: center;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    color: var(--fg);
+    transition: background 0.2s var(--easing), border-color 0.2s var(--easing), transform 0.4s var(--easing);
+  }
+  .theme-toggle:hover { background: var(--surface-2); transform: rotate(20deg); }
+  .theme-toggle svg { width: 16px; height: 16px; }
+  .theme-toggle .icon-sun { display: none; }
+  .theme-toggle .icon-moon { display: block; }
+  [data-theme="dark"] .theme-toggle .icon-sun { display: block; }
+  [data-theme="dark"] .theme-toggle .icon-moon { display: none; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) ~ * .theme-toggle .icon-sun,
+    :root:not([data-theme]) .theme-toggle .icon-sun { display: block; }
+    :root:not([data-theme]) ~ * .theme-toggle .icon-moon,
+    :root:not([data-theme]) .theme-toggle .icon-moon { display: none; }
+  }
+  .nav-inner {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px var(--gutter);
+    max-width: var(--measure);
+    margin: 0 auto;
+  }
+  .nav-brand {
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .nav-brand .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--pulse); box-shadow: 0 0 0 3px rgba(212,255,58,0.18); }
+  .nav-links { display: flex; gap: 28px; }
+  .nav-links a {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--fg);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    position: relative;
+    padding: 4px 0;
+    transition: color 0.3s var(--easing);
+  }
+  .nav-links a:hover { color: var(--muted); }
+  @media (max-width: 720px) { .nav-links { display: none; } }
+
+  .btn {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 11px 20px 11px 18px;
+    background: var(--fg);
+    color: var(--bg);
+    border-radius: 100px;
+    display: inline-flex; align-items: center; gap: 10px;
+    transition: all 0.3s var(--easing);
+  }
+  .btn:hover { background: var(--pulse); color: #0E0E14; }
+  .btn .arr { width: 14px; height: 14px; }
+
+  /* ============================================
+     HERO
+     ============================================ */
+  .hero {
+    padding: clamp(80px, 10vw, 140px) 0 clamp(60px, 8vw, 100px);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    padding-bottom: 36px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 48px;
+  }
+  .hero-meta-cell { display: flex; flex-direction: column; gap: 6px; }
+  .hero-meta-cell span:first-child { font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+  .hero-meta-cell span:last-child { font-family: var(--mono); font-size: 12px; color: var(--fg); }
+  @media (max-width: 720px) { .hero-meta { grid-template-columns: 1fr; gap: 16px; } }
+
+  .hero-title { position: relative; }
+  .hero-title h1 {
+    font-family: var(--display);
+    font-weight: 320;
+    font-size: clamp(64px, 14vw, 220px);
+    line-height: 0.88;
+    letter-spacing: -0.045em;
+  }
+  .hero-title .gen-em {
+    color: var(--fg);
+    position: relative;
+  }
+  .hero-title .gen-em::after {
+    content: "";
+    position: absolute;
+    left: 4%; right: 4%; bottom: 0.04em;
+    height: 0.18em;
+    background: var(--pulse);
+    z-index: -1;
+    transform: skewX(-8deg);
+  }
+  .hero-title .dot-dev {
+    font-family: var(--mono);
+    font-style: normal;
+    font-size: 0.18em;
+    vertical-align: 0.7em;
+    margin-left: 0.2em;
+    color: var(--muted);
+    font-variation-settings: normal;
+    letter-spacing: 0.05em;
+  }
+
+  .hero-strap {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: clamp(24px, 5vw, 80px);
+    margin-top: 56px;
+    padding-top: 36px;
+    border-top: 1px solid var(--border);
+  }
+  @media (max-width: 820px) { .hero-strap { grid-template-columns: 1fr; gap: 28px; } }
+  .hero-strap .lead { max-width: 38ch; }
+
+  /* ============================================
+     SECTION HEADERS
+     ============================================ */
+  .section-head {
+    display: grid;
+    grid-template-columns: minmax(160px, 220px) 1fr;
+    gap: clamp(24px, 5vw, 64px);
+    align-items: baseline;
+    padding-bottom: 48px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 56px;
+  }
+  @media (max-width: 720px) { .section-head { grid-template-columns: 1fr; gap: 14px; padding-bottom: 28px; margin-bottom: 32px; } }
+  .section-head .label { display: flex; flex-direction: column; gap: 10px; }
+  .section-head h2 {
+    font-family: var(--display);
+    font-weight: 340;
+    font-size: clamp(36px, 5.6vw, 76px);
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+    max-width: 16ch;
+    color: var(--fg);
+  }
+  .section-head h2 .it { color: var(--fg); }
+
+  /* ============================================
+     MANIFESTO BLOCK
+     ============================================ */
+  .manifesto {
+    background: var(--surface-deep);
+    color: var(--surface-deep-fg);
+    padding: clamp(80px, 12vw, 160px) 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .manifesto::after {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 50% at 80% 20%, rgba(212,255,58,0.06), transparent 60%);
+    pointer-events: none;
+  }
+  .manifesto .wrap { position: relative; z-index: 1; }
+  .manifesto-grid {
+    display: grid;
+    grid-template-columns: minmax(180px, 240px) 1fr;
+    gap: clamp(24px, 5vw, 80px);
+  }
+  @media (max-width: 820px) { .manifesto-grid { grid-template-columns: 1fr; gap: 28px; } }
+  .manifesto h3 {
+    font-family: var(--display);
+    font-weight: 320;
+    font-size: clamp(28px, 4.2vw, 56px);
+    line-height: 1.05;
+    letter-spacing: -0.022em;
+    color: var(--surface-deep-fg);
+  }
+  .manifesto h3 .pulse { color: var(--pulse); background: var(--pulse); color: #0E0E14; padding: 0 0.12em; }
+  .manifesto h3 .it { color: var(--surface-deep-fg); font-weight: 600; border-bottom: 3px solid var(--pulse); padding-bottom: 0.02em; }
+  .manifesto .eyebrow { color: var(--pulse); background: none; }
+  [data-theme="dark"] .manifesto .eyebrow { color: var(--pulse-deep); }
+  .manifesto p { color: var(--surface-deep-muted); max-width: 56ch; }
+  .manifesto-stack > * + * { margin-top: 28px; }
+
+  /* ============================================
+     MARK ANATOMY
+     ============================================ */
+  .mark-anatomy-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: clamp(24px, 5vw, 80px);
+    align-items: center;
+  }
+  @media (max-width: 900px) { .mark-anatomy-grid { grid-template-columns: 1fr; } }
+  .mark-canvas {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    aspect-ratio: 1 / 1;
+    display: grid; place-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .mark-canvas .corners {
+    position: absolute; inset: 16px;
+    pointer-events: none;
+  }
+  .mark-canvas .corners::before,
+  .mark-canvas .corners::after {
+    content: ""; position: absolute;
+    width: 14px; height: 14px;
+    border: 1px solid var(--ink);
+  }
+  .mark-canvas .corners::before { top: 0; left: 0; border-right: 0; border-bottom: 0; }
+  .mark-canvas .corners::after { bottom: 0; right: 0; border-left: 0; border-top: 0; }
+
+  .mark-anatomy-text > * + * { margin-top: 20px; }
+  .mark-anatomy-text ul { list-style: none; }
+  .mark-anatomy-text li {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: 16px;
+    align-items: baseline;
+  }
+  .mark-anatomy-text li .ix { font-family: var(--mono); font-size: 11px; color: var(--muted); letter-spacing: 0.1em; }
+  .mark-anatomy-text li strong { display: block; font-family: var(--sans); font-weight: 500; font-size: 14px; margin-bottom: 4px; }
+  .mark-anatomy-text li span { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+  /* ============================================
+     LOGO GALLERY GRID
+     ============================================ */
+  .logo-gallery {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+  .logo-card {
+    background: var(--paper);
+    padding: clamp(28px, 4vw, 48px);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 320px;
+  }
+  .logo-card.dark { background: var(--ink); color: var(--bone); }
+  .logo-card.dark .lc-meta { color: rgba(242,239,230,0.6); }
+  .logo-card.dark .download-btn { color: var(--bone); border-color: rgba(242,239,230,0.25); }
+  .logo-card.dark .download-btn:hover { background: var(--pulse); color: var(--ink); border-color: var(--pulse); }
+  .logo-card.accent { background: var(--pulse); }
+
+  .logo-card .display {
+    flex: 1;
+    display: grid;
+    place-items: center;
+    padding: 24px 0;
+  }
+  .logo-card .display svg { max-width: 70%; max-height: 160px; height: auto; }
+  .logo-card.compact .display svg { max-height: 100px; }
+  .logo-card.wide .display svg { max-width: 85%; }
+
+  .logo-card .lc-foot {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .logo-card .lc-meta { display: flex; flex-direction: column; gap: 4px; font-family: var(--mono); font-size: 11px; }
+  .logo-card .lc-meta .name { color: inherit; text-transform: uppercase; letter-spacing: 0.08em; }
+  .logo-card .lc-meta .spec { color: var(--muted); font-size: 10px; }
+
+  .download-btn {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--fg);
+    border: 1px solid var(--ink);
+    padding: 8px 12px;
+    border-radius: 100px;
+    display: inline-flex; align-items: center; gap: 6px;
+    transition: all 0.25s var(--easing);
+    white-space: nowrap;
+  }
+  .download-btn:hover { background: var(--ink); color: var(--bone); }
+  .download-btn svg { width: 10px; height: 10px; }
+
+  /* Span helpers */
+  .col-12 { grid-column: span 12; }
+  .col-8 { grid-column: span 8; }
+  .col-6 { grid-column: span 6; }
+  .col-4 { grid-column: span 4; }
+  .col-3 { grid-column: span 3; }
+  @media (max-width: 900px) {
+    .col-8, .col-6, .col-4, .col-3 { grid-column: span 12; }
+    .col-md-6 { grid-column: span 6; }
+  }
+  @media (max-width: 560px) {
+    .col-md-6 { grid-column: span 12; }
+  }
+
+  /* ============================================
+     CLEAR SPACE / SIZING DEMO
+     ============================================ */
+  .clearspace-card {
+    background: var(--paper);
+    border: 1px solid var(--border);
+    padding: 56px;
+    display: grid;
+    place-items: center;
+    position: relative;
+    aspect-ratio: 16 / 9;
+  }
+  .clearspace-card .dashed-frame {
+    position: absolute; inset: 24px;
+    border: 1px dashed var(--stone-2);
+  }
+  .clearspace-card .dashed-frame-inner {
+    position: absolute;
+    top: 50%; left: 50%; transform: translate(-50%, -50%);
+    border: 1px dashed var(--mist);
+    width: calc(100% - 96px);
+    aspect-ratio: 1 / 1;
+    max-width: 280px;
+  }
+  .clearspace-card .x-label {
+    position: absolute;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.1em;
+    background: var(--paper);
+    padding: 0 6px;
+  }
+  .clearspace-card .x-top { top: 18px; left: 50%; transform: translateX(-50%); }
+  .clearspace-card .x-bot { bottom: 18px; left: 50%; transform: translateX(-50%); }
+  .clearspace-card .x-left { left: 18px; top: 50%; transform: translateY(-50%) rotate(-90deg); }
+  .clearspace-card .x-right { right: 18px; top: 50%; transform: translateY(-50%) rotate(90deg); }
+
+  .size-rail {
+    display: flex; align-items: flex-end; gap: 36px;
+    padding: 48px;
+    background: var(--paper);
+    border: 1px solid var(--border);
+    overflow-x: auto;
+  }
+  .size-rail > .size-cell {
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+    flex-shrink: 0;
+  }
+  .size-rail .size-cell svg { height: auto; }
+  .size-rail .size-cell .size-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--muted);
+    letter-spacing: 0.08em;
+  }
+
+  /* ============================================
+     COLOR SYSTEM
+     ============================================ */
+  .color-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+  @media (max-width: 900px) { .color-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .color-grid { grid-template-columns: 1fr; } }
+
+  .swatch {
+    padding: 28px 24px;
+    min-height: 240px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    cursor: pointer;
+    position: relative;
+    transition: transform 0.3s var(--easing);
+  }
+  .swatch:hover { z-index: 2; }
+  .swatch.hero-swatch { min-height: 320px; grid-row: span 1; }
+  .swatch .role { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; }
+  .swatch .nm { font-family: var(--display); font-weight: 350; font-size: 36px; letter-spacing: -0.02em; line-height: 1; margin-top: 12px; }
+  .swatch.hero-swatch .nm { font-size: 56px; }
+  .swatch .codes { font-family: var(--mono); font-size: 11px; line-height: 1.6; opacity: 0.75; }
+  .swatch .copy-tag {
+    position: absolute; top: 20px; right: 20px;
+    font-family: var(--mono); font-size: 10px;
+    border: 1px solid currentColor; opacity: 0.4;
+    padding: 4px 8px; border-radius: 100px;
+    transition: opacity 0.2s;
+  }
+  .swatch:hover .copy-tag { opacity: 1; }
+  .swatch.copied .copy-tag { background: currentColor; color: var(--paper); border-color: transparent; }
+  .swatch.copied .copy-tag::before { content: "copied ✓"; }
+  .swatch.copied .copy-tag span { display: none; }
+
+  .sw-bone { background: var(--bone); color: var(--ink); }
+  .sw-ink { background: var(--ink); color: var(--bone); }
+  .sw-pulse { background: var(--pulse); color: var(--ink); }
+  .sw-plasma { background: var(--plasma); color: var(--paper); }
+  .sw-mist { background: var(--mist); color: var(--paper); }
+  .sw-stone { background: var(--stone); color: var(--ink); }
+  .sw-paper { background: var(--paper); color: var(--ink); }
+  .sw-pulse-deep { background: var(--pulse-deep); color: var(--ink); }
+
+  .ratio-bar {
+    display: flex; height: 40px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    margin-top: 40px;
+  }
+  .ratio-bar > div { display: grid; place-items: center; font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; }
+  .ratio-bar > div span { padding: 0 12px; }
+
+  /* ============================================
+     TYPOGRAPHY SPECIMEN
+     ============================================ */
+  .type-spec {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: clamp(28px, 4vw, 56px);
+    margin-bottom: 24px;
+    position: relative;
+  }
+  .type-spec .type-meta {
+    display: flex; justify-content: space-between; align-items: flex-end; gap: 24px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+  .type-spec .type-meta .name {
+    font-family: var(--display);
+    font-weight: 320;
+    font-size: clamp(28px, 4vw, 52px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .type-spec .type-meta .name.sans { font-family: var(--sans); font-weight: 600; letter-spacing: -0.03em; }
+  .type-spec .type-meta .name.mono { font-family: var(--mono); font-weight: 500; letter-spacing: -0.01em; font-size: clamp(24px, 3vw, 40px); }
+
+  .type-meta .info { display: flex; flex-direction: column; gap: 4px; font-family: var(--mono); font-size: 11px; color: var(--muted); text-align: right; }
+  .type-meta .info strong { color: var(--fg); font-weight: 500; }
+
+  .glyph-row {
+    font-family: var(--display);
+    font-size: clamp(36px, 5vw, 64px);
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    font-weight: 340;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  .glyph-row.sans { font-family: var(--sans); }
+  .glyph-row.mono { font-family: var(--mono); font-size: clamp(20px, 3vw, 32px); letter-spacing: 0; }
+
+  .weights-row {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 16px;
+    padding-top: 24px;
+    margin-top: 24px;
+    border-top: 1px solid var(--border);
+  }
+  .weights-row > div { display: flex; flex-direction: column; gap: 4px; }
+  .weights-row .w-num { font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 0.1em; }
+  .weights-row .w-demo { font-size: 22px; line-height: 1; }
+  .weights-row .w-demo.serif { font-family: var(--display); letter-spacing: -0.015em; }
+  .weights-row .w-demo.sans { font-family: var(--sans); letter-spacing: -0.02em; }
+  .weights-row .w-demo.mono { font-family: var(--mono); }
+
+  /* ============================================
+     VOICE / DO-DONT
+     ============================================ */
+  .voice-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  @media (max-width: 900px) { .voice-grid { grid-template-columns: 1fr; } }
+  .voice-cell { background: var(--surface); padding: 36px 32px; min-height: 240px; display: flex; flex-direction: column; gap: 16px; }
+  .voice-cell .num { font-family: var(--mono); font-size: 12px; letter-spacing: 0.1em; color: var(--muted); }
+  .voice-cell h4 { font-family: var(--display); font-weight: 340; font-size: 28px; line-height: 1.1; letter-spacing: -0.02em; }
+  .voice-cell h4 .it { color: var(--fg); font-weight: 600; }
+  .voice-cell p { font-size: 14px; line-height: 1.55; color: var(--muted); }
+
+  .dodont-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 720px) { .dodont-grid { grid-template-columns: 1fr; } }
+  .dodont {
+    border: 1px solid var(--border);
+    padding: 32px;
+    display: flex; flex-direction: column; gap: 16px;
+    background: var(--paper);
+  }
+  .dodont.bad { background: var(--bone-soft); }
+  .dodont .tag {
+    font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+    display: inline-flex; align-items: center; gap: 8px;
+    width: max-content;
+  }
+  .dodont.good .tag::before { content: ""; width: 8px; height: 8px; background: var(--ink); }
+  .dodont.bad .tag::before { content: ""; width: 8px; height: 8px; background: var(--mist); border-radius: 50%; }
+  .dodont p { font-size: 14px; line-height: 1.55; color: var(--muted); }
+
+  /* ============================================
+     APPLICATIONS / MOCKUPS
+     ============================================ */
+  .app-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 24px; }
+  @media (max-width: 900px) { .app-grid { gap: 16px; } }
+
+  .app-card {
+    border: 1px solid var(--border);
+    background: var(--paper);
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    position: relative;
+    display: grid; place-items: center;
+  }
+  .app-card .app-label {
+    position: absolute; bottom: 18px; left: 22px;
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
+  }
+  .app-card.dark { background: var(--ink); }
+  .app-card.dark .app-label { color: rgba(242,239,230,0.55); }
+  .app-card.pulse { background: var(--pulse); }
+
+  /* Phone */
+  .mock-phone {
+    width: 56%; max-width: 200px;
+    aspect-ratio: 9 / 19;
+    background: var(--ink);
+    border-radius: 30px;
+    padding: 8px;
+    position: relative;
+    box-shadow: 0 24px 50px -20px rgba(0,0,0,0.35), 0 0 0 1px var(--ink);
+  }
+  .mock-phone .scr {
+    width: 100%; height: 100%;
+    background: var(--bone);
+    border-radius: 22px;
+    display: grid; place-items: center;
+    padding: 18px;
+    position: relative;
+    overflow: hidden;
+  }
+  .mock-phone .notch {
+    position: absolute; top: 14px; left: 50%; transform: translateX(-50%);
+    width: 26%; height: 14px;
+    background: var(--ink);
+    border-radius: 0 0 12px 12px;
+    z-index: 2;
+  }
+  .mock-phone .scr svg { max-width: 64%; }
+
+  /* Business card */
+  .mock-card {
+    width: 80%; aspect-ratio: 1.75 / 1;
+    background: var(--bone);
+    border-radius: 6px;
+    padding: 22px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    box-shadow: 0 20px 40px -16px rgba(0,0,0,0.2), 0 1px 0 var(--stone);
+    transform: rotate(-3deg);
+    position: relative;
+  }
+  .mock-card svg { width: 48px; }
+  .mock-card .name-block { display: flex; flex-direction: column; gap: 2px; }
+  .mock-card .name-block .nm-1 { font-family: var(--display); font-weight: 340; font-size: 17px; letter-spacing: -0.02em; }
+  .mock-card .name-block .nm-2 { font-family: var(--mono); font-size: 9px; color: var(--mist); letter-spacing: 0.08em; text-transform: uppercase; }
+  .mock-card .corner-mono { position: absolute; bottom: 18px; right: 22px; font-family: var(--mono); font-size: 9px; color: var(--mist); letter-spacing: 0.08em; }
+
+  /* Avatar/icon */
+  .mock-avatar {
+    width: 50%;
+    aspect-ratio: 1 / 1;
+    border-radius: 28%;
+    overflow: hidden;
+    display: grid; place-items: center;
+    box-shadow: 0 30px 60px -20px rgba(0,0,0,0.25);
+  }
+
+  /* Poster */
+  .mock-poster {
+    background: var(--ink);
+    color: var(--bone);
+    width: 80%;
+    aspect-ratio: 3 / 4;
+    padding: 26px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    border-radius: 4px;
+    box-shadow: 0 30px 60px -20px rgba(0,0,0,0.4);
+    position: relative;
+    overflow: hidden;
+  }
+  .mock-poster::after {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(circle at 80% 20%, rgba(212,255,58,0.15), transparent 50%);
+  }
+  .mock-poster > * { position: relative; z-index: 1; }
+  .mock-poster .mp-head { display: flex; justify-content: space-between; align-items: flex-start; }
+  .mock-poster .mp-head svg { width: 36px; }
+  .mock-poster .mp-head .mp-meta { font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em; text-align: right; color: rgba(242,239,230,0.6); line-height: 1.4; }
+  .mock-poster .mp-title { font-family: var(--display); font-weight: 320; font-size: clamp(20px, 2.4vw, 30px); line-height: 0.96; letter-spacing: -0.025em; }
+  .mock-poster .mp-title .it { color: var(--pulse); }
+  .mock-poster .mp-foot { display: flex; justify-content: space-between; align-items: flex-end; font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em; color: rgba(242,239,230,0.6); }
+
+  /* App tile (square color) */
+  .mock-tile {
+    width: 80%; aspect-ratio: 1 / 1; border-radius: 22%;
+    display: grid; place-items: center;
+    box-shadow: 0 24px 50px -18px rgba(0,0,0,0.3);
+  }
+  .mock-tile.tile-pulse { background: var(--pulse); }
+  .mock-tile.tile-ink { background: var(--ink); }
+  .mock-tile.tile-bone { background: var(--bone); border: 1px solid var(--stone); }
+
+  /* T-shirt area */
+  .mock-tee {
+    width: 70%; aspect-ratio: 1 / 1.1;
+    background: var(--bone-soft);
+    clip-path: polygon(20% 0%, 35% 0%, 50% 12%, 65% 0%, 80% 0%, 100% 14%, 90% 28%, 80% 22%, 80% 100%, 20% 100%, 20% 22%, 10% 28%, 0% 14%);
+    display: grid; place-items: center;
+    position: relative;
+  }
+  .mock-tee svg { width: 38%; transform: translateY(-12%); }
+
+  /* Sticker / circular */
+  .mock-sticker {
+    width: 62%; aspect-ratio: 1 / 1;
+    background: var(--pulse);
+    border-radius: 50%;
+    display: grid; place-items: center;
+    position: relative;
+    box-shadow: 0 20px 40px -16px rgba(0,0,0,0.2), inset 0 0 0 1px rgba(0,0,0,0.04);
+  }
+  .mock-sticker svg { width: 56%; }
+
+  /* AI agent terminal */
+  .mock-terminal {
+    width: 86%; aspect-ratio: 4 / 3;
+    background: var(--ink); border-radius: 10px;
+    padding: 18px;
+    display: flex; flex-direction: column; gap: 10px;
+    box-shadow: 0 24px 50px -20px rgba(0,0,0,0.4), 0 0 0 1px var(--ink-soft);
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--bone);
+    line-height: 1.5;
+  }
+  .mock-terminal .tm-head {
+    display: flex; align-items: center; gap: 6px; padding-bottom: 8px; border-bottom: 1px solid rgba(242,239,230,0.1);
+  }
+  .mock-terminal .tm-head .tm-dot { width: 7px; height: 7px; border-radius: 50%; background: rgba(242,239,230,0.18); }
+  .mock-terminal .tm-head .tm-dot.live { background: var(--pulse); }
+  .mock-terminal .tm-head .tm-title { font-size: 9px; letter-spacing: 0.1em; color: rgba(242,239,230,0.5); margin-left: 8px; text-transform: uppercase; }
+  .mock-terminal .tm-line { display: flex; gap: 8px; font-size: 10px; }
+  .mock-terminal .tm-line .tm-prompt { color: var(--pulse); }
+  .mock-terminal .tm-line .tm-meta { color: rgba(242,239,230,0.4); }
+  .mock-terminal .tm-line.tm-out { color: rgba(242,239,230,0.7); padding-left: 18px; }
+
+  /* ============================================
+     SYSTEM / FEATURE PILLARS
+     ============================================ */
+  .pillars-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  @media (max-width: 900px) { .pillars-grid { grid-template-columns: 1fr; } }
+  .pillar { background: var(--surface); padding: 40px 32px; min-height: 280px; display: flex; flex-direction: column; gap: 18px; position: relative; }
+  .pillar .p-num { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; color: var(--muted); }
+  .pillar .p-icon { width: 44px; height: 44px; }
+  .pillar h4 { font-family: var(--display); font-weight: 340; font-size: 26px; line-height: 1.05; letter-spacing: -0.02em; }
+  .pillar h4 .it { color: var(--fg); font-weight: 500; }
+  .pillar p { font-size: 14px; line-height: 1.55; color: var(--muted); }
+
+  /* ============================================
+     DOWNLOAD-ALL BAR
+     ============================================ */
+  .dl-bar {
+    background: var(--surface-deep);
+    color: var(--surface-deep-fg);
+    padding: clamp(48px, 7vw, 96px) 0;
+  }
+  .dl-bar .wrap { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; align-items: center; }
+  @media (max-width: 820px) { .dl-bar .wrap { grid-template-columns: 1fr; gap: 24px; } }
+  .dl-bar h3 { font-family: var(--display); font-weight: 320; font-size: clamp(32px, 5vw, 56px); line-height: 1.02; letter-spacing: -0.025em; color: var(--surface-deep-fg); }
+  .dl-bar h3 .it { color: var(--pulse); }
+  .dl-bar .dl-cta { display: flex; flex-direction: column; gap: 14px; }
+  .dl-bar .btn-pulse {
+    background: var(--pulse); color: #0E0E14;
+    padding: 18px 28px; font-size: 13px;
+    width: max-content;
+    display: inline-flex; align-items: center; gap: 12px;
+    border-radius: 100px;
+    font-family: var(--mono); letter-spacing: 0.05em; text-transform: uppercase;
+    transition: all 0.3s var(--easing);
+  }
+  .dl-bar .btn-pulse:hover { background: var(--surface-deep-fg); color: var(--surface-deep); }
+  .dl-bar small { font-family: var(--mono); font-size: 11px; color: var(--surface-deep-muted); letter-spacing: 0.05em; }
+
+  /* ============================================
+     FOOTER
+     ============================================ */
+  footer {
+    background: var(--bg);
+    padding: 56px 0 32px;
+    border-top: 1px solid var(--border);
+  }
+  footer .wrap { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; align-items: end; }
+  @media (max-width: 720px) { footer .wrap { grid-template-columns: 1fr; gap: 24px; } }
+  footer .ft-lock { display: flex; align-items: center; gap: 16px; }
+  footer .ft-lock svg { width: 56px; }
+  footer .ft-lock .ft-name { font-family: var(--display); font-weight: 350; font-size: 28px; letter-spacing: -0.02em; }
+  footer .ft-meta { font-family: var(--mono); font-size: 11px; color: var(--muted); line-height: 1.7; letter-spacing: 0.04em; }
+  footer .ft-meta strong { color: var(--fg); font-weight: 500; }
+  footer .legal {
+    margin-top: 48px; padding-top: 20px;
+    border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+    font-family: var(--mono); font-size: 10px; color: var(--muted); letter-spacing: 0.06em;
+  }
+
+  /* ============================================
+     ENTRANCE ANIMATION
+     ============================================ */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .reveal {
+    opacity: 0;
+    animation: fadeUp 0.9s var(--easing) forwards;
+  }
+  .reveal-1 { animation-delay: 0.05s; }
+  .reveal-2 { animation-delay: 0.15s; }
+  .reveal-3 { animation-delay: 0.28s; }
+  .reveal-4 { animation-delay: 0.42s; }
+  .reveal-5 { animation-delay: 0.56s; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { animation: none; opacity: 1; }
+  }
+
+  /* ============================================
+     TOAST
+     ============================================ */
+  .toast {
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(120%);
+    background: var(--ink); color: var(--bone);
+    padding: 12px 20px; border-radius: 100px;
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.05em;
+    z-index: 2000;
+    transition: transform 0.4s var(--easing);
+    box-shadow: 0 12px 30px -12px rgba(0,0,0,0.3);
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+  .toast .pulse-dot { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--pulse); margin-right: 8px; vertical-align: middle; }
+</style>
+</head>
+<body>
+
+<!-- =============================================
+     NAVIGATION
+     ============================================= -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-brand">
+      <span class="dot"></span>
+      <span>LogicGen.dev / Brand System v1.0</span>
+    </a>
+    <div class="nav-links">
+      <a href="#mark">Mark</a>
+      <a href="#system">System</a>
+      <a href="#color">Color</a>
+      <a href="#type">Type</a>
+      <a href="#voice">Voice</a>
+      <a href="#apply">Apply</a>
+    </div>
+    <div class="nav-actions">
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle theme">
+        <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </button>
+      <button class="btn" onclick="downloadAllAssets()">
+        <span>Download Kit</span>
+        <svg class="arr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v16m0 0l-6-6m6 6l6-6"/></svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- =============================================
+     HERO — Cover plate
+     ============================================= -->
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-meta reveal reveal-1">
+      <div class="hero-meta-cell">
+        <span>Document № 001</span>
+        <span>Visual Identity System</span>
+      </div>
+      <div class="hero-meta-cell" style="text-align: right;">
+        <span>Issued · Spring 2026</span>
+        <span>For: LogicGen.dev</span>
+      </div>
+    </div>
+
+    <div class="hero-title reveal reveal-2">
+      <h1>
+        Logic<span class="gen-em it">Gen</span><span class="dot-dev">.dev</span>
+      </h1>
+    </div>
+
+    <div class="hero-strap">
+      <div class="reveal reveal-3">
+        <span class="eyebrow eyebrow-mist">§ 00 — Premise</span>
+      </div>
+      <div class="reveal reveal-4">
+        <p class="lead">
+          A platform for the next generation of <em>non-technical founders</em> and the <em>AI agents</em> they command — where business logic meets generative velocity, and the first MVP ships before the doubt does.
+        </p>
+        <p class="body-lg muted" style="margin-top: 28px; max-width: 56ch;">
+          This document codifies the identity. The mark, the wordmark, the colour, the voice, and the room each requires to breathe. It is the operating manual for everything LogicGen says, shows, and becomes.
+        </p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- =============================================
+     MANIFESTO
+     ============================================= -->
+<section class="manifesto" id="manifesto">
+  <div class="wrap">
+    <div class="manifesto-grid">
+      <div>
+        <span class="eyebrow">§ 01 — Manifesto</span>
+      </div>
+      <div class="manifesto-stack">
+        <h3>
+          We were built for the founder who has the <span class="it">idea</span>, but not the <span class="it">stack</span> &mdash; and for the agent that has the <span class="pulse">stack</span>, but not yet the <span class="pulse">judgment</span>.
+        </h3>
+        <p>
+          The world is full of brilliant operators &mdash; people who have closed deals, run businesses, understood markets &mdash; who have been told for thirty years that <em>shipping software</em> is somebody else's job. We disagree.
+        </p>
+        <p>
+          LogicGen is the platform where business logic, financial models, video understanding, and a thousand other integrations are composable primitives. Where a non-technical founder builds an MVP between meetings. Where an AI agent reaches for advanced tools without permission slips. Where <em>Logic</em> &mdash; the structural discipline of a real system &mdash; meets <em>Gen</em> &mdash; the velocity of a model that ships.
+        </p>
+        <p>
+          The identity carries that tension by design. A serif that remembers the rigor of an old engineering manual. A sans that runs at the speed of a build pipeline. A single electric pulse that means: <em>this generates.</em>
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     BRAND PILLARS — what the system stands on
+     ============================================= -->
+<section class="section section-tight" id="pillars">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="label">
+        <span class="eyebrow eyebrow-mist">§ 02 — Pillars</span>
+        <span class="num">04 / principles</span>
+      </div>
+      <h2>Four loads the <span class="it">identity</span> must carry.</h2>
+    </div>
+
+    <div class="pillars-grid">
+      <div class="pillar">
+        <span class="p-num">01.</span>
+        <svg class="p-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="6" width="32" height="32" rx="4"/><path d="M14 14h16M14 22h10M14 30h16"/></svg>
+        <h4>Structural &mdash; like <span class="it">code</span> on a clean repo.</h4>
+        <p>Generous margins, monospaced labels, hairline rules. Nothing decorative survives the first edit. Information has a position; the position has a reason.</p>
+      </div>
+      <div class="pillar">
+        <span class="p-num">02.</span>
+        <svg class="p-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 22 L 38 22"/><path d="M28 12 L 38 22 L 28 32"/><circle cx="10" cy="22" r="3" fill="#D4FF3A" stroke="none"/></svg>
+        <h4>Velocity &mdash; <span class="it">forward</span>, never decorative.</h4>
+        <p>Every visual gesture pushes right, generates, advances. The wedge is not an ornament. It is the chevron of a system in motion.</p>
+      </div>
+      <div class="pillar">
+        <span class="p-num">03.</span>
+        <svg class="p-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2"><circle cx="22" cy="22" r="14"/><path d="M22 14v8l5 3"/></svg>
+        <h4>Editorial &mdash; the rigor of a <span class="it">monograph</span>.</h4>
+        <p>One sans family doing all the work. No ornaments, no italics, no swashes &mdash; just precision letterforms with generous space. Restraint is the signal that we built a system, not a vibe.</p>
+      </div>
+      <div class="pillar">
+        <span class="p-num">04.</span>
+        <svg class="p-icon" viewBox="0 0 44 44" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 6v32M6 22h32" /><circle cx="22" cy="22" r="5" fill="#D4FF3A" stroke="none"/></svg>
+        <h4>Generative &mdash; one bright <span class="it">pulse</span>, never two.</h4>
+        <p>A single colour means <em>this generated</em>. We do not paint surfaces with it. We use it to mark the moment of creation &mdash; the cursor, the wedge, the spark.</p>
+      </div>
+
+      <div class="pillar" style="grid-column: span 2;">
+        <span class="p-num">/note</span>
+        <h4 style="font-size: 22px;">For the audience &mdash; <span class="it">two</span> readers in one room.</h4>
+        <p>The non-technical founder needs reassurance: <em>this is real, this is trustworthy, I can hold this in my hand.</em> The AI agent needs surface area: <em>this is composable, this is structured, this is parseable.</em> The identity is built so both reads land in the same glance.</p>
+      </div>
+      <div class="pillar">
+        <span class="p-num">/with</span>
+        <h4 style="font-size: 22px;">Built <span class="it">alongside</span> Denova.</h4>
+        <p>Where LogicGen ships your first MVP, Denova powers the integration layer beneath it. The identity flexes to co-brand &mdash; the wedge becomes the connector, the L becomes the foundation Denova plugs into.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- =============================================
+     §03 — THE MARK / ANATOMY
+     ============================================= -->
+<section class="section" id="mark">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="label">
+        <span class="eyebrow eyebrow-mist">§ 03 — The Mark</span>
+        <span class="num">primary asset / construction</span>
+      </div>
+      <h2>A foundation, and a <span class="it">wedge</span> &mdash; nothing more.</h2>
+    </div>
+
+    <div class="mark-anatomy-grid">
+      <!-- The mark, large -->
+      <div class="mark-canvas">
+        <div class="corners"></div>
+        <svg viewBox="0 0 200 200" style="width: 60%; height: auto;">
+          <rect width="200" height="200" rx="40" fill="#0E0E14"/>
+          <path d="M 50 56 L 74 56 L 74 124 L 102 124 L 102 144 L 50 144 Z" fill="#F2EFE6"/>
+          <path d="M 112 56 L 152 100 L 112 144 L 112 124 L 130 100 L 112 76 Z" fill="#D4FF3A"/>
+          <!-- Construction guides -->
+          <g stroke="#D4FF3A" stroke-width="0.3" opacity="0.0" fill="none" stroke-dasharray="2 2" class="guides">
+            <line x1="100" y1="0" x2="100" y2="200"/>
+            <line x1="0" y1="100" x2="200" y2="100"/>
+          </g>
+        </svg>
+      </div>
+
+      <!-- Anatomy text -->
+      <div class="mark-anatomy-text">
+        <div>
+          <span class="eyebrow eyebrow-mist">Anatomy</span>
+          <p class="lead" style="margin-top: 16px; max-width: 28ch;">
+            The mark is two components, set on a single black field.
+          </p>
+        </div>
+        <ul>
+          <li>
+            <span class="ix">A.</span>
+            <div>
+              <strong>The Foundation</strong>
+              <span>A bone-coloured "L" &mdash; structural, weight-bearing, unmovable. Logic. The premise the system stands on.</span>
+            </div>
+          </li>
+          <li>
+            <span class="ix">B.</span>
+            <div>
+              <strong>The Wedge</strong>
+              <span>A pulse-green hollow chevron. The cursor of generation. Reads simultaneously as code-bracket, play-button, and forward-vector.</span>
+            </div>
+          </li>
+          <li>
+            <span class="ix">C.</span>
+            <div>
+              <strong>The Container</strong>
+              <span>A rounded square in ink, with a corner radius of 20% &mdash; firm enough to feel engineered, soft enough to feel human.</span>
+            </div>
+          </li>
+          <li style="border: none;">
+            <span class="ix">D.</span>
+            <div>
+              <strong>The Grid</strong>
+              <span>Drawn on a 200&times;200 unit grid. The L occupies cells 50&ndash;102&times;56&ndash;144. The wedge occupies cells 112&ndash;152&times;56&ndash;144. A 10-unit air gap between them is non-negotiable.</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     §04 — LOGO SYSTEM / GALLERY
+     ============================================= -->
+<section class="section" id="system" style="padding-top: 0;">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="label">
+        <span class="eyebrow eyebrow-mist">§ 04 — The System</span>
+        <span class="num">lockups · variants · downloads</span>
+      </div>
+      <h2>One mark, <span class="it">eight</span> permissions.</h2>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="logo-gallery" id="logoGallery">
+      <!-- Cards populated by JS using LOGOS dictionary -->
+    </div>
+    <p class="num" style="margin-top: 20px; text-align: right;">click any tile to download the SVG · all assets vector, infinitely scalable</p>
+  </div>
+</section>
+
+<!-- =============================================
+     §05 — CLEAR SPACE & MINIMUM SIZE
+     ============================================= -->
+<section class="section section-tight">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="label">
+        <span class="eyebrow eyebrow-mist">§ 05 — Clear space</span>
+        <span class="num">protection · scale</span>
+      </div>
+      <h2>The mark needs <span class="it">room</span> to do its job.</h2>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;" class="cs-grid">
+      <div class="clearspace-card">
+        <span class="x-label x-top">↕ x</span>
+        <span class="x-label x-bot">↕ x</span>
+        <span class="x-label x-left">↔ x</span>
+        <span class="x-label x-right">↔ x</span>
+        <div class="dashed-frame"></div>
+        <div class="dashed-frame-inner"></div>
+        <svg viewBox="0 0 200 200" style="width: 38%; position: relative; z-index: 2;">
+          <rect width="200" height="200" rx="40" fill="#0E0E14"/>
+          <path d="M 50 56 L 74 56 L 74 124 L 102 124 L 102 144 L 50 144 Z" fill="#F2EFE6"/>
+          <path d="M 112 56 L 152 100 L 112 144 L 112 124 L 130 100 L 112 76 Z" fill="#D4FF3A"/>
+        </svg>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 16px; padding: 24px 0;">
+        <span class="eyebrow eyebrow-mist">Rule</span>
+        <p class="lead" style="font-size: 22px; max-width: 32ch;">
+          Maintain clear space equal to <strong>x</strong> &mdash; where <em>x</em> equals the height of the wedge &mdash; on every side of the mark.
+        </p>
+        <p class="body muted">
+          Nothing breaches this perimeter. Not type. Not edges. Not other marks. When in doubt, give it more.
+        </p>
+        <span class="eyebrow eyebrow-mist" style="margin-top: 16px;">Minimum scale</span>
+        <p class="body muted">
+          Digital: <strong style="color: var(--ink);">24px</strong> minimum for the mark, <strong style="color: var(--ink);">120px</strong> minimum for the horizontal lockup.<br>
+          Print: <strong style="color: var(--ink);">8mm</strong> minimum for the mark, <strong style="color: var(--ink);">32mm</strong> minimum for the lockup.
+        </p>
+      </div>
+    </div>
+
+    <!-- Size rail -->
+    <div style="margin-top: 48px;">
+      <span class="eyebrow eyebrow-mist" style="display: block; margin-bottom: 16px;">Scale specimen</span>
+      <div class="size-rail">
+        <div class="size-cell">
+          <svg viewBox="0 0 200 200" width="24" height="24"><rect width="200" height="200" rx="40" fill="#0E0E14"/><path d="M 50 56 L 74 56 L 74 124 L 102 124 L 102 144 L 50 144 Z" fill="#F2EFE6"/><path d="M 112 56 L 152 100 L 112 144 L 112 124 L 130 100 L 112 76 Z" fill="#D4FF3A"/></svg>
+          <span class="size-label">24px · min</span>
+        </div>
+        <div class="size-cell">
+          <svg viewBox="0 0 200 200" width="40" height="40"><rect width="200" height="200" rx="40" fill="#0E0E14"/><path d="M 50 56 L 74 56 L 74 124 L 102 124 L 102 144 L 50 144 Z" fill="#F2EFE6"/><path d="M 112 56 L 152 100 L 112 144 L 112 124 L 130 100 L 112 76 Z" fill="#D4FF3A"/></svg>
+          <span class="size-label">40px · favicon</span>
+        </div>
+        <div class="size-cell">
+          <svg viewBox="0 0 200 200" width="64" height="64"><rect width="200" height="200" rx="40" fill="#0E0E14"/><path d="M 50 56 L 74 56 L 74 124 L 102 124 L 102 144 L 50 144 Z" fill="#F2EFE6"/><path d="M 112 56 L 152 100 L 112 144 L 112 124 L 130 100 L 112 76 Z" fill="#D4FF3A"/></svg>
+          <span class="size-label">64px · UI</span>
+        </div>
+        <div class="size-cell">
+          <svg viewBox="0 0 200 200" width="96" height="96"><rect width="200" height="200" rx="40" fill="#0E0E14"/><path d="M 50 56 L 74 56 L 74 124 L 102 124 L 102 144 L 50 144 Z" fill="#F2EFE6"/><path d="M 112 56 L 152 100 L 112 144 L 112 124 L 130 100 L 112 76 Z" fill="#D4FF3A"/></svg>
+          <span class="size-label">96px · header</span>
+        </div>
+        <div class="size-cell">
+          <svg viewBox="0 0 200 200" width="144" height="144"><rect width="200" height="200" rx="40" fill="#0E0E14"/><path d="M 50 56 L 74 56 L 74 124 L 102 124 L 102 144 L 50 144 Z" fill="#F2EFE6"/><path d="M 112 56 L 152 100 L 112 144 L 112 124 L 130 100 L 112 76 Z" fill="#D4FF3A"/></svg>
+          <span class="size-label">144px · hero</span>
+        </div>
+        <div class="size-cell">
+          <svg viewBox="0 0 200 200" width="200" height="200"><rect width="200" height="200" rx="40" fill="#0E0E14"/><path d="M 50 56 L 74 56 L 74 124 L 102 124 L 102 144 L 50 144 Z" fill="#F2EFE6"/><path d="M 112 56 L 152 100 L 112 144 L 112 124 L 130 100 L 112 76 Z" fill="#D4FF3A"/></svg>
+          <span class="size-label">200px · canonical</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     §06 — COLOR SYSTEM
+     ============================================= -->
+<section class="section" id="color">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="label">
+        <span class="eyebrow eyebrow-mist">§ 06 — Colour</span>
+        <span class="num">palette · ratio · usage</span>
+      </div>
+      <h2>Bone. Ink. <span class="it">Pulse.</span> &mdash; and a rare violet.</h2>
+    </div>
+
+    <div class="color-grid">
+      <div class="swatch sw-bone hero-swatch" data-hex="#F2EFE6" style="grid-column: span 2;">
+        <div>
+          <div class="role">Primary surface · 60%</div>
+          <div class="nm">Bone</div>
+        </div>
+        <div class="codes">
+          HEX &nbsp; #F2EFE6<br>
+          RGB &nbsp; 242 · 239 · 230<br>
+          CMYK &nbsp; 4 · 4 · 9 · 0<br>
+          PMS &nbsp; Warm Gray 1 C
+        </div>
+        <span class="copy-tag"><span>copy hex</span></span>
+      </div>
+      <div class="swatch sw-ink hero-swatch" data-hex="#0E0E14" style="grid-column: span 2;">
+        <div>
+          <div class="role">Primary type · 30%</div>
+          <div class="nm">Ink</div>
+        </div>
+        <div class="codes">
+          HEX &nbsp; #0E0E14<br>
+          RGB &nbsp; 14 · 14 · 20<br>
+          CMYK &nbsp; 75 · 70 · 50 · 95<br>
+          PMS &nbsp; Black 6 C
+        </div>
+        <span class="copy-tag"><span>copy hex</span></span>
+      </div>
+
+      <div class="swatch sw-pulse" data-hex="#D4FF3A">
+        <div>
+          <div class="role">Signature · 6%</div>
+          <div class="nm">Pulse</div>
+        </div>
+        <div class="codes">
+          HEX &nbsp; #D4FF3A<br>
+          RGB &nbsp; 212·255·58<br>
+          PMS &nbsp; 388 C
+        </div>
+        <span class="copy-tag"><span>copy hex</span></span>
+      </div>
+      <div class="swatch sw-plasma" data-hex="#5A3AFF">
+        <div>
+          <div class="role">Rare accent · 2%</div>
+          <div class="nm">Plasma</div>
+        </div>
+        <div class="codes">
+          HEX &nbsp; #5A3AFF<br>
+          RGB &nbsp; 90·58·255<br>
+          PMS &nbsp; 2725 C
+        </div>
+        <span class="copy-tag"><span>copy hex</span></span>
+      </div>
+      <div class="swatch sw-mist" data-hex="#6B6A78">
+        <div>
+          <div class="role">Secondary type</div>
+          <div class="nm" style="font-size: 30px;">Mist</div>
+        </div>
+        <div class="codes">
+          HEX &nbsp; #6B6A78<br>
+          RGB &nbsp; 107·106·120
+        </div>
+        <span class="copy-tag"><span>copy hex</span></span>
+      </div>
+      <div class="swatch sw-stone" data-hex="#D6D2C4">
+        <div>
+          <div class="role">Hairline · border</div>
+          <div class="nm" style="font-size: 30px;">Stone</div>
+        </div>
+        <div class="codes">
+          HEX &nbsp; #D6D2C4<br>
+          RGB &nbsp; 214·210·196
+        </div>
+        <span class="copy-tag"><span>copy hex</span></span>
+      </div>
+      <div class="swatch sw-paper" data-hex="#FBF9F2">
+        <div>
+          <div class="role">Recessed surface</div>
+          <div class="nm" style="font-size: 30px;">Paper</div>
+        </div>
+        <div class="codes">
+          HEX &nbsp; #FBF9F2<br>
+          RGB &nbsp; 251·249·242
+        </div>
+        <span class="copy-tag"><span>copy hex</span></span>
+      </div>
+      <div class="swatch sw-pulse-deep" data-hex="#B8E22E">
+        <div>
+          <div class="role">Pulse · pressed state</div>
+          <div class="nm" style="font-size: 30px;">Pulse Deep</div>
+        </div>
+        <div class="codes">
+          HEX &nbsp; #B8E22E<br>
+          RGB &nbsp; 184·226·46
+        </div>
+        <span class="copy-tag"><span>copy hex</span></span>
+      </div>
+    </div>
+
+    <!-- Ratio bar -->
+    <div style="margin-top: 56px;">
+      <span class="eyebrow eyebrow-mist" style="display: block; margin-bottom: 12px;">Distribution &mdash; how the palette should appear across any surface</span>
+      <div class="ratio-bar">
+        <div class="sw-bone" style="flex: 60;"><span>Bone · 60</span></div>
+        <div class="sw-ink" style="flex: 30;"><span>Ink · 30</span></div>
+        <div class="sw-mist" style="flex: 5;"><span>Mist · 5</span></div>
+        <div class="sw-pulse" style="flex: 4;"><span>Pulse · 4</span></div>
+        <div class="sw-plasma" style="flex: 1;"><span>Plasma · 1</span></div>
+      </div>
+      <p class="body muted" style="margin-top: 16px; max-width: 64ch;">
+        Pulse is a <em>signal</em>, not a surface. The instinct to fill a page with it is the instinct of someone who has never seen a real brand book. Hold the line at 4&ndash;6%.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     §07 — TYPOGRAPHY
+     ============================================= -->
+<section class="section" id="type">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="label">
+        <span class="eyebrow eyebrow-mist">§ 07 — Typography</span>
+        <span class="num">two voices · one conversation</span>
+      </div>
+      <h2>Sans for the <span class="it">argument</span>. Mono for the <span class="it">machine</span>.</h2>
+    </div>
+
+    <!-- GEIST DISPLAY -->
+    <div class="type-spec">
+      <div class="type-meta">
+        <div>
+          <div class="eyebrow eyebrow-mist" style="margin-bottom: 12px;">Display · the voice of LOGIC + GENERATION</div>
+          <div class="name sans">Geist</div>
+        </div>
+        <div class="info">
+          <strong>Variable: 300..800 · single family</strong>
+          <span>Modern grotesque. Open apertures, neutral stance.</span>
+          <span>Used for: H1 → H4, lead paragraphs, brand moments</span>
+        </div>
+      </div>
+      <div class="glyph-row sans" style="font-weight: 300;">ABCDEFGHIJKLMN<span class="it">OPQRSTUV</span>WXYZ</div>
+      <div class="glyph-row sans" style="font-weight: 400;">abcdefghijk<span class="it">lmnopqrstu</span>vwxyz &amp; 0123456789</div>
+      <div class="weights-row">
+        <div><span class="w-num">300 · Light</span><span class="w-demo sans" style="font-weight: 300;">Aa</span></div>
+        <div><span class="w-num">400 · Regular</span><span class="w-demo sans" style="font-weight: 400;">Aa</span></div>
+        <div><span class="w-num">500 · Medium</span><span class="w-demo sans" style="font-weight: 500;">Aa</span></div>
+        <div><span class="w-num">600 · Semibold</span><span class="w-demo sans" style="font-weight: 600;">Aa</span></div>
+        <div><span class="w-num">700 · Bold</span><span class="w-demo sans" style="font-weight: 700;">Aa</span></div>
+        <div><span class="w-num">800 · Black</span><span class="w-demo sans" style="font-weight: 800;">Aa</span></div>
+      </div>
+    </div>
+
+    <!-- GEIST -->
+    <!-- GEIST MONO -->
+    <div class="type-spec">
+      <div class="type-meta">
+        <div>
+          <div class="eyebrow eyebrow-mist" style="margin-bottom: 12px;">Mono · the voice of the MACHINE</div>
+          <div class="name mono">Geist Mono</div>
+        </div>
+        <div class="info">
+          <strong>Variable: 400..600</strong>
+          <span>Eyebrows · labels · code · numerics</span>
+          <span>Used for: metadata, captions, signposting</span>
+        </div>
+      </div>
+      <div class="glyph-row mono">function * generate(logic) {</div>
+      <div class="glyph-row mono">&nbsp;&nbsp;return await logic.compose();</div>
+      <div class="glyph-row mono">} // logicgen.dev / v1.0</div>
+    </div>
+
+    <!-- TYPE HIERARCHY EXAMPLE -->
+    <div style="margin-top: 56px; padding: clamp(28px, 4vw, 56px); background: var(--surface); border: 1px solid var(--border);">
+      <span class="eyebrow eyebrow-mist" style="display: block; margin-bottom: 32px;">Hierarchy in practice</span>
+      <div class="display-md" style="margin-bottom: 20px;">Ship the first one. <span class="it">Then</span> the next nine hundred.</div>
+      <p class="lead" style="max-width: 56ch; margin-bottom: 24px;">
+        LogicGen collapses the distance between an idea on a whiteboard and a working interface in a customer's hands.
+      </p>
+      <p class="body muted" style="max-width: 64ch; margin-bottom: 20px;">
+        Non-technical founders compose business logic, integrate financial primitives, parse video, route data, and stand up agent workflows &mdash; without ever writing a line of code. AI agents reach the same primitives through a structured surface.
+      </p>
+      <p class="mono" style="font-size: 12px; color: var(--muted); letter-spacing: 0.04em;">
+        // example caption · file path · status indicator
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     §08 — VOICE & TONE
+     ============================================= -->
+<section class="section section-tight" id="voice">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="label">
+        <span class="eyebrow eyebrow-mist">§ 08 — Voice</span>
+        <span class="num">how we sound</span>
+      </div>
+      <h2>Speak like a <span class="it">senior engineer</span> who took a writing class.</h2>
+    </div>
+
+    <div class="voice-grid">
+      <div class="voice-cell">
+        <span class="num">/01</span>
+        <h4>Confident &mdash; never <span class="it">salesy.</span></h4>
+        <p>We have done the work. We don't need to shout. The shortest true sentence beats the longest persuasive one.</p>
+      </div>
+      <div class="voice-cell">
+        <span class="num">/02</span>
+        <h4>Specific &mdash; never <span class="it">vague.</span></h4>
+        <p>"Ship your MVP in a week" beats "accelerate your journey." Numbers, nouns, verbs, in that order. Marketing-speak is a leak we patch on sight.</p>
+      </div>
+      <div class="voice-cell">
+        <span class="num">/03</span>
+        <h4>Generous &mdash; never <span class="it">condescending.</span></h4>
+        <p>Our reader is a domain expert who happens not to code. We never imply otherwise. The product earns trust by working; the copy earns it by respect.</p>
+      </div>
+      <div class="voice-cell">
+        <span class="num">/04</span>
+        <h4>Editorial &mdash; never <span class="it">corporate.</span></h4>
+        <p>Em-dashes are welcome. Sentence fragments, where they bite. We write like we're explaining the thing to a friend who is smart, busy, and skeptical.</p>
+      </div>
+      <div class="voice-cell">
+        <span class="num">/05</span>
+        <h4>Composable &mdash; never <span class="it">monolithic.</span></h4>
+        <p>Headlines should survive in isolation. Paragraphs should survive without their neighbors. The system, like the product, is built from primitives.</p>
+      </div>
+      <div class="voice-cell">
+        <span class="num">/06</span>
+        <h4>Forward &mdash; never <span class="it">apologetic.</span></h4>
+        <p>We describe what is true now and what we are building next. Hedge words ("hopefully," "ideally," "we believe") are removed on the last pass.</p>
+      </div>
+    </div>
+
+    <!-- DO / DON'T -->
+    <div style="margin-top: 56px;">
+      <span class="eyebrow eyebrow-mist" style="display: block; margin-bottom: 20px;">Voice in practice</span>
+      <div class="dodont-grid">
+        <div class="dodont good">
+          <span class="tag">Do · sounds like LogicGen</span>
+          <p class="display-md" style="font-size: 26px; line-height: 1.1; color: var(--ink);">Build the financial model. Then route it to Stripe, Notion, and your agent. <span class="it">In an afternoon.</span></p>
+          <p class="body muted">Specific. Concrete. Forward. The em-dash works.</p>
+        </div>
+        <div class="dodont bad">
+          <span class="tag">Don't · sounds like a thousand others</span>
+          <p class="display-md" style="font-size: 26px; line-height: 1.1; color: var(--mist);">Unlock the power of AI to transform your business journey with our cutting-edge platform.</p>
+          <p class="body muted">Verbs that mean nothing. Stock phrases. We delete this sentence on sight.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     §09 — APPLICATIONS / MOCKUPS
+     ============================================= -->
+<section class="section" id="apply">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="label">
+        <span class="eyebrow eyebrow-mist">§ 09 — Application</span>
+        <span class="num">in the wild</span>
+      </div>
+      <h2>The identity at <span class="it">work.</span></h2>
+    </div>
+
+    <div class="app-grid">
+      <!-- App Icon on phone (col 4) -->
+      <div class="col-4 col-md-6">
+        <div class="app-card dark">
+          <div class="mock-phone">
+            <div class="notch"></div>
+            <div class="scr" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;">
+              <svg viewBox="0 0 200 200" style="width: 56%;">
+                <rect width="200" height="200" rx="40" fill="#0E0E14"/>
+                <path d="M 50 56 L 74 56 L 74 124 L 102 124 L 102 144 L 50 144 Z" fill="#F2EFE6"/>
+                <path d="M 112 56 L 152 100 L 112 144 L 112 124 L 130 100 L 112 76 Z" fill="#D4FF3A"/>
+              </svg>
+              <div style="font-family: var(--display); font-weight: 350; font-size: 14px; letter-spacing: -0.02em;">LogicGen</div>
+              <div style="font-family: var(--mono); font-size: 9px; color: var(--mist); letter-spacing: 0.08em;">v1.0 / Welcome</div>
+            </div>
+          </div>
+          <span class="app-label">/01 · App icon on home screen</span>
+        </div>
+      </div>
+
+      <!-- Sticker (col 4) -->
+      <div class="col-4 col-md-6">
+        <div class="app-card">
+          <div class="mock-sticker">
+            <svg viewBox="0 0 200 200">
+              <path d="M 50 56 L 74 56 L 74 124 L 102 124 L 102 144 L 50 144 Z" fill="#0E0E14"/>
+              <path d="M 112 56 L 152 100 L 112 144 L 112 124 L 130 100 L 112 76 Z" fill="#0E0E14"/>
+            </svg>
+          </div>
+          <span class="app-label">/02 · Conference sticker · die-cut</span>
+        </div>
+      </div>
+
+      <!-- Business card (col 4) -->
+      <div class="col-4 col-md-6">
+        <div class="app-card" style="background: var(--bone-soft);">
+          <div class="mock-card">
+            <svg viewBox="0 0 200 200">
+              <rect width="200" height="200" rx="40" fill="#0E0E14"/>
+              <path d="M 50 56 L 74 56 L 74 124 L 102 124 L 102 144 L 50 144 Z" fill="#F2EFE6"/>
+              <path d="M 112 56 L 152 100 L 112 144 L 112 124 L 130 100 L 112 76 Z" fill="#D4FF3A"/>
+            </svg>
+            <div class="name-block">
+              <span class="nm-1">Avery Mendoza</span>
+              <span class="nm-2">Head of Founder Success</span>
+            </div>
+            <span class="corner-mono">logicgen.dev</span>
+          </div>
+          <span class="app-label">/03 · Business card · 3.5 × 2 in</span>
+        </div>
+      </div>
+
+      <!-- Poster (col 4) -->
+      <div class="col-4 col-md-6">
+        <div class="app-card" style="background: var(--bone-soft);">
+          <div class="mock-poster">
+            <div class="mp-head">
+              <svg viewBox="0 0 200 200" style="width: 32px;">
+                <path d="M 50 56 L 74 56 L 74 124 L 102 124 L 102 144 L 50 144 Z" fill="#F2EFE6"/>
+                <path d="M 112 56 L 152 100 L 112 144 L 112 124 L 130 100 L 112 76 Z" fill="#D4FF3A"/>
+              </svg>
+              <div class="mp-meta">No. 001<br>Spring · 26<br>SF · NYC · Remote</div>
+            </div>
+            <div>
+              <div class="mp-title">Ship the<br>first one.<br><span class="it">Then</span> the<br>next nine<br>hundred.</div>
+            </div>
+            <div class="mp-foot">
+              <span>logicgen.dev</span>
+              <span>→</span>
+            </div>
+          </div>
+          <span class="app-label" style="color: var(--mist);">/04 · Conference / event poster</span>
+        </div>
+      </div>
+
+      <!-- Avatar/icon set (col 4) -->
+      <div class="col-4 col-md-6">
+        <div class="app-card pulse">
+          <div style="display: flex; gap: 14px; align-items: center;">
+            <div class="mock-tile tile-ink">
+              <svg viewBox="0 0 200 200" style="width: 65%;">
+                <path d="M 50 56 L 74 56 L 74 124 L 102 124 L 102 144 L 50 144 Z" fill="#F2EFE6"/>
+                <path d="M 112 56 L 152 100 L 112 144 L 112 124 L 130 100 L 112 76 Z" fill="#D4FF3A"/>
+              </svg>
+            </div>
+            <div class="mock-tile tile-bone">
+              <svg viewBox="0 0 200 200" style="width: 65%;">
+                <path d="M 50 56 L 74 56 L 74 124 L 102 124 L 102 144 L 50 144 Z" fill="#0E0E14"/>
+                <path d="M 112 56 L 152 100 L 112 144 L 112 124 L 130 100 L 112 76 Z" fill="#0E0E14"/>
+              </svg>
+            </div>
+          </div>
+          <span class="app-label" style="color: var(--ink); opacity: 0.6;">/05 · Avatar &amp; tile · social</span>
+        </div>
+      </div>
+
+      <!-- AI Agent terminal (col 8) -->
+      <div class="col-8">
+        <div class="app-card dark" style="aspect-ratio: 8/3;">
+          <div class="mock-terminal">
+            <div class="tm-head">
+              <span class="tm-dot"></span><span class="tm-dot"></span><span class="tm-dot live"></span>
+              <span class="tm-title">agent ~ logicgen-sdk / build</span>
+            </div>
+            <div class="tm-line"><span class="tm-prompt">→</span> agent.compose({ logic: 'invoice-route', integrations: ['stripe','notion','gmail'] })</div>
+            <div class="tm-line tm-out">✓ logic graph compiled · 14 nodes</div>
+            <div class="tm-line tm-out">✓ integrations wired · 3/3</div>
+            <div class="tm-line tm-out">✓ deployed → <span style="color: var(--pulse);">https://acme.logicgen.app</span></div>
+            <div class="tm-line"><span class="tm-prompt">→</span> <span style="color: var(--pulse); animation: blink 1s steps(2) infinite;">_</span></div>
+          </div>
+          <span class="app-label">/06 · AI agent SDK · advanced surface</span>
+        </div>
+      </div>
+
+      <!-- Co-brand with Denova (col 4) -->
+      <div class="col-4 col-md-6">
+        <div class="app-card">
+          <div style="display: flex; align-items: center; gap: 16px;">
+            <svg viewBox="0 0 200 200" style="width: 60px;">
+              <rect width="200" height="200" rx="40" fill="#0E0E14"/>
+              <path d="M 50 56 L 74 56 L 74 124 L 102 124 L 102 144 L 50 144 Z" fill="#F2EFE6"/>
+              <path d="M 112 56 L 152 100 L 112 144 L 112 124 L 130 100 L 112 76 Z" fill="#D4FF3A"/>
+            </svg>
+            <span style="font-family: var(--display); font-weight: 300; font-size: 30px; color: var(--mist);">×</span>
+            <div style="width: 60px; height: 60px; border-radius: 14px; background: var(--ink); display: grid; place-items: center;">
+              <svg viewBox="0 0 100 100" style="width: 60%;">
+                <circle cx="50" cy="50" r="32" fill="none" stroke="#F2EFE6" stroke-width="6"/>
+                <circle cx="50" cy="50" r="8" fill="#5A3AFF"/>
+              </svg>
+            </div>
+          </div>
+          <span class="app-label">/07 · Co-brand with Denova</span>
+        </div>
+      </div>
+
+      <!-- Billboard / wordmark (col 12) -->
+      <div class="col-12">
+        <div class="app-card dark" style="aspect-ratio: 21/6; padding: 0;">
+          <div style="width: 100%; height: 100%; padding: 6%; display: flex; flex-direction: column; justify-content: space-between; align-items: stretch;">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+              <svg viewBox="0 0 200 200" style="width: 48px;">
+                <path d="M 50 56 L 74 56 L 74 124 L 102 124 L 102 144 L 50 144 Z" fill="#F2EFE6"/>
+                <path d="M 112 56 L 152 100 L 112 144 L 112 124 L 130 100 L 112 76 Z" fill="#D4FF3A"/>
+              </svg>
+              <div style="font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; color: rgba(242,239,230,0.5); text-align: right;">
+                campaign · 001<br>logicgen.dev
+              </div>
+            </div>
+            <div style="font-family: var(--display); font-weight: 320; font-size: clamp(36px, 6vw, 92px); line-height: 0.92; letter-spacing: -0.035em; color: var(--bone);">
+              You had the idea<br>at <span style=" color: var(--pulse);">3:14 AM.</span> Ship it<br>by morning.
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-end; font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; color: rgba(242,239,230,0.5);">
+              <span>→ try it free / first MVP in a weekend</span>
+              <span>billboard · OOH · SF / NYC</span>
+            </div>
+          </div>
+          <span class="app-label" style="left: auto; right: 22px;">/08 · Out-of-home · 14×48</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+</style>
+
+<!-- =============================================
+     §10 — DOWNLOAD ALL
+     ============================================= -->
+<section class="dl-bar" id="download">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow" style="color: var(--pulse); display: block; margin-bottom: 16px;">§ 10 — Take it with you</span>
+      <h3>The full kit, <span class="it">vector & versioned.</span></h3>
+      <p class="body muted" style="color: rgba(242,239,230,0.6); margin-top: 16px; max-width: 52ch;">Eight logo variants. Eight colour swatches. The construction grid. The clear-space template. All SVG. All editable. Packaged into a single ZIP.</p>
+    </div>
+    <div class="dl-cta">
+      <button class="btn-pulse" onclick="downloadAllAssets()">
+        Download brand kit · ZIP
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 16px; height: 16px;"><path d="M12 4v16m0 0l-6-6m6 6l6-6"/></svg>
+      </button>
+      <small>~ 14 SVG files · plus a README in plain text</small>
+    </div>
+  </div>
+</section>
+
+<!-- =============================================
+     FOOTER
+     ============================================= -->
+<footer>
+  <div class="wrap">
+    <div class="ft-lock">
+      <svg viewBox="0 0 200 200">
+        <rect width="200" height="200" rx="40" fill="#0E0E14"/>
+        <path d="M 50 56 L 74 56 L 74 124 L 102 124 L 102 144 L 50 144 Z" fill="#F2EFE6"/>
+        <path d="M 112 56 L 152 100 L 112 144 L 112 124 L 130 100 L 112 76 Z" fill="#D4FF3A"/>
+      </svg>
+      <div>
+        <div class="ft-name">LogicGen<span style="font-family: var(--mono); font-size: 14px; color: var(--mist); margin-left: 4px;">.dev</span></div>
+        <div class="num">Brand Identity System · v1.0 · Spring 2026</div>
+      </div>
+    </div>
+    <div class="ft-meta">
+      <strong>Document</strong><br>
+      No. 001<br>
+      Issued internal · external<br>
+      Iterates: minor — quarterly
+    </div>
+    <div class="ft-meta">
+      <strong>Custodian</strong><br>
+      brand@logicgen.dev<br>
+      For questions, exceptions,<br>or co-brand permissions
+    </div>
+    <div class="legal">
+      <span>© 2026 LogicGen. The mark and wordmark are properties of LogicGen, Inc.</span>
+      <span>Designed in the spirit of a system that ships.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- Toast -->
+<div class="toast" id="toast"><span class="pulse-dot"></span><span id="toastMsg">Copied</span></div>
+
+
+<script>
+/* ============================================
+   LOGOGEN.DEV — LOGO ASSET LIBRARY
+   All SVGs as standalone strings for download
+   ============================================ */
+
+const SVG_HEAD = '<?xml version="1.0" encoding="UTF-8"?>\n';
+
+// ============================================
+// CORE GEOMETRY PRIMITIVES (reused everywhere)
+// ============================================
+const L_PATH = 'M 50 56 L 74 56 L 74 124 L 102 124 L 102 144 L 50 144 Z';
+const WEDGE_PATH = 'M 112 56 L 152 100 L 112 144 L 112 124 L 130 100 L 112 76 Z';
+
+// ============================================
+// LOGO VARIANTS — each is a complete SVG string
+// ============================================
+const LOGOS = {
+  'mark-primary': {
+    name: 'Mark · Primary',
+    spec: 'Ink container · Bone L · Pulse wedge',
+    bg: 'paper',
+    svg: SVG_HEAD + `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <rect width="200" height="200" rx="40" fill="#0E0E14"/>
+  <path d="${L_PATH}" fill="#F2EFE6"/>
+  <path d="${WEDGE_PATH}" fill="#D4FF3A"/>
+</svg>`
+  },
+
+  'mark-inverse': {
+    name: 'Mark · Light',
+    spec: 'Bone container · Ink L · Plasma wedge',
+    bg: 'paper',
+    svg: SVG_HEAD + `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <rect width="200" height="200" rx="40" fill="#F2EFE6"/>
+  <path d="${L_PATH}" fill="#0E0E14"/>
+  <path d="${WEDGE_PATH}" fill="#5A3AFF"/>
+</svg>`
+  },
+
+  'mark-mono-ink': {
+    name: 'Mark · Mono Ink',
+    spec: 'Single-colour · for press & seal',
+    bg: 'paper',
+    svg: SVG_HEAD + `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <rect width="200" height="200" rx="40" fill="#0E0E14"/>
+  <path d="${L_PATH}" fill="#F2EFE6"/>
+  <path d="${WEDGE_PATH}" fill="#F2EFE6"/>
+</svg>`
+  },
+
+  'mark-glyph': {
+    name: 'Glyph · Transparent',
+    spec: 'L + wedge · no container · for badges',
+    bg: 'paper',
+    svg: SVG_HEAD + `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <path d="${L_PATH}" fill="#0E0E14"/>
+  <path d="${WEDGE_PATH}" fill="#0E0E14"/>
+</svg>`
+  },
+
+  'mark-glyph-pulse': {
+    name: 'Glyph · Pulse field',
+    spec: 'Solid ink on Pulse · sticker / merch',
+    bg: 'pulse',
+    svg: SVG_HEAD + `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <rect width="200" height="200" fill="#D4FF3A"/>
+  <path d="${L_PATH}" fill="#0E0E14"/>
+  <path d="${WEDGE_PATH}" fill="#0E0E14"/>
+</svg>`
+  },
+
+  'mark-dark-bone': {
+    name: 'Glyph · Reverse',
+    spec: 'Solid Bone · for dark surfaces',
+    bg: 'ink',
+    svg: SVG_HEAD + `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <rect width="200" height="200" rx="40" fill="#0E0E14"/>
+  <path d="${L_PATH}" fill="#F2EFE6"/>
+  <path d="${WEDGE_PATH}" fill="#F2EFE6"/>
+</svg>`
+  },
+
+  'lockup-horizontal': {
+    name: 'Lockup · Horizontal',
+    spec: 'Mark + wordmark · primary signature',
+    bg: 'paper',
+    wide: true,
+    svg: SVG_HEAD + `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 200" width="700" height="200">
+  <!-- Mark -->
+  <rect width="200" height="200" rx="40" fill="#0E0E14"/>
+  <path d="${L_PATH}" fill="#F2EFE6"/>
+  <path d="${WEDGE_PATH}" fill="#D4FF3A"/>
+  <!-- Wordmark -->
+  <text x="240" y="128" font-family="Geist, system-ui, sans-serif" font-weight="350" font-size="92" fill="#0E0E14" letter-spacing="-3">Logic</text>
+  <text x="445" y="128" font-family="Geist, system-ui, sans-serif" font-weight="350" font-size="92" fill="#0E0E14" letter-spacing="-3">Gen</text>
+  <text x="592" y="128" font-family="Geist Mono, monospace" font-weight="500" font-size="22" fill="#6B6A78" letter-spacing="1">.dev</text>
+  <!-- Pulse underline beneath "Gen" -->
+  <rect x="449" y="139" width="138" height="8" fill="#D4FF3A"/>
+</svg>`
+  },
+
+  'lockup-horizontal-dark': {
+    name: 'Lockup · Horizontal · Reverse',
+    spec: 'For Ink and dark surfaces',
+    bg: 'ink',
+    wide: true,
+    svg: SVG_HEAD + `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 200" width="700" height="200">
+  <rect width="700" height="200" fill="#0E0E14"/>
+  <path d="${L_PATH}" fill="#F2EFE6"/>
+  <path d="${WEDGE_PATH}" fill="#D4FF3A"/>
+  <text x="240" y="128" font-family="Geist, system-ui, sans-serif" font-weight="350" font-size="92" fill="#F2EFE6" letter-spacing="-3">Logic</text>
+  <text x="445" y="128" font-family="Geist, system-ui, sans-serif" font-weight="350" font-size="92" fill="#F2EFE6" letter-spacing="-3">Gen</text>
+  <text x="592" y="128" font-family="Geist Mono, monospace" font-weight="500" font-size="22" fill="#6B6A78" letter-spacing="1">.dev</text>
+  <rect x="449" y="139" width="138" height="8" fill="#D4FF3A"/>
+</svg>`
+  },
+
+  'lockup-vertical': {
+    name: 'Lockup · Stacked',
+    spec: 'Mark above wordmark · for square spaces',
+    bg: 'paper',
+    svg: SVG_HEAD + `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 480" width="480" height="480">
+  <!-- Mark centered -->
+  <g transform="translate(140 30)">
+    <rect width="200" height="200" rx="40" fill="#0E0E14"/>
+    <path d="${L_PATH}" fill="#F2EFE6"/>
+    <path d="${WEDGE_PATH}" fill="#D4FF3A"/>
+  </g>
+  <!-- Wordmark below, centered -->
+  <text x="240" y="345" text-anchor="middle" font-family="Geist, system-ui, sans-serif" font-weight="350" font-size="64" fill="#0E0E14" letter-spacing="-2">
+    <tspan>Logic</tspan><tspan>Gen</tspan>
+  </text>
+  <text x="240" y="378" text-anchor="middle" font-family="Geist Mono, monospace" font-weight="500" font-size="14" fill="#6B6A78" letter-spacing="3">. D E V</text>
+  <rect x="180" y="357" width="120" height="4" fill="#D4FF3A"/>
+</svg>`
+  },
+
+  'wordmark': {
+    name: 'Wordmark · Only',
+    spec: 'Logo type without the mark',
+    bg: 'paper',
+    wide: true,
+    svg: SVG_HEAD + `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 160" width="580" height="160">
+  <text x="20" y="108" font-family="Geist, system-ui, sans-serif" font-weight="350" font-size="92" fill="#0E0E14" letter-spacing="-3">Logic</text>
+  <text x="225" y="108" font-family="Geist, system-ui, sans-serif" font-weight="350" font-size="92" fill="#0E0E14" letter-spacing="-3">Gen</text>
+  <text x="372" y="108" font-family="Geist Mono, monospace" font-weight="500" font-size="22" fill="#6B6A78" letter-spacing="1">.dev</text>
+  <rect x="229" y="119" width="138" height="8" fill="#D4FF3A"/>
+</svg>`
+  },
+
+  'wordmark-mono': {
+    name: 'Wordmark · Mono',
+    spec: 'Single-colour wordmark',
+    bg: 'paper',
+    wide: true,
+    svg: SVG_HEAD + `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 160" width="580" height="160">
+  <text x="20" y="108" font-family="Geist, system-ui, sans-serif" font-weight="350" font-size="92" fill="#0E0E14" letter-spacing="-3">Logic</text>
+  <text x="225" y="108" font-family="Geist, system-ui, sans-serif" font-weight="350" font-size="92" fill="#0E0E14" letter-spacing="-3">Gen</text>
+  <text x="372" y="108" font-family="Geist Mono, monospace" font-weight="500" font-size="22" fill="#0E0E14" letter-spacing="1">.dev</text>
+</svg>`
+  },
+
+  'app-icon': {
+    name: 'App Icon · 1024',
+    spec: 'iOS / Android / favicon master',
+    bg: 'paper',
+    svg: SVG_HEAD + `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <rect width="1024" height="1024" rx="224" fill="#0E0E14"/>
+  <g transform="translate(256 256) scale(2.56)">
+    <path d="${L_PATH}" fill="#F2EFE6"/>
+    <path d="${WEDGE_PATH}" fill="#D4FF3A"/>
+  </g>
+</svg>`
+  },
+
+  'favicon': {
+    name: 'Favicon · 32',
+    spec: 'Tiny optimized glyph',
+    bg: 'paper',
+    svg: SVG_HEAD + `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <rect width="32" height="32" rx="6" fill="#0E0E14"/>
+  <rect x="8" y="9" width="4" height="14" fill="#F2EFE6"/>
+  <rect x="8" y="20" width="9" height="3" fill="#F2EFE6"/>
+  <path d="M 18 9 L 25 16 L 18 23 L 18 20 L 21 16 L 18 12 Z" fill="#D4FF3A"/>
+</svg>`
+  },
+
+  'cobrand-denova': {
+    name: 'Co-brand · Denova',
+    spec: 'Partner lockup × Denova',
+    bg: 'paper',
+    wide: true,
+    svg: SVG_HEAD + `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 240" width="700" height="240">
+  <!-- LogicGen mark -->
+  <g transform="translate(40 20)">
+    <rect width="200" height="200" rx="40" fill="#0E0E14"/>
+    <path d="${L_PATH}" fill="#F2EFE6"/>
+    <path d="${WEDGE_PATH}" fill="#D4FF3A"/>
+  </g>
+  <!-- divider X -->
+  <text x="290" y="142" font-family="Geist, system-ui, sans-serif" font-weight="300" font-size="84" fill="#6B6A78">×</text>
+  <!-- Denova placeholder mark -->
+  <g transform="translate(360 20)">
+    <rect width="200" height="200" rx="40" fill="#0E0E14"/>
+    <circle cx="100" cy="100" r="52" fill="none" stroke="#F2EFE6" stroke-width="10"/>
+    <circle cx="100" cy="100" r="14" fill="#5A3AFF"/>
+  </g>
+  <!-- Caption -->
+  <text x="350" y="232" text-anchor="middle" font-family="Geist Mono, monospace" font-weight="500" font-size="12" fill="#6B6A78" letter-spacing="3">LOGICGEN  ×  DENOVA</text>
+</svg>`
+  }
+};
+
+// ============================================
+// RENDER LOGO GALLERY
+// ============================================
+function renderGallery() {
+  const order = [
+    { key: 'mark-primary',         span: 4 },
+    { key: 'mark-inverse',         span: 4 },
+    { key: 'mark-mono-ink',        span: 4 },
+    { key: 'lockup-horizontal',    span: 8 },
+    { key: 'mark-dark-bone',       span: 4 },
+    { key: 'lockup-horizontal-dark', span: 12 },
+    { key: 'lockup-vertical',      span: 4 },
+    { key: 'wordmark',             span: 8 },
+    { key: 'mark-glyph',           span: 3 },
+    { key: 'mark-glyph-pulse',     span: 3 },
+    { key: 'app-icon',             span: 3 },
+    { key: 'favicon',              span: 3 },
+    { key: 'wordmark-mono',        span: 6 },
+    { key: 'cobrand-denova',       span: 6 }
+  ];
+
+  const gallery = document.getElementById('logoGallery');
+  if (!gallery) return;
+
+  const html = order.map(({key, span}) => {
+    const L = LOGOS[key];
+    if (!L) return '';
+    const bgClass = L.bg === 'ink' ? 'dark' : (L.bg === 'pulse' ? 'accent' : '');
+    const wideClass = L.wide ? 'wide' : '';
+    const compact = (key === 'favicon') ? 'compact' : '';
+    return `
+      <div class="logo-card col-${span} ${bgClass} ${wideClass} ${compact}">
+        <div class="display">${L.svg.replace(SVG_HEAD, '')}</div>
+        <div class="lc-foot">
+          <div class="lc-meta">
+            <span class="name">${L.name}</span>
+            <span class="spec">${L.spec}</span>
+          </div>
+          <button class="download-btn" onclick="downloadLogo('${key}')">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 4v14m0 0l-5-5m5 5l5-5M5 20h14"/></svg>
+            SVG
+          </button>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  gallery.innerHTML = html;
+}
+
+// ============================================
+// DOWNLOAD A SINGLE LOGO
+// ============================================
+function downloadLogo(key) {
+  const L = LOGOS[key];
+  if (!L) return;
+  const blob = new Blob([L.svg], { type: 'image/svg+xml' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `logicgen-${key}.svg`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 100);
+  showToast(`Downloaded ${key}.svg`);
+}
+
+// ============================================
+// COLOR PALETTE — COPY ON CLICK
+// ============================================
+function attachColorCopy() {
+  document.querySelectorAll('.swatch').forEach(sw => {
+    sw.addEventListener('click', () => {
+      const hex = sw.dataset.hex;
+      if (!hex) return;
+      navigator.clipboard.writeText(hex).then(() => {
+        sw.classList.add('copied');
+        showToast(`${hex} copied to clipboard`);
+        setTimeout(() => sw.classList.remove('copied'), 1600);
+      });
+    });
+  });
+}
+
+// ============================================
+// DOWNLOAD ALL — ZIP BUNDLE
+// ============================================
+async function downloadAllAssets() {
+  if (typeof JSZip === 'undefined') {
+    showToast('ZIP library failed to load — downloading individually');
+    Object.keys(LOGOS).forEach((k, i) => setTimeout(() => downloadLogo(k), i * 250));
+    return;
+  }
+
+  showToast('Bundling brand kit…');
+  const zip = new JSZip();
+
+  // Add all logos
+  const logosFolder = zip.folder('01_logos');
+  Object.entries(LOGOS).forEach(([key, L]) => {
+    logosFolder.file(`logicgen-${key}.svg`, L.svg);
+  });
+
+  // Add color palette as SVG
+  const paletteSvg = SVG_HEAD + `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 200" width="800" height="200">
+  <rect x="0"   width="200" height="200" fill="#F2EFE6"/>
+  <rect x="200" width="200" height="200" fill="#0E0E14"/>
+  <rect x="400" width="160" height="200" fill="#D4FF3A"/>
+  <rect x="560" width="80"  height="200" fill="#5A3AFF"/>
+  <rect x="640" width="80"  height="200" fill="#6B6A78"/>
+  <rect x="720" width="80"  height="200" fill="#D6D2C4"/>
+  <text x="20"  y="190" font-family="monospace" font-size="11" fill="#0E0E14">BONE  #F2EFE6</text>
+  <text x="220" y="190" font-family="monospace" font-size="11" fill="#F2EFE6">INK  #0E0E14</text>
+  <text x="420" y="190" font-family="monospace" font-size="11" fill="#0E0E14">PULSE  #D4FF3A</text>
+  <text x="568" y="190" font-family="monospace" font-size="10" fill="#F2EFE6">PLASMA</text>
+  <text x="648" y="190" font-family="monospace" font-size="10" fill="#F2EFE6">MIST</text>
+  <text x="728" y="190" font-family="monospace" font-size="10" fill="#0E0E14">STONE</text>
+</svg>`;
+  zip.folder('02_color').file('logicgen-palette.svg', paletteSvg);
+
+  // README
+  const readme = `LOGICGEN.DEV — BRAND IDENTITY KIT
+═══════════════════════════════════════════════
+Version 1.0  ·  Spring 2026
+For non-technical founders + AI agents
+═══════════════════════════════════════════════
+
+CONTENTS
+────────
+01_logos/         14 SVG logo variants
+02_color/         Palette swatch SVG
+README.txt        This file
+
+LOGO USAGE QUICK REFERENCE
+──────────────────────────
+mark-primary           Default for any neutral surface
+mark-inverse           Use on cream / paper, with violet wedge
+mark-mono-ink          Single-colour for press, seal, foil
+mark-glyph             Transparent BG · for badges, watermarks
+mark-glyph-pulse       For pulse-colour merchandise
+mark-dark-bone         Reverse · for dark surfaces
+lockup-horizontal      Primary brand signature
+lockup-horizontal-dark Same, for dark surfaces
+lockup-vertical        Square / centered applications
+wordmark               Logotype only · when mark is implied
+wordmark-mono          Single-colour wordmark
+app-icon               1024px source for iOS / Android
+favicon                32px optimized for browsers
+cobrand-denova         Approved lockup with Denova
+
+COLOR PALETTE
+─────────────
+Bone        #F2EFE6  — primary surface · 60%
+Ink         #0E0E14  — primary type · 30%
+Pulse       #D4FF3A  — signature accent · 4–6%
+Plasma      #5A3AFF  — rare AI/gen accent · ≤ 1%
+Mist        #6B6A78  — secondary type
+Stone       #D6D2C4  — hairlines, borders
+Paper       #FBF9F2  — recessed surfaces
+Pulse Deep  #B8E22E  — pressed / hover state
+
+TYPOGRAPHY
+──────────
+Display:  Geist          (variable, 300–800)
+Body/UI:  Geist          (variable, 300–800)
+Mono:     Geist Mono     (variable, 400–600)
+
+A single modern sans family does all display + UI work.
+No italics, no swashes, no variable axes beyond weight.
+Both faces are free, open-source, and available via Google Fonts.
+
+CLEAR SPACE
+───────────
+Maintain space equal to X on all sides of the mark,
+where X = the height of the wedge.
+
+MINIMUM SIZE
+────────────
+Mark:    24px digital  ·  8mm print
+Lockup:  120px digital ·  32mm print
+
+VOICE PRINCIPLES
+────────────────
+1. Confident, never salesy.
+2. Specific, never vague.
+3. Generous, never condescending.
+4. Editorial, never corporate.
+5. Composable, never monolithic.
+6. Forward, never apologetic.
+
+QUESTIONS · brand@logicgen.dev
+═══════════════════════════════════════════════
+`;
+  zip.file('README.txt', readme);
+
+  const blob = await zip.generateAsync({ type: 'blob' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'logicgen-brand-kit-v1.0.zip';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 100);
+  showToast('Brand kit downloaded ✓');
+}
+
+// ============================================
+// TOAST
+// ============================================
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+// ============================================
+// THEME TOGGLE
+// ============================================
+function applyTheme(theme) {
+  if (theme === 'dark' || theme === 'light') {
+    document.documentElement.setAttribute('data-theme', theme);
+  } else {
+    document.documentElement.removeAttribute('data-theme');
+  }
+}
+
+function toggleTheme() {
+  const current = document.documentElement.getAttribute('data-theme');
+  // Determine the effective current theme (accounting for OS preference if unset)
+  let effective = current;
+  if (!effective) {
+    effective = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+  const next = effective === 'dark' ? 'light' : 'dark';
+  applyTheme(next);
+  try { localStorage.setItem('logicgen-theme', next); } catch (e) {}
+  showToast(next === 'dark' ? 'Dark mode ✓' : 'Light mode ✓');
+}
+
+// Apply persisted theme as early as possible (before paint where we can)
+(function initTheme() {
+  try {
+    const saved = localStorage.getItem('logicgen-theme');
+    if (saved === 'dark' || saved === 'light') applyTheme(saved);
+  } catch (e) {}
+  // React to OS theme changes when user hasn't manually overridden
+  if (window.matchMedia) {
+    const mq = window.matchMedia('(prefers-color-scheme: dark)');
+    mq.addEventListener?.('change', () => {
+      let saved = null;
+      try { saved = localStorage.getItem('logicgen-theme'); } catch (e) {}
+      if (!saved) applyTheme(null); // let CSS @media handle it
+    });
+  }
+})();
+
+// ============================================
+// BOOT
+// ============================================
+document.addEventListener('DOMContentLoaded', () => {
+  renderGallery();
+  attachColorCopy();
+});
+</script>
+
+</body>
+</html>
